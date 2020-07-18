@@ -1,0 +1,41 @@
+---
+title: [OpenCV基础]core组件进阶
+date: 2017-03-28 06:48:02
+categories:
+- 技术
+tags:
+- OpenCV基础
+- c++
+comments: true
+---
++ LUT函数： LOOK UP TABLE 操作
+用于批量元素查找、扫描和操作图像。
+```
+//首先我们建立一个mat型用于查表
+Mat lookUpTable(1, 256, CV_8U);
+uchar* p = lookUpTable.data;
+for( int i = 0; i < 256; ++ i)
+{
+	p[i] = table[i];
+}
+//然后我们调用函数(I 是输入， J 是输出)：
+for(int i = 0; i < times; ++ i)
+	LUT(I, lookUpTable, J);
+```
+
++ 计时函数
+'getTickCount()'函数： 返回CPU自某个时间以来走过的时钟周期；
+'getTickFrequency()'函数： 返回CPU一秒钟的时钟周期；
+故使用以上两个函数可以得到某段程度的运行时间：
+```
+double time1 = static_cast<double>(getTickCount()); //记录起始时间
+// 你的程序...
+time1 = ((double)getTickCount() - time1) / getTickFrequency();
+cout << "程序运行时间 : " << time1 << endl;
+```
+
++ 访问图中像素的方法
+图像处理最基本的就是处理每个点的像素啦，所以呢，如何访问每个像素点呢。
+1. 指针访问： C操作符[]
+如果是一幅 640 *320 的图像，就把他看成是一个二维数组 pic[640][320]。两个嵌套的for循环，即可完成图像像素点的遍历。
+  
