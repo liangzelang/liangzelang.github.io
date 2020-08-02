@@ -74,6 +74,9 @@ tag_generator:
 category_generator: 
     per_page: 30
 
+# 个性化配置
+# 不从google加载字体，默认加载本地字体
+use_font_lato: false
 
 # Extensions
 ## Plugins: https://hexo.io/plugins/
