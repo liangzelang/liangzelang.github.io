@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>正则表达式 | Zelang Liang</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Python中的正则表达式实际编程开发中，会遇到很多字符串处理相关的工作，因此专为处理匹配字符串的正则表达式一定需要花时间学习的。 基础表达我们以匹配一个简单的邮箱*liangzelang@gmail.com*为例介绍正则表达式的入门方法。 基本元素表达 \w表示匹配一个字母或数字 \d表示匹配一个数字 \s表示匹配一个空格 .表示匹配任意字符  基本数量表达有了上述的基本表达，那么我们可以看一下">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="正则表达式">
+<meta property="og:url" content="http://newbird.cn/2020/09/30/Linux_shell/正则表达式/index.html">
+<meta property="og:site_name" content="Zelang Liang">
+<meta property="og:description" content="Python中的正则表达式实际编程开发中，会遇到很多字符串处理相关的工作，因此专为处理匹配字符串的正则表达式一定需要花时间学习的。 基础表达我们以匹配一个简单的邮箱*liangzelang@gmail.com*为例介绍正则表达式的入门方法。 基本元素表达 \w表示匹配一个字母或数字 \d表示匹配一个数字 \s表示匹配一个空格 .表示匹配任意字符  基本数量表达有了上述的基本表达，那么我们可以看一下">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://newbird.cn/2020/09/30/Linux_shell/正则表达式/re.png">
+<meta property="og:image" content="http://newbird.cn/2020/09/30/Linux_shell/正则表达式/re.match_api.png">
+<meta property="og:updated_time" content="2020-09-30T09:38:32.141Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="正则表达式">
+<meta name="twitter:description" content="Python中的正则表达式实际编程开发中，会遇到很多字符串处理相关的工作，因此专为处理匹配字符串的正则表达式一定需要花时间学习的。 基础表达我们以匹配一个简单的邮箱*liangzelang@gmail.com*为例介绍正则表达式的入门方法。 基本元素表达 \w表示匹配一个字母或数字 \d表示匹配一个数字 \s表示匹配一个空格 .表示匹配任意字符  基本数量表达有了上述的基本表达，那么我们可以看一下">
+<meta name="twitter:image" content="http://newbird.cn/2020/09/30/Linux_shell/正则表达式/re.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Zelang Liang" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zelang Liang</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">New Bird , New Beginning</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">主页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">个人</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://newbird.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Linux_shell/正则表达式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/30/Linux_shell/正则表达式/" class="article-date">
+  <time datetime="2020-09-30T00:00:17.000Z" itemprop="datePublished">2020-09-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      正则表达式
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Python中的正则表达式"><a href="#Python中的正则表达式" class="headerlink" title="Python中的正则表达式"></a>Python中的正则表达式</h1><p>实际编程开发中，会遇到很多字符串处理相关的工作，因此专为处理匹配字符串的正则表达式一定需要花时间学习的。</p>
+<h2 id="基础表达"><a href="#基础表达" class="headerlink" title="基础表达"></a>基础表达</h2><p>我们以匹配一个简单的邮箱<a href="mailto:*liangzelang@gmail.com" target="_blank" rel="noopener">*liangzelang@gmail.com</a>*为例介绍正则表达式的入门方法。</p>
+<h3 id="基本元素表达"><a href="#基本元素表达" class="headerlink" title="基本元素表达"></a>基本元素表达</h3><ul>
+<li><code>\w</code>表示匹配一个字母或数字</li>
+<li><code>\d</code>表示匹配一个数字</li>
+<li><code>\s</code>表示匹配一个空格</li>
+<li><code>.</code>表示匹配任意字符</li>
+</ul>
+<h3 id="基本数量表达"><a href="#基本数量表达" class="headerlink" title="基本数量表达"></a>基本数量表达</h3><p>有了上述的基本表达，那么我们可以看一下如果匹配不同数量的字符</p>
+<ul>
+<li><code>+</code>表示一个或以上的字符，如<code>\d+</code>表示匹配一个或以上的数字字符串，可以匹配<code>1</code>和<code>123456</code></li>
+<li><code>*</code>表示任意个字符，可以是0个，如<code>\w*</code>表示匹配任何个字母或数字</li>
+<li><code>?</code>表示0个或1个字符，如<code>&lt;?liangzelang&gt;?</code>表示匹配<code>liangzelang</code> 或 <code>&lt;liangzelang&gt;</code></li>
+<li><code>{n}</code>表示n个字符，同时可以限定数量范围<code>{m,n}</code>,表示m–n个字符</li>
+</ul>
+<h3 id="特殊字符表达"><a href="#特殊字符表达" class="headerlink" title="特殊字符表达"></a>特殊字符表达</h3><ul>
+<li><code>\</code>转义符，实际工作中会用到很多特殊字符<code>* . ? + $ ^ [ ] ( ) { } | \ /</code>等，这个时候需要加上<code>\</code>转义符</li>
+</ul>
+<p>了解了上面的基本表达可以顺利写出邮箱的正则表达式：<br><code>\w+@\w+\.\w+</code> ,为了更直观python的用例如下：</p>
+<h2 id="进阶表达"><a href="#进阶表达" class="headerlink" title="进阶表达"></a>进阶表达</h2><p>匹配<code>192.168.1.1</code>这个IP地址，可以容易得到<code>\d+\.\d+\.\d+\.\d+</code>,但是这样有个问题就是如果是<code>999.999.999.999</code>也匹配上了,因此我们需要匹配的更加准确</p>
+<h3 id="精确范围表达"><a href="#精确范围表达" class="headerlink" title="精确范围表达"></a>精确范围表达</h3><ul>
+<li><code>[]</code>表示匹配的字符串范围，如<code>[0-9A-Za-z]</code>表示一个数字或者字母</li>
+<li><code>^</code>表示匹配字符串起始</li>
+<li><code>$</code>表示匹配字符串结尾</li>
+<li><code>[A|B]</code>表示匹配A或者B<br>那么正则表达式<code>&#39;^[2[0-5][0-5]|1[0-9][0-9]|[0-9]?[0-9][\.]?]{4}$&#39;</code> 可以匹配<code>192.168.1.1</code></li>
+</ul>
+<h2 id="python-re库"><a href="#python-re库" class="headerlink" title="python re库"></a>python re库</h2><p>以上就是在python中使用正则表达式的基础知识，python中有专门的正则表达式库<code>re</code>,该库主要包含一些处理正则表达式的函数接口：<br><img src="./re.png" alt="re模块相关API接口"></p>
+<h3 id="匹配正则表达式-re-match"><a href="#匹配正则表达式-re-match" class="headerlink" title="匹配正则表达式 re.match"></a>匹配正则表达式 re.match</h3><p>以上文讲到的匹配email地址：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> re.match(<span class="string">r'\w+@\w+\.\w+'</span>, <span class="string">'liangzelang@gmail.com'</span>):</span><br><span class="line">    print(<span class="string">"OK"</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">"not match"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>匹配IP地址：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> re.match(<span class="string">r'^[2[0-5][0-5]|1[0-9][0-9]|[0-9]?[0-9][\.]?]&#123;4&#125;$'</span>, <span class="string">'192.168.1.1'</span>):</span><br><span class="line">    print(<span class="string">"IP ok"</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">"IP not match"</span>)</span><br></pre></td></tr></table></figure></p>
+<h3 id="切分字符-re-split"><a href="#切分字符-re-split" class="headerlink" title="切分字符 re.split"></a>切分字符 re.split</h3><p>如果使用正常的字符串切分函数是无法去除多余的字符或者空格的：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'a b  c'</span>.split(<span class="string">' '</span>)</span><br><span class="line">[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">''</span>, <span class="string">'c'</span>]</span><br></pre></td></tr></table></figure></p>
+<p>使用re.split函数：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> re</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>re.split(<span class="string">r'\s+'</span>, <span class="string">'a b  c'</span>)</span><br><span class="line">[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>]</span><br></pre></td></tr></table></figure></p>
+<h3 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h3><p>上文中我们匹配了邮箱和IP，那如果我们要找到邮箱中对应的用户名、邮箱服务商或者IP地址的网段，那么就需要把匹配到的字符串分组；</p>
+<ul>
+<li><code>()</code>表示需要提取的分组</li>
+</ul>
+<p>re.match函数返回的Match对象正好有group方法可以提供匹配到每个分组字符串。<br><img src="./re.match_api.png" alt="match对象的方法"><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> re</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>m = re.match(<span class="string">r'^(\w+)@(\w+)\.(\w+)$'</span>, <span class="string">'liangzelang@gmail.com'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>m</span><br><span class="line">&lt;re.Match object; span=(<span class="number">0</span>, <span class="number">21</span>), match=<span class="string">'liangzelang@gmail.com'</span>&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>m.group(<span class="number">0</span>)</span><br><span class="line"><span class="string">'liangzelang@gmail.com'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>m.group(<span class="number">1</span>)</span><br><span class="line"><span class="string">'liangzelang'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>m.group(<span class="number">2</span>)</span><br><span class="line"><span class="string">'gmail'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>m.group(<span class="number">3</span>)</span><br><span class="line"><span class="string">'com'</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="编译-re-compile"><a href="#编译-re-compile" class="headerlink" title="编译 re.compile"></a>编译 re.compile</h3><p>实际使用中一般先编译正则表达式，可以确保正则表达式本身没有语法错误，然后再使用编译后的正则表达式直接匹配使用。如果反复使用效率会有较大提升。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>re.compile(<span class="string">r'^(\w+)@(\w+)\.(\w+)$'</span>)</span><br><span class="line">re.compile(<span class="string">'^(\\w+)@(\\w+)\\.(\\w+)$'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>email = re.compile(<span class="string">r'^(\w+)@(\w+)\.(\w+)$'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>email.match(<span class="string">'liangzelang@gmail.com'</span>).groups()</span><br><span class="line">(<span class="string">'liangzelang'</span>, <span class="string">'gmail'</span>, <span class="string">'com'</span>)</span><br></pre></td></tr></table></figure></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017639890281664" target="_blank" rel="noopener">正则表达式</a></li>
+<li><a href="https://www.jianshu.com/p/0053af01554e" target="_blank" rel="noopener">re库的用法介绍
+</a></li>
+</ul>
+<h1 id="Linux正则表达式"><a href="#Linux正则表达式" class="headerlink" title="Linux正则表达式"></a>Linux正则表达式</h1><ul>
+<li>未完待续</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2020/09/30/Linux_shell/正则表达式/" data-id="ckfp7tbml000kfspl3yvqoeu9" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/08/02/Leetcode/5-最长回文子串-C-中心扩展-暴力-md/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">[5. 最长回文子串] C + 中心扩展 + 暴力</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h2 class="widget-title"><b>关于我</b></h2>
+    <div class="widget">
+ <front size="3"><b>邮箱</b>：liangzelang@gmail.com<br>
+ <b>现状</b>： 目前北京理工大学模式识别硕士在读，2018年毕业。个人喜欢图像处理、计算机视觉、机器学习等领域。更多以及<a href="http://cv.qiaobutang.com/r/5997e28c0cf202fca1a62686">个人简历</a></front>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">35</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Caffe/">Caffe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/">Markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV基础/">OpenCV基础</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ResNet/">ResNet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TLD/">TLD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VS2010/">VS2010</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c++</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/">ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图像处理/">图像处理</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/目标跟踪/">目标跟踪</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Caffe/" style="font-size: 10px;">Caffe</a> <a href="/tags/Linux/" style="font-size: 11.43px;">Linux</a> <a href="/tags/Markdown/" style="font-size: 10px;">Markdown</a> <a href="/tags/OpenCV/" style="font-size: 12.86px;">OpenCV</a> <a href="/tags/OpenCV基础/" style="font-size: 15.71px;">OpenCV基础</a> <a href="/tags/ResNet/" style="font-size: 10px;">ResNet</a> <a href="/tags/TLD/" style="font-size: 10px;">TLD</a> <a href="/tags/VS2010/" style="font-size: 10px;">VS2010</a> <a href="/tags/c/" style="font-size: 20px;">c++</a> <a href="/tags/leetcode/" style="font-size: 17.14px;">leetcode</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/图像处理/" style="font-size: 14.29px;">图像处理</a> <a href="/tags/数据结构与算法/" style="font-size: 18.57px;">数据结构与算法</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/目标跟踪/" style="font-size: 12.86px;">目标跟踪</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/30/Linux_shell/正则表达式/">正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/02/Leetcode/5-最长回文子串-C-中心扩展-暴力-md/">[5. 最长回文子串] C + 中心扩展 + 暴力</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/24/CPP/数据结构之图论基础/">数据结构之图论基础</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/24/CPP/数据结构之常见图论算法/">数据结构之常见图论算法</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/19/DeepLearning/caffe-finetuning/">Caffe ResNet50微调</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 liangzelang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+	<p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">主页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">个人</a>
+  
+</nav>
+    
+
+<script src="//ajax.useso.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

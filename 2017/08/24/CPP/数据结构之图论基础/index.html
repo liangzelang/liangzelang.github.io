@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>数据结构之图论基础 | Zelang Liang</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1、图的数据存储1.1、 邻接矩阵图的邻接矩阵是由两个数组完成，一个一维数组存储图中的顶点;一个二维数组存储图中的边或弧。如果图G有n个顶点，则邻接矩阵是一个n*n的方阵，定义为：arc[i][j]等于1（如果（Vi，Vj）属于E），反之等于0。有向图也差不多，有了出度和入度的概念网 就是有权的图 邻接矩阵的创建">
+<meta name="keywords" content="c++,数据结构与算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构之图论基础">
+<meta property="og:url" content="http://newbird.cn/2017/08/24/CPP/数据结构之图论基础/index.html">
+<meta property="og:site_name" content="Zelang Liang">
+<meta property="og:description" content="1、图的数据存储1.1、 邻接矩阵图的邻接矩阵是由两个数组完成，一个一维数组存储图中的顶点;一个二维数组存储图中的边或弧。如果图G有n个顶点，则邻接矩阵是一个n*n的方阵，定义为：arc[i][j]等于1（如果（Vi，Vj）属于E），反之等于0。有向图也差不多，有了出度和入度的概念网 就是有权的图 邻接矩阵的创建">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-09-30T09:34:19.061Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构之图论基础">
+<meta name="twitter:description" content="1、图的数据存储1.1、 邻接矩阵图的邻接矩阵是由两个数组完成，一个一维数组存储图中的顶点;一个二维数组存储图中的边或弧。如果图G有n个顶点，则邻接矩阵是一个n*n的方阵，定义为：arc[i][j]等于1（如果（Vi，Vj）属于E），反之等于0。有向图也差不多，有了出度和入度的概念网 就是有权的图 邻接矩阵的创建">
+  
+    <link rel="alternate" href="/atom.xml" title="Zelang Liang" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zelang Liang</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">New Bird , New Beginning</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">主页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">个人</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://newbird.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-CPP/数据结构之图论基础" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/24/CPP/数据结构之图论基础/" class="article-date">
+  <time datetime="2017-08-24T12:53:48.000Z" itemprop="datePublished">2017-08-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      数据结构之图论基础
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1、图的数据存储"><a href="#1、图的数据存储" class="headerlink" title="1、图的数据存储"></a>1、图的数据存储</h2><h2 id="1-1、-邻接矩阵"><a href="#1-1、-邻接矩阵" class="headerlink" title="1.1、 邻接矩阵"></a>1.1、 邻接矩阵</h2><p>图的邻接矩阵是由两个数组完成，一个一维数组存储<strong>图中的顶点</strong>;一个二维数组存储<strong>图中的边或弧</strong>。<br>如果图G有n个顶点，则邻接矩阵是一个n*n的方阵，定义为：<br>arc[i][j]等于1（如果（Vi，Vj）属于E），反之等于0。<br>有向图也差不多，有了出度和入度的概念<br>网 就是有权的图</p>
+<h2 id="邻接矩阵的创建"><a href="#邻接矩阵的创建" class="headerlink" title="邻接矩阵的创建"></a>邻接矩阵的创建</h2><a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;stdio.h&quot;    </span><br><span class="line">#include &quot;stdlib.h&quot;   </span><br><span class="line">#include &quot;io.h&quot;  </span><br><span class="line">#include &quot;math.h&quot;  </span><br><span class="line">#include &quot;time.h&quot;</span><br><span class="line"></span><br><span class="line">#define OK 1</span><br><span class="line">#define ERROR 0</span><br><span class="line">#define TRUE 1</span><br><span class="line">#define FALSE 0</span><br><span class="line">#define MAXVEX 100 /* 最大顶点数，应由用户定义 */</span><br><span class="line">#define INFINITY 65535</span><br><span class="line"></span><br><span class="line">typedef int Status;	/* Status是函数的类型,其值是函数结果状态代码，如OK等 */</span><br><span class="line">typedef char VertexType; /* 顶点类型应由用户定义  */</span><br><span class="line">typedef int EdgeType; /* 边上的权值类型应由用户定义 */</span><br><span class="line">typedef struct</span><br><span class="line">&#123;</span><br><span class="line">	VertexType vexs[MAXVEX]; /* 顶点表 */</span><br><span class="line">	EdgeType arc[MAXVEX][MAXVEX];/* 邻接矩阵，可看作边表 */</span><br><span class="line">	int numNodes, numEdges; /* 图中当前的顶点数和边数  */</span><br><span class="line">&#125;MGraph;</span><br><span class="line"></span><br><span class="line">/* 建立无向网图的邻接矩阵表示 */</span><br><span class="line">void CreateMGraph(MGraph *G)</span><br><span class="line">&#123;</span><br><span class="line">	int i,j,k,w;</span><br><span class="line">	printf(&quot;输入顶点数和边数:\n&quot;);</span><br><span class="line">	scanf(&quot;%d,%d&quot;,&amp;G-&gt;numNodes,&amp;G-&gt;numEdges); /* 输入顶点数和边数 */</span><br><span class="line">	for(i = 0;i &lt;G-&gt;numNodes;i++) /* 读入顶点信息,建立顶点表 */</span><br><span class="line">		scanf(&amp;G-&gt;vexs[i]);</span><br><span class="line">	for(i = 0;i &lt;G-&gt;numNodes;i++)</span><br><span class="line">		for(j = 0;j &lt;G-&gt;numNodes;j++)</span><br><span class="line">			G-&gt;arc[i][j]=INFINITY;	/* 邻接矩阵初始化 */</span><br><span class="line">	for(k = 0;k &lt;G-&gt;numEdges;k++) /* 读入numEdges条边，建立邻接矩阵 */</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;输入边(vi,vj)上的下标i，下标j和权w:\n&quot;);</span><br><span class="line">		scanf(&quot;%d,%d,%d&quot;,&amp;i,&amp;j,&amp;w); /* 输入边(vi,vj)上的权w */</span><br><span class="line">		G-&gt;arc[i][j]=w; </span><br><span class="line">		G-&gt;arc[j][i]= G-&gt;arc[i][j]; /* 因为是无向图，矩阵对称 */</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(void)</span><br><span class="line">&#123;    </span><br><span class="line">	MGraph G;    </span><br><span class="line">	CreateMGraph(&amp;G);</span><br><span class="line">	</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="1-2、邻接表"><a href="#1-2、邻接表" class="headerlink" title="1.2、邻接表"></a>1.2、邻接表</h2><p>与邻接矩阵不同，就是把顶点存在一个数组，然后其邻接点以链表的方式存储即可，节约空间。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;stdio.h&quot;    </span><br><span class="line">#include &quot;stdlib.h&quot;   </span><br><span class="line">#include &quot;io.h&quot;  </span><br><span class="line">#include &quot;math.h&quot;  </span><br><span class="line">#include &quot;time.h&quot;</span><br><span class="line"></span><br><span class="line">#define OK 1</span><br><span class="line">#define ERROR 0</span><br><span class="line">#define TRUE 1</span><br><span class="line">#define FALSE 0</span><br><span class="line">#define MAXVEX 100 /* 最大顶点数,应由用户定义 */</span><br><span class="line"></span><br><span class="line">typedef int Status;	/* Status是函数的类型,其值是函数结果状态代码,如OK等 */</span><br><span class="line">typedef char VertexType; /* 顶点类型应由用户定义 */</span><br><span class="line">typedef int EdgeType; /* 边上的权值类型应由用户定义 */</span><br><span class="line"></span><br><span class="line">typedef struct EdgeNode /* 边表结点  */</span><br><span class="line">&#123;</span><br><span class="line">	int adjvex;    /* 邻接点域,存储该顶点对应的下标 */</span><br><span class="line">	EdgeType info;		/* 用于存储权值,对于非网图可以不需要 */</span><br><span class="line">	struct EdgeNode *next; /* 链域,指向下一个邻接点 */</span><br><span class="line">&#125;EdgeNode;</span><br><span class="line"></span><br><span class="line">typedef struct VertexNode /* 顶点表结点 */</span><br><span class="line">&#123;</span><br><span class="line">	VertexType data; /* 顶点域,存储顶点信息 */</span><br><span class="line">	EdgeNode *firstedge;/* 边表头指针 */</span><br><span class="line">&#125;VertexNode, AdjList[MAXVEX];</span><br><span class="line"></span><br><span class="line">typedef struct</span><br><span class="line">&#123;</span><br><span class="line">	AdjList adjList; </span><br><span class="line">	int numNodes,numEdges; /* 图中当前顶点数和边数 */</span><br><span class="line">&#125;GraphAdjList;</span><br><span class="line"></span><br><span class="line">/* 建立图的邻接表结构 */</span><br><span class="line">void  CreateALGraph(GraphAdjList *G)</span><br><span class="line">&#123;</span><br><span class="line">	int i,j,k;</span><br><span class="line">	EdgeNode *e;</span><br><span class="line">	printf(&quot;输入顶点数和边数:\n&quot;);</span><br><span class="line">	scanf(&quot;%d,%d&quot;,&amp;G-&gt;numNodes,&amp;G-&gt;numEdges); /* 输入顶点数和边数 */</span><br><span class="line">	for(i = 0;i &lt; G-&gt;numNodes;i++) /* 读入顶点信息,建立顶点表 */</span><br><span class="line">	&#123;</span><br><span class="line">		scanf(&amp;G-&gt;adjList[i].data); 	/* 输入顶点信息 */</span><br><span class="line">		G-&gt;adjList[i].firstedge=NULL; 	/* 将边表置为空表 */</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	for(k = 0;k &lt; G-&gt;numEdges;k++)/* 建立边表 */</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;输入边(vi,vj)上的顶点序号:\n&quot;);</span><br><span class="line">		scanf(&quot;%d,%d&quot;,&amp;i,&amp;j); /* 输入边(vi,vj)上的顶点序号 */</span><br><span class="line">		e=(EdgeNode *)malloc(sizeof(EdgeNode)); /* 向内存申请空间,生成边表结点 */</span><br><span class="line">		e-&gt;adjvex=j;					/* 邻接序号为j */                         </span><br><span class="line">		e-&gt;next=G-&gt;adjList[i].firstedge;	/* 将e的指针指向当前顶点上指向的结点 */</span><br><span class="line">		G-&gt;adjList[i].firstedge=e;		/* 将当前顶点的指针指向e */               </span><br><span class="line">		</span><br><span class="line">		e=(EdgeNode *)malloc(sizeof(EdgeNode)); /* 向内存申请空间,生成边表结点 */</span><br><span class="line">		e-&gt;adjvex=i;					/* 邻接序号为i */                         </span><br><span class="line">		e-&gt;next=G-&gt;adjList[j].firstedge;	/* 将e的指针指向当前顶点上指向的结点 */</span><br><span class="line">		G-&gt;adjList[j].firstedge=e;		/* 将当前顶点的指针指向e */               </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(void)</span><br><span class="line">&#123;    </span><br><span class="line">	GraphAdjList G;    </span><br><span class="line">	CreateALGraph(&amp;G);</span><br><span class="line">	</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="2、图的遍历"><a href="#2、图的遍历" class="headerlink" title="2、图的遍历"></a>2、图的遍历</h2><p>与树的遍历一样，就图的一个顶点出发，访遍所有其余顶点且使每一个顶点仅被访问一次，这一过程就是图的遍历（BFS，DFS）</p>
+<h2 id="2-1、深度优先搜索DFS"><a href="#2-1、深度优先搜索DFS" class="headerlink" title="2.1、深度优先搜索DFS"></a>2.1、深度优先搜索DFS</h2><p>深度优先搜索可以是一个递归过程，有点像树的前序遍历。<br>从图中某个顶点V出发，访问此顶点，然后从V的未被访问的邻接点出发深度优先遍历图，直至图中所有和V有路径相同的顶点都被访问到。<br>如果是邻接矩阵,DFS实现如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">int visited[MAX];   //访问标志数组</span><br><span class="line"></span><br><span class="line">void DFS(MGraph G, int i)</span><br><span class="line">&#123;</span><br><span class="line">	int j;</span><br><span class="line">	visited[i] = TRUE;</span><br><span class="line">	printf(&quot;%c&quot; , G.vexs[i]);</span><br><span class="line">	for(j = 0; j&lt; G.numVertexes; j++)</span><br><span class="line">		if(G.arc[i][j] == 1 &amp;&amp; !visited[j])</span><br><span class="line">			DFS(G, j);   //这是一个递归调用</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 邻接矩阵的深度遍历操作</span><br><span class="line">void DFSTraverse(MGraph G)</span><br><span class="line">&#123;</span><br><span class="line">	int i;</span><br><span class="line">	for(i = 0; i &lt; G.numVertexes; i++)</span><br><span class="line">		visited[i] = FALSE;</span><br><span class="line">	for(i = 0; i &lt; G.numVertexes; i++)</span><br><span class="line">		if(!visited[i])</span><br><span class="line">			DFS(G,i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果是邻接表其实和邻接矩阵差不多：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">void DFS(GraphAdjList GL, int i)</span><br><span class="line">&#123;</span><br><span class="line">	EdgeNode *p;</span><br><span class="line">	visited[i] = TRUE;</span><br><span class="line">	printf(&quot;%c &quot;, GL-&gt;adjList[i].data);</span><br><span class="line">	p = GL-&gt;adjList[i].firstedge;</span><br><span class="line">	while(p)</span><br><span class="line">	&#123;</span><br><span class="line">		if(!visited[p-&gt;adjvex])</span><br><span class="line">			DFS(GL, p-&gt;adjvex);</span><br><span class="line">		p = p-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void DFSTraverse(GraphAdjList GL)</span><br><span class="line">&#123;</span><br><span class="line">	int i;</span><br><span class="line">	for(i = 0; i &lt; GL-&gt;numVertexes; i++)</span><br><span class="line">		visited[i] = FALSE;</span><br><span class="line">	for(i = 0; i &lt; GL-&gt;numVertexes; i++)</span><br><span class="line">	    if(!visited[i])</span><br><span class="line">	    	DFS(GL, i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以对比两者复杂度看出，对于n个顶点e条边，由于邻接矩阵必须要要搜索n<em>n的矩阵，复杂度为O（n</em>n); 邻接点复杂度为O(n+e);</p>
+<h2 id="2-2、广度优先搜索BFS"><a href="#2-2、广度优先搜索BFS" class="headerlink" title="2.2、广度优先搜索BFS"></a>2.2、广度优先搜索BFS</h2><p>如果深度优先搜索DFS像树的前序遍历，那么广度优先搜索BFS就有点像树的层序遍历。<br>如果把顶点直接连接的点看成第二层，依次类推，就有一个调整后的比较有层次的图了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">void BFSTraverse(MGraph G)</span><br><span class="line">&#123;</span><br><span class="line">    int i,j;</span><br><span class="line">    Queue Q;</span><br><span class="line">    for(i = 0; i &lt; G.numVertexes; i++)</span><br><span class="line">    	visited[i] = FALSE;</span><br><span class="line">    InitQueue(&amp;Q);</span><br><span class="line">    for(i = 0; i &lt; G.numVertexes; i++)</span><br><span class="line">    &#123;</span><br><span class="line">    	if(!visited[i])</span><br><span class="line">    	&#123;</span><br><span class="line">    		visited[i] = TRUE;</span><br><span class="line">    		printf(&quot;%c&quot;, G.vexes[i]);</span><br><span class="line">    		EnQueue(&amp;Q, i);</span><br><span class="line">    		while(!QueueEmpty(Q))</span><br><span class="line">    		&#123;</span><br><span class="line">    			DeQueue(&amp;Q, &amp;i); //出队列</span><br><span class="line">    			for(j = 0; j &lt; G.numVertexes; j++)</span><br><span class="line">    			&#123;</span><br><span class="line">    				if(G.arc[i][j]==1 &amp;&amp; !visited[j])</span><br><span class="line">    				&#123;</span><br><span class="line">    					visited[j] = TRUE;</span><br><span class="line">    					printf(&quot;%c&quot;, G.vexes[j]);</span><br><span class="line">    					EnQueue(&amp;Q, j);</span><br><span class="line">    				&#125;</span><br><span class="line">    			&#125;</span><br><span class="line">	    	&#125;</span><br><span class="line">  </span><br><span class="line">	    &#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>下面是邻接表的广度优先搜索<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">void BFSTraverse(GraphAdjList GL)</span><br><span class="line">&#123;</span><br><span class="line">	int i;</span><br><span class="line">	EdgeNode *p;</span><br><span class="line">	Queue Q;</span><br><span class="line">	for(i = 0; i &lt; GL-&gt;numVertexes; i++)</span><br><span class="line">		visited[i] = FALSE;</span><br><span class="line">	InitQueue(&amp;Q);</span><br><span class="line">	for(i = 0; i &lt; GL-&gt;numVertexes; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if(!visited[i])</span><br><span class="line">		&#123;</span><br><span class="line">			visited[i] = TRUE;</span><br><span class="line">			printf(&quot;%c&quot;, GL-&gt;adjList[i].data);</span><br><span class="line">			EnQueue(&amp;Q, i);</span><br><span class="line">			while(!QueueEmpty(Q))</span><br><span class="line">			&#123;</span><br><span class="line">				DeQueue(&amp;Q, &amp;i);</span><br><span class="line">				p = GL-&gt;adjList[i].firstedge;</span><br><span class="line">				while(p)</span><br><span class="line">				&#123;</span><br><span class="line">					if(!visited[p-&gt;adjvex])</span><br><span class="line">					&#123;</span><br><span class="line">						visited[p-&gt;adjvex] = TRUE;</span><br><span class="line">						printf(&quot;%c&quot;, GL-&gt;adjList[p-&gt;adjvex].data);</span><br><span class="line">						EnQueue(&amp;Q, p-&gt;adjvex);</span><br><span class="line">					&#125;</span><br><span class="line">					p = p-&gt;next;</span><br><span class="line">				&#125; </span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>对比DFS和BFS会发现其实两者的复杂度一样的，只是访问的顺序不一样了而已。两者没有什么优劣之分，只是在不同情况下需要考虑合适的方法。<br>深度优化适合目标明确，以找到目标为主要目的的情况；而广度优化适合在不断扩大遍历范围时找到相对最优解的情况。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/08/24/CPP/数据结构之图论基础/" data-id="ckfp7tbn60010fspl0opmzj1q" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/08/02/Leetcode/5-最长回文子串-C-中心扩展-暴力-md/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          [5. 最长回文子串] C + 中心扩展 + 暴力
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/08/24/CPP/数据结构之常见图论算法/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">数据结构之常见图论算法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h2 class="widget-title"><b>关于我</b></h2>
+    <div class="widget">
+ <front size="3"><b>邮箱</b>：liangzelang@gmail.com<br>
+ <b>现状</b>： 目前北京理工大学模式识别硕士在读，2018年毕业。个人喜欢图像处理、计算机视觉、机器学习等领域。更多以及<a href="http://cv.qiaobutang.com/r/5997e28c0cf202fca1a62686">个人简历</a></front>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">35</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Caffe/">Caffe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/">Markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV基础/">OpenCV基础</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ResNet/">ResNet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TLD/">TLD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VS2010/">VS2010</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c++</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/">ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图像处理/">图像处理</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/目标跟踪/">目标跟踪</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Caffe/" style="font-size: 10px;">Caffe</a> <a href="/tags/Linux/" style="font-size: 11.43px;">Linux</a> <a href="/tags/Markdown/" style="font-size: 10px;">Markdown</a> <a href="/tags/OpenCV/" style="font-size: 12.86px;">OpenCV</a> <a href="/tags/OpenCV基础/" style="font-size: 15.71px;">OpenCV基础</a> <a href="/tags/ResNet/" style="font-size: 10px;">ResNet</a> <a href="/tags/TLD/" style="font-size: 10px;">TLD</a> <a href="/tags/VS2010/" style="font-size: 10px;">VS2010</a> <a href="/tags/c/" style="font-size: 20px;">c++</a> <a href="/tags/leetcode/" style="font-size: 17.14px;">leetcode</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/图像处理/" style="font-size: 14.29px;">图像处理</a> <a href="/tags/数据结构与算法/" style="font-size: 18.57px;">数据结构与算法</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/目标跟踪/" style="font-size: 12.86px;">目标跟踪</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/30/Linux_shell/正则表达式/">正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/02/Leetcode/5-最长回文子串-C-中心扩展-暴力-md/">[5. 最长回文子串] C + 中心扩展 + 暴力</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/24/CPP/数据结构之图论基础/">数据结构之图论基础</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/24/CPP/数据结构之常见图论算法/">数据结构之常见图论算法</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/19/DeepLearning/caffe-finetuning/">Caffe ResNet50微调</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 liangzelang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+	<p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">主页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">个人</a>
+  
+</nav>
+    
+
+<script src="//ajax.useso.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

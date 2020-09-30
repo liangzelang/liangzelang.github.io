@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>OpenCV数据结构与基本绘图 | Zelang Liang</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="IplImage与Mat在最开始，OpenCV使用基于C语言接口构建，因此在较早版本的OpenCV中使用IplImage存储图像数据。这就造成了一定的问题，在调试了的时候，需要程序员手动release为IplImage分配的内存，不然可能造成内存泄漏。在OpenCV2.0以来，就引入了C++接口，也就产生了基于C++的Mat数据结构，没错，它是可以自动内存管理的，因此我们现在用的最多的就是Mat">
+<meta name="keywords" content="c++,OpenCV基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenCV数据结构与基本绘图">
+<meta property="og:url" content="http://newbird.cn/2017/03/28/OpenCV/OpenCV数据结构与基本绘图/index.html">
+<meta property="og:site_name" content="Zelang Liang">
+<meta property="og:description" content="IplImage与Mat在最开始，OpenCV使用基于C语言接口构建，因此在较早版本的OpenCV中使用IplImage存储图像数据。这就造成了一定的问题，在调试了的时候，需要程序员手动release为IplImage分配的内存，不然可能造成内存泄漏。在OpenCV2.0以来，就引入了C++接口，也就产生了基于C++的Mat数据结构，没错，它是可以自动内存管理的，因此我们现在用的最多的就是Mat">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://oapeb119y.bkt.clouddn.com/image/opencv/Mat%E8%BE%93%E5%87%BA%E9%A3%8E%E6%A0%BC.png">
+<meta property="og:updated_time" content="2020-09-30T09:34:19.065Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OpenCV数据结构与基本绘图">
+<meta name="twitter:description" content="IplImage与Mat在最开始，OpenCV使用基于C语言接口构建，因此在较早版本的OpenCV中使用IplImage存储图像数据。这就造成了一定的问题，在调试了的时候，需要程序员手动release为IplImage分配的内存，不然可能造成内存泄漏。在OpenCV2.0以来，就引入了C++接口，也就产生了基于C++的Mat数据结构，没错，它是可以自动内存管理的，因此我们现在用的最多的就是Mat">
+<meta name="twitter:image" content="http://oapeb119y.bkt.clouddn.com/image/opencv/Mat%E8%BE%93%E5%87%BA%E9%A3%8E%E6%A0%BC.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Zelang Liang" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zelang Liang</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">New Bird , New Beginning</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">主页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">个人</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://newbird.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-OpenCV/OpenCV数据结构与基本绘图" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/28/OpenCV/OpenCV数据结构与基本绘图/" class="article-date">
+  <time datetime="2017-03-28T14:54:20.000Z" itemprop="datePublished">2017-03-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      OpenCV数据结构与基本绘图
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li><p>IplImage与Mat<br>在最开始，OpenCV使用基于C语言接口构建，因此在较早版本的OpenCV中使用IplImage存储图像数据。这就造成了一定的问题，在调试了的时候，需要程序员手动release为IplImage分配的内存，不然可能造成内存泄漏。<br>在OpenCV2.0以来，就引入了C++接口，也就产生了基于C++的Mat数据结构，没错，它是可以自动内存管理的，因此我们现在用的最多的就是Mat数据结构了。Mat类很方便，不用手动分配内存、释放内存。<br>那么为什么IplImage还继续顽强存在呢，那就是因为大部分嵌入式系统只支持C语言.</p>
+</li>
+<li><p>Mat类 包含两个数据部分，一个部分是矩阵头（矩阵尺寸、存储方法、存储地址等），另一部分指向存储所有像素值得矩阵。</p>
+</li>
+</ol>
+<p>需要记住的是，大多时候复制Mat类，只是引用矩阵头，而不是复制整个像素矩阵，这将导致巨大的时间成本。因此，OpenCV采用引用计数机制，每个Mat对象都有独自的矩阵头，但是共享一个像素矩阵。常见的复制构造函数、赋值符号都是只复制矩阵头，而不是复制整个像素矩阵。<br><a id="more"></a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//以下三个Mat对象有不同的矩阵头，但是共享一个矩阵</span><br><span class="line">Mat A;   //创建矩阵头部分</span><br><span class="line">A = imread(const string &amp; filename, 1);  // 为矩阵开辟空间</span><br><span class="line">Mat B(A);  //采用复制构造函数</span><br><span class="line">Mat C = A;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>引用计数机制在上面的例子中有很好的说明，矩阵的引用次数为3，当Mat C的矩阵头被释放后，引用计数就减1，当引用次数为0时，矩阵空间就会被释放。</p>
+</li>
+<li><p>那么如果想复制整个矩阵，就需要使用clone()和copyTo()函数。</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Mat D = A.clone();</span><br><span class="line">Mat E;</span><br><span class="line">A.copyTo(E);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>简要小结<br>++ OpenCV函数中C++接口，图像的内存都自动分配、释放；<br>++ 复制构造函数和赋值运算符只复制矩阵头；<br>++ clone(),copyTo()函数可以复制矩阵。</li>
+</ul>
+<ol start="3">
+<li>Mat对象的创建和显式<br>Mat类型有多种创建方法，</li>
+</ol>
+<ul>
+<li>采用默认构造函数</li>
+<li>使用构造函数初始化</li>
+<li>为IplImage对象创建Mat信息头</li>
+<li>使用Create（）成员函数</li>
+<li>采用Matlab方式初始化</li>
+<li>采用逗号分隔符方式初始化</li>
+<li>为已存在的Mat对象创建新信息头<br>具体初始化代码如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">  //方法1：使用Mat（）构造函数</span><br><span class="line">Mat M(2, 2, CV_8UC3, Scalar(0,0,255));</span><br><span class="line">cout &lt;&lt; &quot;M = &quot; &lt;&lt; endl &lt;&lt; &quot; &quot; &lt;&lt; M &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">//way2 没有太懂，由于这是多维的数组，使用cout出错</span><br><span class="line">int sz[3] = &#123;2, 2, 2&#125;;</span><br><span class="line">Mat L(3, sz, CV_8UC3, Scalar::all(0));</span><br><span class="line"></span><br><span class="line">//way3 为IplImage创建信息头</span><br><span class="line">IplImage* img = cvLoadImage(&quot;D:\\C++程序联系文件夹（可选择性删除）\\OpenCV_Exercise\\learn.jpg&quot;,1);</span><br><span class="line">Mat mtx(img);</span><br><span class="line"></span><br><span class="line">//way4 使用Create()函数</span><br><span class="line">Mat K;</span><br><span class="line">K.create(4,4,CV_8UC(2));</span><br><span class="line">cout &lt;&lt; &quot;K = &quot; &lt;&lt; endl &lt;&lt; &quot; &quot; &lt;&lt; K &lt;&lt; endl &lt;&lt; endl;</span><br><span class="line">//way5 Matlab大法好</span><br><span class="line">Mat E = Mat::eye(4,4,CV_64F);</span><br><span class="line">cout &lt;&lt; &quot;E = &quot; &lt;&lt; endl &lt;&lt; &quot; &quot; &lt;&lt; E &lt;&lt; endl &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">Mat O = Mat::ones(2,2,CV_32F);</span><br><span class="line">cout &lt;&lt; &quot;O = &quot; &lt;&lt; endl &lt;&lt; &quot; &quot; &lt;&lt; O &lt;&lt; endl &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">Mat Z = Mat::zeros(3,3,CV_8UC1);</span><br><span class="line">cout &lt;&lt; &quot;Z = &quot; &lt;&lt; endl &lt;&lt; &quot; &quot; &lt;&lt; Z &lt;&lt; endl &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">//way6 </span><br><span class="line">Mat C = (Mat_&lt;double&gt;(3,3) &lt;&lt; 0, -1, 2, -1, 5, -1, 0, -1, 0);</span><br><span class="line">cout &lt;&lt; &quot;C = &quot; &lt;&lt; endl &lt;&lt; &quot; &quot; &lt;&lt; C &lt;&lt; endl &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">//way7 为已存在的对象创建新的信息头</span><br><span class="line">Mat RowClone = C.row(0).clone();</span><br><span class="line">cout &lt;&lt; &quot;RowClone = &quot; &lt;&lt; endl &lt;&lt; &quot; &quot; &lt;&lt; RowClone &lt;&lt; endl &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>Mat类型的格式化输出方法，</p>
+<ul>
+<li>OpenCV默认方式</li>
+<li>Python输出风格</li>
+<li>逗号分隔风格（CSV）</li>
+<li>Numpy风格</li>
+<li>C语言风格<br>例程如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Mat r = Mat(3, 3, CV_8UC3);</span><br><span class="line">randu(r, Scalar::all(0), Scalar::all(255));</span><br><span class="line">//OpenCV格式化输出</span><br><span class="line">//way1 Opencv默认输出格式</span><br><span class="line">cout &lt;&lt; &quot;r 默认输出格式: &quot; &lt;&lt; endl &lt;&lt; r &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">//way2 python风格思密达</span><br><span class="line">cout &lt;&lt; &quot;r Python风格: &quot; &lt;&lt; endl &lt;&lt; format(r, &quot;python&quot;) &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">//way3 CSV风格</span><br><span class="line">cout &lt;&lt; &quot;r CSV风格: &quot;  &lt;&lt; endl &lt;&lt; format(r, &quot;csv&quot;) &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">//way4 Numpy风格</span><br><span class="line">cout &lt;&lt; &quot;r Numpy风格: &quot; &lt;&lt; endl &lt;&lt; format(r, &quot;numpy&quot;) &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">//way5 C style</span><br><span class="line">cout &lt;&lt; &quot;r C style: &quot; &lt;&lt; endl &lt;&lt; format(r, &quot;C&quot;) &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="http://oapeb119y.bkt.clouddn.com/image/opencv/Mat%E8%BE%93%E5%87%BA%E9%A3%8E%E6%A0%BC.png" alt="输出格式"></p>
+<ol start="4">
+<li>OpenCV中常用基于图像的数据结构与函数介绍</li>
+</ol>
+<ul>
+<li>点的表示：Point 类<br>二维坐标系下的点<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Point2f p(6,2);</span><br><span class="line">cout &lt;&lt; &quot;[二维点] p = &quot; &lt;&lt; p &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">Point3f l(1,2,3);</span><br><span class="line">cout &lt;&lt; &quot;[三维点] l = &quot; &lt;&lt; l &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">vector&lt;float&gt; v;</span><br><span class="line">v.push_back(3);</span><br><span class="line">v.push_back(5);</span><br><span class="line">v.push_back(4);</span><br><span class="line">cout &lt;&lt; &quot;[基于Mat的Vector] v = &quot; &lt;&lt; Mat(v) &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">vector&lt;Point2f&gt; points(20);</span><br><span class="line">for(size_t i = 0; i &lt; points.size(); ++i)</span><br><span class="line">&#123;</span><br><span class="line">	points[i] = Point2f((float)(i*5),(float)(i%7));</span><br><span class="line">&#125;</span><br><span class="line">cout &lt;&lt; &quot;[二维点向量] points = &quot; &lt;&lt; points &lt;&lt; &quot;;&quot;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>Point2f、Point3f等等其实都是一个类模板Point_<typename t>.具体定义core.hpp中。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">template&lt;typename _Tp&gt; class Point_</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    typedef _Tp value_type;</span><br><span class="line"></span><br><span class="line">    // various constructors</span><br><span class="line">    Point_();</span><br><span class="line">    Point_(_Tp _x, _Tp _y);</span><br><span class="line">    Point_(const Point_&amp; pt);</span><br><span class="line">    Point_(const CvPoint&amp; pt);</span><br><span class="line">    Point_(const CvPoint2D32f&amp; pt);</span><br><span class="line">    Point_(const Size_&lt;_Tp&gt;&amp; sz);</span><br><span class="line">    Point_(const Vec&lt;_Tp, 2&gt;&amp; v);</span><br><span class="line"></span><br><span class="line">    Point_&amp; operator = (const Point_&amp; pt);</span><br><span class="line">    //! conversion to another data type</span><br><span class="line">    template&lt;typename _Tp2&gt; operator Point_&lt;_Tp2&gt;() const;</span><br><span class="line"></span><br><span class="line">    //! conversion to the old-style C structures</span><br><span class="line">    operator CvPoint() const;</span><br><span class="line">    operator CvPoint2D32f() const;</span><br><span class="line">    operator Vec&lt;_Tp, 2&gt;() const;</span><br><span class="line"></span><br><span class="line">    //! dot product</span><br><span class="line">    _Tp dot(const Point_&amp; pt) const;</span><br><span class="line">    //! dot product computed in double-precision arithmetics</span><br><span class="line">    double ddot(const Point_&amp; pt) const;</span><br><span class="line">    //! cross-product</span><br><span class="line">    double cross(const Point_&amp; pt) const;</span><br><span class="line">    //! checks whether the point is inside the specified rectangle</span><br><span class="line">    bool inside(const Rect_&lt;_Tp&gt;&amp; r) const;</span><br><span class="line"></span><br><span class="line">    _Tp x, y; //&lt; the point coordinates</span><br><span class="line">&#125;; </span><br><span class="line"></span><br><span class="line">typedef Point_&lt;int&gt; Point2i;</span><br><span class="line">typedef Point2i Point;</span><br><span class="line">typedef Point_&lt;float&gt; Point2f;</span><br></pre></td></tr></table></figure></typename></p>
+<p>从这个二维点的类模板可以看出Point_<float> Point2f 都等价。</float></p>
+<ul>
+<li><p>颜色的表示： Scalar 类<br>这个也是OpenCV中实现的类模板，其实可以简单的看成包含4个元素的Vector,不过一般我们都是用RGB表示颜色，因此只用到三个元素。<b>需要注意的是，OpenCV默认的图片通道存储顺序不是我们熟悉的RGB，而是BGR。&lt;\b&gt;下面为Scalar模板类的源码，位于core.hpp中。</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">template&lt;typename _Tp&gt; class Scalar_ : public Vec&lt;_Tp, 4&gt;</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    //! various constructors</span><br><span class="line">    Scalar_();</span><br><span class="line">    Scalar_(_Tp v0, _Tp v1, _Tp v2=0, _Tp v3=0);</span><br><span class="line">    Scalar_(const CvScalar&amp; s);</span><br><span class="line">    Scalar_(_Tp v0);</span><br><span class="line"></span><br><span class="line">    //! returns a scalar with all elements set to v0</span><br><span class="line">    static Scalar_&lt;_Tp&gt; all(_Tp v0);</span><br><span class="line">    //! conversion to the old-style CvScalar</span><br><span class="line">    operator CvScalar() const;</span><br><span class="line"></span><br><span class="line">    //! conversion to another data type</span><br><span class="line">    template&lt;typename T2&gt; operator Scalar_&lt;T2&gt;() const;</span><br><span class="line"></span><br><span class="line">    //! per-element product</span><br><span class="line">    Scalar_&lt;_Tp&gt; mul(const Scalar_&lt;_Tp&gt;&amp; t, double scale=1 ) const;</span><br><span class="line"></span><br><span class="line">    // returns (v0, -v1, -v2, -v3)</span><br><span class="line">    Scalar_&lt;_Tp&gt; conj() const;</span><br><span class="line"></span><br><span class="line">    // returns true iff v1 == v2 == v3 == 0</span><br><span class="line">    bool isReal() const;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">typedef Scalar_&lt;double&gt; Scalar;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>尺寸的表示： Size 类<br>与以上的基本都一样，也是一个类模板，此处不详细描述。常用：’ Size(5, 6) // width 5, height 6 ‘.</p>
+</li>
+<li>矩阵的表示： Rect 类<br>同上。</li>
+<li>颜色的空间转换： cvtColor() 函数<br><code>void cvtColor(InputArray src, OutputArray dst, int code, int dstCn = 0);</code><br>InputArray src：输入图像<br>OutputArray dst: 输出图像<br>int code: 颜色空间转换标识符，是一堆枚举值，具体见<code>.../imgproc/types_c.h</code><br>int dstCn: 目标图像的通道数，默认值为0，取原图像的通道数</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/03/28/OpenCV/OpenCV数据结构与基本绘图/" data-id="ckfp7tbmm000mfspltywfjybl" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenCV基础/">OpenCV基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/28/OpenCV/core组件进阶/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          core组件进阶
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/12/CPP/虚析构函数的作用/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">虚析构函数的作用</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h2 class="widget-title"><b>关于我</b></h2>
+    <div class="widget">
+ <front size="3"><b>邮箱</b>：liangzelang@gmail.com<br>
+ <b>现状</b>： 目前北京理工大学模式识别硕士在读，2018年毕业。个人喜欢图像处理、计算机视觉、机器学习等领域。更多以及<a href="http://cv.qiaobutang.com/r/5997e28c0cf202fca1a62686">个人简历</a></front>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">35</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Caffe/">Caffe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/">Markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV基础/">OpenCV基础</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ResNet/">ResNet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TLD/">TLD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VS2010/">VS2010</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c++</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/">ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图像处理/">图像处理</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/目标跟踪/">目标跟踪</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Caffe/" style="font-size: 10px;">Caffe</a> <a href="/tags/Linux/" style="font-size: 11.43px;">Linux</a> <a href="/tags/Markdown/" style="font-size: 10px;">Markdown</a> <a href="/tags/OpenCV/" style="font-size: 12.86px;">OpenCV</a> <a href="/tags/OpenCV基础/" style="font-size: 15.71px;">OpenCV基础</a> <a href="/tags/ResNet/" style="font-size: 10px;">ResNet</a> <a href="/tags/TLD/" style="font-size: 10px;">TLD</a> <a href="/tags/VS2010/" style="font-size: 10px;">VS2010</a> <a href="/tags/c/" style="font-size: 20px;">c++</a> <a href="/tags/leetcode/" style="font-size: 17.14px;">leetcode</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/图像处理/" style="font-size: 14.29px;">图像处理</a> <a href="/tags/数据结构与算法/" style="font-size: 18.57px;">数据结构与算法</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/目标跟踪/" style="font-size: 12.86px;">目标跟踪</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/30/Linux_shell/正则表达式/">正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/02/Leetcode/5-最长回文子串-C-中心扩展-暴力-md/">[5. 最长回文子串] C + 中心扩展 + 暴力</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/24/CPP/数据结构之图论基础/">数据结构之图论基础</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/24/CPP/数据结构之常见图论算法/">数据结构之常见图论算法</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/19/DeepLearning/caffe-finetuning/">Caffe ResNet50微调</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 liangzelang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+	<p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">主页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">个人</a>
+  
+</nav>
+    
+
+<script src="//ajax.useso.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

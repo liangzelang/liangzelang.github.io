@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>目标跟踪算法--模板匹配 | Zelang Liang</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="目前目标跟踪在机器视觉领域发展较快，有很多跟踪方法，例如传统的模板匹配、camshift、meanshift等算法。最近在疯狂学习opencv中，所以从最简单的模板匹配实现开始。  为了提高兴趣，做一个人脸检测与跟踪算法，检测部分算法见【人脸检测】。这里采用鼠标选取跟踪的目标，在利用模板匹配的方式进行目标跟踪。">
+<meta name="keywords" content="c++,OpenCV基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="目标跟踪算法--模板匹配">
+<meta property="og:url" content="http://newbird.cn/2017/06/14/OpenCV/目标检测算法/index.html">
+<meta property="og:site_name" content="Zelang Liang">
+<meta property="og:description" content="目前目标跟踪在机器视觉领域发展较快，有很多跟踪方法，例如传统的模板匹配、camshift、meanshift等算法。最近在疯狂学习opencv中，所以从最简单的模板匹配实现开始。  为了提高兴趣，做一个人脸检测与跟踪算法，检测部分算法见【人脸检测】。这里采用鼠标选取跟踪的目标，在利用模板匹配的方式进行目标跟踪。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-09-30T09:34:19.069Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="目标跟踪算法--模板匹配">
+<meta name="twitter:description" content="目前目标跟踪在机器视觉领域发展较快，有很多跟踪方法，例如传统的模板匹配、camshift、meanshift等算法。最近在疯狂学习opencv中，所以从最简单的模板匹配实现开始。  为了提高兴趣，做一个人脸检测与跟踪算法，检测部分算法见【人脸检测】。这里采用鼠标选取跟踪的目标，在利用模板匹配的方式进行目标跟踪。">
+  
+    <link rel="alternate" href="/atom.xml" title="Zelang Liang" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zelang Liang</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">New Bird , New Beginning</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">主页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">个人</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://newbird.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-OpenCV/目标检测算法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/14/OpenCV/目标检测算法/" class="article-date">
+  <time datetime="2017-06-14T14:48:49.000Z" itemprop="datePublished">2017-06-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      目标跟踪算法--模板匹配
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p>目前目标跟踪在机器视觉领域发展较快，有很多跟踪方法，例如传统的模板匹配、camshift、meanshift等算法。最近在疯狂学习opencv中，所以从最简单的模板匹配实现开始。</p>
+</li>
+<li><p>为了提高兴趣，做一个人脸检测与跟踪算法，检测部分算法见【人脸检测】。这里采用鼠标选取跟踪的目标，在利用模板匹配的方式进行目标跟踪。</p>
+<a id="more"></a></li>
+<li>首先效果如视频所示：</li>
+</ul>
+<div align="center"><br><iframe height="360" width="640" src="http://yuntv.letv.com/bcloud.html?uu=4ubiflz0c7&vu=769bb4f9d4&auto_play=1&width=640&height=360&lang=zh_CN" frameborder="0" allowfullscreen><br></iframe><br></div>
+
+
+<h1 id="模板匹配"><a href="#模板匹配" class="headerlink" title="模板匹配"></a>模板匹配</h1><h2 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h2><p>模板匹配就是在一幅图像中寻找与给定模板最相似的区域的技术。大致步骤就是：</p>
+<ol>
+<li>给定模板，给定图像，</li>
+<li>计算初始位置与模板匹配度（有很多计算方法），</li>
+<li>滑动窗口重复步骤2，直到整副图像搜索计算完成，</li>
+<li>根据采用的相似度计算方法，找到相似度最高的位置，标识为新的目标位置。</li>
+<li>步骤1</li>
+</ol>
+<ul>
+<li>当然，从以上步骤可以看出如果每一次找寻与模板匹配的目标位置都要搜索整张图像，那么计算量将非常大，因此需要改进一下，因为目标移动速度没有那么快，所以我们滑动窗口搜索的区域只搜索以上一个目标位置为中心3*3的区域，这样计算量就小很多。<h2 id="opencv相关函数"><a href="#opencv相关函数" class="headerlink" title="opencv相关函数"></a>opencv相关函数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1. matchTemplate(InputArray image, InputArray temp1, outputArray result, int method);</span><br><span class="line">参数：</span><br><span class="line">InputArray image : 输入图像</span><br><span class="line">InputArray temp1 ： 模板 </span><br><span class="line">outputArray result ：匹配结果</span><br><span class="line">method ：匹配方法（有很多种，见匹配原理）</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这个函数就是根据参数进行模板匹配，返回整个匹配区域的匹配结果，根据这个结果，利用minMaxLoc函数可以找到匹配度最高的位置。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">2. void minMaxLoc(InputArray src, double* minVal,double* maxVal=0, Point* minLoc=0, Point* maxLoc=0, InputArray mask=noArray());</span><br><span class="line">参数：</span><br><span class="line">InputArray src ： 输入单通道数据</span><br><span class="line">double* minVal ： 返回最小值指针</span><br><span class="line">double* maxVal=0 ： 返回最大值指针</span><br><span class="line">Point* minLoc=0 ： 返回最小值位置指针</span><br><span class="line">Point* maxLoc=0 ： 返回最大值位置指针</span><br><span class="line">InputArray mask=noArray() ： 掩模</span><br></pre></td></tr></table></figure></p>
+<p>这个函数就是找到一个阵列数据中的最大值或者最小值。。。</p>
+<h2 id="匹配原理"><a href="#匹配原理" class="headerlink" title="匹配原理"></a>匹配原理</h2><ol>
+<li>平方差匹配法 method = TM_SQDIFF<br>利用被搜索位置和模板的平方差进行匹配，匹配度最高时结果为0：</li>
+<li>归一化平方差匹配法 method = TM_SQDIFF_NORMED</li>
+<li>相关匹配法 method = TM_CCORR</li>
+<li>归一化相关匹配法 method = TM_CCORR_NORMED</li>
+<li>相关系数匹配法 method = TM_CCOEFF</li>
+<li>归一化相关系数匹配法 method = TM_CCOEFF_NORMED</li>
+</ol>
+<h2 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h2><p>具体函数和原理都搞定了，那么实现来吧。<br>具体实现代码如下图：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;opencv2\opencv.hpp&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">using namespace cv;</span><br><span class="line"></span><br><span class="line">//全局变量</span><br><span class="line">bool drawing_box = false;</span><br><span class="line">bool gotModel = false;</span><br><span class="line">Rect box;</span><br><span class="line"></span><br><span class="line">//鼠标回调函数</span><br><span class="line">void on_Mouse(int event, int x, int y, int flags, void * param)</span><br><span class="line">&#123;</span><br><span class="line">	switch(event)</span><br><span class="line">	&#123;</span><br><span class="line">	case CV_EVENT_MOUSEMOVE:</span><br><span class="line">		if(drawing_box)</span><br><span class="line">		&#123;</span><br><span class="line">			box.width = x - box.x;</span><br><span class="line">			box.height = y - box.y;</span><br><span class="line">		&#125;</span><br><span class="line">		break;</span><br><span class="line">	case CV_EVENT_LBUTTONDOWN:</span><br><span class="line">		drawing_box = true;</span><br><span class="line">		box = Rect(x,y,0,0);</span><br><span class="line">		break;</span><br><span class="line">	case CV_EVENT_LBUTTONUP:</span><br><span class="line">		drawing_box = false;</span><br><span class="line">		if(box.width &lt; 0)</span><br><span class="line">		&#123;</span><br><span class="line">			box.x += box.width;</span><br><span class="line">			box.width *= -1;</span><br><span class="line">		&#125;</span><br><span class="line">		if(box.height &lt; 0)</span><br><span class="line">		&#123;</span><br><span class="line">			box.y += box.height;</span><br><span class="line">			box.height *= -1;</span><br><span class="line">		&#125;</span><br><span class="line">		gotModel = true;</span><br><span class="line">		break;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 模板匹配</span><br><span class="line">// Mat frame : 需要跟踪的图像</span><br><span class="line">// Mat &amp; model : 需要跟踪的模板，可以更新的</span><br><span class="line">// Rect &amp; trackBox: 得到的结果</span><br><span class="line">void tracking(Mat frame, Mat &amp; model, Rect &amp; trackBox)   </span><br><span class="line">&#123;</span><br><span class="line">	Mat graySrc;</span><br><span class="line">	cvtColor(frame, graySrc, CV_RGB2GRAY);</span><br><span class="line">	Rect searchWindow;  //设定目标搜索范围为3*3的范围</span><br><span class="line">	searchWindow.width = trackBox.width * 3;  </span><br><span class="line">    searchWindow.height = trackBox.height * 3;  </span><br><span class="line">    searchWindow.x = trackBox.x + trackBox.width * 0.5 - searchWindow.width * 0.5;  </span><br><span class="line">    searchWindow.y = trackBox.y + trackBox.height * 0.5 - searchWindow.height * 0.5;  </span><br><span class="line">    searchWindow &amp;= Rect(0, 0, frame.cols, frame.rows);  </span><br><span class="line"></span><br><span class="line">	Mat similarity;</span><br><span class="line">	matchTemplate(graySrc(searchWindow), model, similarity, CV_TM_CCOEFF_NORMED);  //采用matchTemplate函数</span><br><span class="line"></span><br><span class="line">	double mag_r;</span><br><span class="line">	Point point;</span><br><span class="line">	minMaxLoc(similarity, 0, &amp;mag_r, 0, &amp;point);  //因为我们采用的是归一化相关匹配法，匹配程度越高，值越大，采用minMaxLoc得到最大值及位置</span><br><span class="line">	trackBox.x = point.x + searchWindow.x;  // 更新目标位置</span><br><span class="line">	trackBox.y = point.y + searchWindow.y;</span><br><span class="line">	model = graySrc(trackBox);	// 更新模板 </span><br><span class="line">&#125;</span><br><span class="line">// 主函数</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	VideoCapture capture;</span><br><span class="line">	VideoWriter outputVideo;	  </span><br><span class="line">	bool fromfile = false;</span><br><span class="line">	Mat frame, model;</span><br><span class="line">	capture.open(0);  </span><br><span class="line">	if(!capture.isOpened())</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; &quot;Capture device failed to open!&quot; &lt;&lt; endl;</span><br><span class="line">		return -1;</span><br><span class="line">	&#125;</span><br><span class="line">	namedWindow(&quot;TrackByModel&quot;, CV_WINDOW_AUTOSIZE);</span><br><span class="line">	setMouseCallback(&quot;TrackByModel&quot;, on_Mouse, NULL);	</span><br><span class="line">	capture &gt;&gt; frame;</span><br><span class="line">	while(!gotModel)</span><br><span class="line">	&#123; </span><br><span class="line">		if(!fromfile)</span><br><span class="line">			capture &gt;&gt; frame;</span><br><span class="line"></span><br><span class="line">		rectangle(frame,box, Scalar(0,0,255),3);</span><br><span class="line"></span><br><span class="line">		imshow(&quot;TrackByModel&quot;, frame);</span><br><span class="line">		if(waitKey(27) == &apos;q&apos;)</span><br><span class="line">			return 1;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//  如果选择了跟踪模板</span><br><span class="line">    cvSetMouseCallback(&quot;Tracker&quot;, NULL, NULL );  //Remove callback  	</span><br><span class="line">	Mat grayImg; </span><br><span class="line">	cvtColor(frame, grayImg, CV_RGB2GRAY);</span><br><span class="line">	model = grayImg(box);   // 设置鼠标选中的方框为ROI</span><br><span class="line">	int  frameCount = 0;</span><br><span class="line">	outputVideo.open(   //初始化视频输出，这个调试用的，不用看这个</span><br><span class="line">		&quot;my_video4.avi&quot;, //输出文件名  </span><br><span class="line">		CV_FOURCC(&apos;D&apos;,&apos;I&apos;,&apos;V&apos;,&apos;X&apos;), // MPEG-4 编码  </span><br><span class="line">		30.0, // 帧率 (FPS)  </span><br><span class="line">		frame.size(), // 单帧图片分辨率为 640x480  </span><br><span class="line">		true // 只输入彩色图 </span><br><span class="line">		);</span><br><span class="line">	if(!outputVideo.isOpened())</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; &quot;OutputVedio device failed to open!\n&quot; &lt;&lt; endl;</span><br><span class="line">		return -1;</span><br><span class="line">	&#125;</span><br><span class="line">	while(1)</span><br><span class="line">	&#123;</span><br><span class="line">		capture &gt;&gt; frame;</span><br><span class="line">		if( frame.empty())</span><br><span class="line">			return -1;</span><br><span class="line">		double t = (double)getTickCount();</span><br><span class="line">		frameCount++;</span><br><span class="line">		tracking(frame, model, box);</span><br><span class="line">		stringstream buf;  </span><br><span class="line">        buf &lt;&lt; frameCount;  </span><br><span class="line">        string num = buf.str();  </span><br><span class="line">		putText(frame, num, Point(20,20), FONT_HERSHEY_SIMPLEX, 1,Scalar(0,0,255),3);</span><br><span class="line">		rectangle(frame,box, Scalar(0,0,255),3);</span><br><span class="line">		imshow(&quot;TrackByModel&quot;, frame);</span><br><span class="line">		outputVideo &lt;&lt; frame;</span><br><span class="line">		t = (double)cvGetTickCount() - t;  </span><br><span class="line">        cout &lt;&lt; &quot;cost time: &quot; &lt;&lt; t / ((double)cvGetTickFrequency()*1000.) &lt;&lt; endl;  </span><br><span class="line">		if(waitKey(1) ==27)</span><br><span class="line">			break;		</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/06/14/OpenCV/目标检测算法/" data-id="ckfp7tbmn000ofsplo6ewrhe7" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenCV基础/">OpenCV基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/06/14/Summary/Markdown用法总结/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Markdown用法总结
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/06/01/CPP/智能指针/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">智能指针</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h2 class="widget-title"><b>关于我</b></h2>
+    <div class="widget">
+ <front size="3"><b>邮箱</b>：liangzelang@gmail.com<br>
+ <b>现状</b>： 目前北京理工大学模式识别硕士在读，2018年毕业。个人喜欢图像处理、计算机视觉、机器学习等领域。更多以及<a href="http://cv.qiaobutang.com/r/5997e28c0cf202fca1a62686">个人简历</a></front>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">35</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Caffe/">Caffe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/">Markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV基础/">OpenCV基础</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ResNet/">ResNet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TLD/">TLD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VS2010/">VS2010</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c++</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/">ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图像处理/">图像处理</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/目标跟踪/">目标跟踪</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Caffe/" style="font-size: 10px;">Caffe</a> <a href="/tags/Linux/" style="font-size: 11.43px;">Linux</a> <a href="/tags/Markdown/" style="font-size: 10px;">Markdown</a> <a href="/tags/OpenCV/" style="font-size: 12.86px;">OpenCV</a> <a href="/tags/OpenCV基础/" style="font-size: 15.71px;">OpenCV基础</a> <a href="/tags/ResNet/" style="font-size: 10px;">ResNet</a> <a href="/tags/TLD/" style="font-size: 10px;">TLD</a> <a href="/tags/VS2010/" style="font-size: 10px;">VS2010</a> <a href="/tags/c/" style="font-size: 20px;">c++</a> <a href="/tags/leetcode/" style="font-size: 17.14px;">leetcode</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/图像处理/" style="font-size: 14.29px;">图像处理</a> <a href="/tags/数据结构与算法/" style="font-size: 18.57px;">数据结构与算法</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/目标跟踪/" style="font-size: 12.86px;">目标跟踪</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/30/Linux_shell/正则表达式/">正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/02/Leetcode/5-最长回文子串-C-中心扩展-暴力-md/">[5. 最长回文子串] C + 中心扩展 + 暴力</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/24/CPP/数据结构之图论基础/">数据结构之图论基础</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/24/CPP/数据结构之常见图论算法/">数据结构之常见图论算法</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/19/DeepLearning/caffe-finetuning/">Caffe ResNet50微调</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 liangzelang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+	<p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">主页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">个人</a>
+  
+</nav>
+    
+
+<script src="//ajax.useso.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

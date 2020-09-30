@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>VS2010+OpenCV2.4.10的安装与配置 | Zelang Liang</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="由于本人最近要做图像处理的一些工作，因此将相应的流程记录备份，方便自己，也为他人提供一个思路吧。平台操作系统： Win7 32位 旗舰版 1、VS2010的安装直接点击 AutoRun.exe或者Setup.exe按照提示一步步安装即可。需要选择安装那些模块，按自己的开发需要选择，如果实在不懂，全部安装。 2、OpenCV的安装我用的是OpenCV2.4.10，安装非常简单。只要选择安装位置就可以">
+<meta name="keywords" content="OpenCV基础,VS2010">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VS2010+OpenCV2.4.10的安装与配置">
+<meta property="og:url" content="http://newbird.cn/2016/09/25/OpenCV/VS2010+OpenCV2.4.10的安装与配置/index.html">
+<meta property="og:site_name" content="Zelang Liang">
+<meta property="og:description" content="由于本人最近要做图像处理的一些工作，因此将相应的流程记录备份，方便自己，也为他人提供一个思路吧。平台操作系统： Win7 32位 旗舰版 1、VS2010的安装直接点击 AutoRun.exe或者Setup.exe按照提示一步步安装即可。需要选择安装那些模块，按自己的开发需要选择，如果实在不懂，全部安装。 2、OpenCV的安装我用的是OpenCV2.4.10，安装非常简单。只要选择安装位置就可以">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://oapeb119y.bkt.clouddn.com/1.png">
+<meta property="og:image" content="http://oapeb119y.bkt.clouddn.com/2.png">
+<meta property="og:image" content="http://oapeb119y.bkt.clouddn.com/3.png">
+<meta property="og:image" content="http://oapeb119y.bkt.clouddn.com/4.png">
+<meta property="og:image" content="http://oapeb119y.bkt.clouddn.com/5.png">
+<meta property="og:image" content="http://oapeb119y.bkt.clouddn.com/6.png">
+<meta property="og:image" content="http://oapeb119y.bkt.clouddn.com/7.png">
+<meta property="og:image" content="http://oapeb119y.bkt.clouddn.com/8.png">
+<meta property="og:image" content="http://oapeb119y.bkt.clouddn.com/9.png">
+<meta property="og:image" content="http://oapeb119y.bkt.clouddn.com/10.png">
+<meta property="og:image" content="http://oapeb119y.bkt.clouddn.com/11.png">
+<meta property="og:image" content="http://oapeb119y.bkt.clouddn.com/12.png">
+<meta property="og:updated_time" content="2020-09-30T09:34:19.065Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="VS2010+OpenCV2.4.10的安装与配置">
+<meta name="twitter:description" content="由于本人最近要做图像处理的一些工作，因此将相应的流程记录备份，方便自己，也为他人提供一个思路吧。平台操作系统： Win7 32位 旗舰版 1、VS2010的安装直接点击 AutoRun.exe或者Setup.exe按照提示一步步安装即可。需要选择安装那些模块，按自己的开发需要选择，如果实在不懂，全部安装。 2、OpenCV的安装我用的是OpenCV2.4.10，安装非常简单。只要选择安装位置就可以">
+<meta name="twitter:image" content="http://oapeb119y.bkt.clouddn.com/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Zelang Liang" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zelang Liang</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">New Bird , New Beginning</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">主页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">个人</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://newbird.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-OpenCV/VS2010+OpenCV2.4.10的安装与配置" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/09/25/OpenCV/VS2010+OpenCV2.4.10的安装与配置/" class="article-date">
+  <time datetime="2016-09-24T22:56:32.000Z" itemprop="datePublished">2016-09-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      VS2010+OpenCV2.4.10的安装与配置
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>由于本人最近要做图像处理的一些工作，因此将相应的流程记录备份，方便自己，也为他人提供一个思路吧。<br><br>平台操作系统： Win7 32位 旗舰版<br></p>
+<h2 id="1、VS2010的安装"><a href="#1、VS2010的安装" class="headerlink" title="1、VS2010的安装"></a>1、VS2010的安装</h2><p>直接点击 AutoRun.exe或者Setup.exe按照提示一步步安装即可。需要选择安装那些模块，按自己的开发需要选择，如果实在不懂，全部安装。<br></p>
+<h2 id="2、OpenCV的安装"><a href="#2、OpenCV的安装" class="headerlink" title="2、OpenCV的安装"></a>2、OpenCV的安装</h2><p>我用的是OpenCV2.4.10，安装非常简单。只要选择安装位置就可以自动完成，如图1。需要记住该安装地址（本文假设安装在D盘根目录下 D:\）。<br><img src="http://oapeb119y.bkt.clouddn.com/1.png" alt="图1"><br><img src="http://oapeb119y.bkt.clouddn.com/2.png" alt="图2"></p>
+<h2 id="3、OpenCV的配置"><a href="#3、OpenCV的配置" class="headerlink" title="3、OpenCV的配置"></a>3、OpenCV的配置</h2><a id="more"></a>
+<h3 id="3-1、系统环境变量的配置"><a href="#3-1、系统环境变量的配置" class="headerlink" title="3.1、系统环境变量的配置"></a>3.1、系统环境变量的配置</h3><p>OpenCV其实就是开源视觉库，要让开发环境找到并使用这个库，需要将OpenCV的路径添加到系统的PATH环境变量。具体方法：<b>我的电脑——&gt;属性——&gt;高级——&gt;环境变量——PATH变量<b><br><br>编辑PATH环境变量，在最后加入 Opencv的路径(本文假设安装在D:\下面，需要根据自己安装路径更改)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">;D:\opencv\build\x86\vc10\bin</span><br></pre></td></tr></table></figure></b></b></p>
+<p><b>不要遗忘分号 ；<b></b></b></p>
+<h2 id="3-2、VS2010工程的相关配置"><a href="#3-2、VS2010工程的相关配置" class="headerlink" title="3.2、VS2010工程的相关配置"></a>3.2、VS2010工程的相关配置</h2><p>工程要使用OpenCV库，就需要在工程中把库的相关路径包含进去。<br>有两种方法，一种是在某个工程下包含相应路径，但是这样每建一个目录就需要重新包含一次，非常繁琐。<b>本文采用第二种方法,包含一次，以后建立工程就不用反复添加<b>：</b></b></p>
+<ul>
+<li>新建项目：<b>文件–&gt;新建–&gt;项目–&gt;选择Win32控制台程序–&gt;确定<b>（本文项目名叫做test，后文要用）<br><img src="http://oapeb119y.bkt.clouddn.com/3.png" alt="图3"><br><img src="http://oapeb119y.bkt.clouddn.com/4.png" alt="图4"></b></b></li>
+<li>包含目录和库目录配置: 在新建的工程页面 <b>菜单栏–&gt;视图–&gt;属性管理器–&gt;Debug|Microsoft.cpp.win32.user(右键属性)，弹出属性页–&gt;VC++目录<b>，分别修改包含目录和库目录。<br><img src="http://oapeb119y.bkt.clouddn.com/5.png" alt="图5"><br><img src="http://oapeb119y.bkt.clouddn.com/6.png" alt="图6"><br><img src="http://oapeb119y.bkt.clouddn.com/7.png" alt="图7"><br><img src="http://oapeb119y.bkt.clouddn.com/8.png" alt="图8"></b></b></li>
+<li>包含目录配置&lt;&gt;<br>添加<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">D:\opencv\build\include</span><br><span class="line">D:\opencv\build\include\opencv</span><br><span class="line">D:\opencv\build\include\opencv2</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这三个路径，如图九所示。<br>注意，根据自己不同的路径修改。<br><img src="http://oapeb119y.bkt.clouddn.com/9.png" alt="图9"></p>
+<ul>
+<li><b>库目录配置<br>添加<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\opencv\build\x86\vc10\lib</span><br></pre></td></tr></table></figure>
+</b></li>
+</ul>
+<p>这个路径。</p>
+<ul>
+<li>链接器配置<br>在<b>属性页–&gt;链接器–&gt;输入–&gt;附加依赖项<b>添加<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">opencv_calib3d2410.lib</span><br><span class="line">opencv_contrib2410.lib</span><br><span class="line">opencv_core2410.lib</span><br><span class="line">opencv_features2d2410.lib</span><br><span class="line">opencv_flann2410.lib</span><br><span class="line">opencv_gpu2410.lib</span><br><span class="line">opencv_highgui2410.lib</span><br><span class="line">opencv_imgproc2410.lib</span><br><span class="line">opencv_legacy2410.lib</span><br><span class="line">opencv_ml2410.lib</span><br><span class="line">opencv_nonfree2410.lib</span><br><span class="line">opencv_objdetect2410.lib</span><br><span class="line">opencv_ocl2410.lib</span><br><span class="line">opencv_photo2410.lib</span><br><span class="line">opencv_stitching2410.lib</span><br><span class="line">opencv_superres2410.lib</span><br><span class="line">opencv_ts2410.lib</span><br><span class="line">opencv_video2410.lib</span><br><span class="line">opencv_videostab2410.lib</span><br><span class="line">opencv_calib3d2410d.lib</span><br><span class="line">opencv_contrib2410d.lib</span><br><span class="line">opencv_core2410d.lib</span><br><span class="line">opencv_features2d2410d.lib</span><br><span class="line">opencv_flann2410d.lib</span><br><span class="line">opencv_gpu2410d.lib</span><br><span class="line">opencv_highgui2410d.lib</span><br><span class="line">opencv_imgproc2410d.lib</span><br><span class="line">opencv_legacy2410d.lib</span><br><span class="line">opencv_ml2410d.lib</span><br><span class="line">opencv_nonfree2410d.lib</span><br><span class="line">opencv_objdetect2410d.lib</span><br><span class="line">opencv_ocl2410d.lib</span><br><span class="line">opencv_photo2410d.lib</span><br><span class="line">opencv_stitching2410d.lib</span><br><span class="line">opencv_superres2410d.lib</span><br><span class="line">opencv_ts2410d.lib</span><br><span class="line">opencv_video2410d.lib</span><br><span class="line">opencv_videostab2410d.lib</span><br></pre></td></tr></table></figure>
+</b></b></li>
+</ul>
+<p>即可。至此所有配置都完成。<br><img src="http://oapeb119y.bkt.clouddn.com/10.png" alt="图10"></p>
+<h2 id="测试安装和配置是否成功"><a href="#测试安装和配置是否成功" class="headerlink" title="测试安装和配置是否成功"></a>测试安装和配置是否成功</h2><p>在之前创建test项目，打开test.cpp,编写如下测试程序：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">/***********************************************************************</span><br><span class="line">* OpenCV 2.4.10 测试例程</span><br><span class="line">* 梁泽浪提供</span><br><span class="line">***********************************************************************/</span><br><span class="line">#include&quot;stdafx.h&quot;</span><br><span class="line">#include &lt;opencv2/opencv.hpp&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">using namespace cv;</span><br><span class="line"></span><br><span class="line">int main(int argc, char*argv[])</span><br><span class="line">&#123;</span><br><span class="line">	IplImage* pImg;  </span><br><span class="line"></span><br><span class="line">    if ((pImg = cvLoadImage(&quot;C:\\Users\\liangzelang\\Desktop\\lena.jpg&quot;, 1)) != 0)  </span><br><span class="line">    &#123;  </span><br><span class="line">        cvNamedWindow (&quot;Image&quot;, 1);  </span><br><span class="line">        cvMoveWindow (&quot;Image&quot;, 0, 0);  </span><br><span class="line">        cvShowImage (&quot;Image&quot;, pImg);  </span><br><span class="line">        cvWaitKey (0);  </span><br><span class="line">        cvDestroyWindow (&quot;Image&quot;);  </span><br><span class="line">        cvReleaseImage (&amp;pImg);  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>需要注意的是cvLoadImage(“C:\Users\liangzelang\Desktop\lena.jpg”,1)中的图片地址的写法。<br><br><img src="http://oapeb119y.bkt.clouddn.com/11.png" alt="图11"><br><img src="http://oapeb119y.bkt.clouddn.com/12.png" alt="图12"><br>最后,一切OK。尽情享受OpenCV吧。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2016/09/25/OpenCV/VS2010+OpenCV2.4.10的安装与配置/" data-id="ckfp7tbmq000vfsplamwsuynw" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenCV基础/">OpenCV基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VS2010/">VS2010</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/12/20/Linux_shell/Linux下gedit打开文件产生带波浪号（～）的备份文件/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Linux下gedit打开文件产生带波浪号（～）的备份文件
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/07/20/Summary/New-Begining/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">菜鸟，新的征程</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h2 class="widget-title"><b>关于我</b></h2>
+    <div class="widget">
+ <front size="3"><b>邮箱</b>：liangzelang@gmail.com<br>
+ <b>现状</b>： 目前北京理工大学模式识别硕士在读，2018年毕业。个人喜欢图像处理、计算机视觉、机器学习等领域。更多以及<a href="http://cv.qiaobutang.com/r/5997e28c0cf202fca1a62686">个人简历</a></front>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">35</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Caffe/">Caffe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/">Markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV基础/">OpenCV基础</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ResNet/">ResNet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TLD/">TLD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VS2010/">VS2010</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c++</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/">ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图像处理/">图像处理</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/目标跟踪/">目标跟踪</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Caffe/" style="font-size: 10px;">Caffe</a> <a href="/tags/Linux/" style="font-size: 11.43px;">Linux</a> <a href="/tags/Markdown/" style="font-size: 10px;">Markdown</a> <a href="/tags/OpenCV/" style="font-size: 12.86px;">OpenCV</a> <a href="/tags/OpenCV基础/" style="font-size: 15.71px;">OpenCV基础</a> <a href="/tags/ResNet/" style="font-size: 10px;">ResNet</a> <a href="/tags/TLD/" style="font-size: 10px;">TLD</a> <a href="/tags/VS2010/" style="font-size: 10px;">VS2010</a> <a href="/tags/c/" style="font-size: 20px;">c++</a> <a href="/tags/leetcode/" style="font-size: 17.14px;">leetcode</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/图像处理/" style="font-size: 14.29px;">图像处理</a> <a href="/tags/数据结构与算法/" style="font-size: 18.57px;">数据结构与算法</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/目标跟踪/" style="font-size: 12.86px;">目标跟踪</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/30/Linux_shell/正则表达式/">正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/02/Leetcode/5-最长回文子串-C-中心扩展-暴力-md/">[5. 最长回文子串] C + 中心扩展 + 暴力</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/24/CPP/数据结构之图论基础/">数据结构之图论基础</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/24/CPP/数据结构之常见图论算法/">数据结构之常见图论算法</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/19/DeepLearning/caffe-finetuning/">Caffe ResNet50微调</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 liangzelang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+	<p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">主页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">个人</a>
+  
+</nav>
+    
+
+<script src="//ajax.useso.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

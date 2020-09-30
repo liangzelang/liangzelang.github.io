@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>智能指针 | Zelang Liang</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="普通指针在内存管理方面非常不方便，new和delete必须成对使用，非常容易出现错误。 智能指针模板类定义了类似指针的对象，可以将new得到的内存地址赋给这些对象，当这些智能指针过期时，将自动调用其（智能指针对象）的析构函数，这些析构函数将使用delete来释放内存。因此如果使用智能指针指向new的内存，无需手动释放这些内存，智能指针过期时，内存自动被释放。">
+<meta name="keywords" content="c++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="智能指针">
+<meta property="og:url" content="http://newbird.cn/2017/06/01/CPP/智能指针/index.html">
+<meta property="og:site_name" content="Zelang Liang">
+<meta property="og:description" content="普通指针在内存管理方面非常不方便，new和delete必须成对使用，非常容易出现错误。 智能指针模板类定义了类似指针的对象，可以将new得到的内存地址赋给这些对象，当这些智能指针过期时，将自动调用其（智能指针对象）的析构函数，这些析构函数将使用delete来释放内存。因此如果使用智能指针指向new的内存，无需手动释放这些内存，智能指针过期时，内存自动被释放。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-09-30T09:34:19.065Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="智能指针">
+<meta name="twitter:description" content="普通指针在内存管理方面非常不方便，new和delete必须成对使用，非常容易出现错误。 智能指针模板类定义了类似指针的对象，可以将new得到的内存地址赋给这些对象，当这些智能指针过期时，将自动调用其（智能指针对象）的析构函数，这些析构函数将使用delete来释放内存。因此如果使用智能指针指向new的内存，无需手动释放这些内存，智能指针过期时，内存自动被释放。">
+  
+    <link rel="alternate" href="/atom.xml" title="Zelang Liang" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zelang Liang</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">New Bird , New Beginning</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">主页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">个人</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://newbird.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-CPP/智能指针" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/01/CPP/智能指针/" class="article-date">
+  <time datetime="2017-06-01T12:57:36.000Z" itemprop="datePublished">2017-06-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      智能指针
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>普通指针在内存管理方面非常不方便，new和delete必须成对使用，非常容易出现错误。</p>
+<h2 id="智能指针模板类"><a href="#智能指针模板类" class="headerlink" title="智能指针模板类"></a>智能指针模板类</h2><p>定义了类似指针的对象，可以将new得到的内存地址赋给这些对象，当这些智能指针过期时，将自动调用其（智能指针对象）的析构函数，这些析构函数将使用delete来释放内存。<br>因此如果使用智能指针指向new的内存，无需手动释放这些内存，智能指针过期时，内存自动被释放。<br><a id="more"></a></p>
+<h2 id="有关智能指针的注意事项"><a href="#有关智能指针的注意事项" class="headerlink" title="有关智能指针的注意事项"></a>有关智能指针的注意事项</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">auto_ptr&lt;string&gt; ps(new string(&quot;this is test string.&quot;));</span><br><span class="line">auto_ptr&lt;string&gt; pd;</span><br><span class="line">pd = ps;</span><br></pre></td></tr></table></figure>
+<p>如上面的代码所示，如果是常规指针，这显然是错误的，因为pd和ps都指向同一个对象，程序将试图删除同一个对象两次；修正这个错误有以下几个方法：</p>
+<ol>
+<li>定义赋值运算符，执行深复制，拷贝对象，使两个指针指向不同对象（一个对象是另外一个的副本）；</li>
+<li>建立所有权（ownership）概念,对于特定对象只能有一个智能指针拥有它，当执行赋值操作时，就转移了对象的所有权，就只有一个智能指针在过期后，其析构函数才能释放对象的内存。auto_ptr和unique_ptr就是采用的这种方法，但是unique_ptr更加严格。</li>
+<li>建立引用计数(reference counting),也就是，将对象内存赋值给一个指针时，计数加1，指针过期时，计数减1。当最后一个指针过期时，才调用析构函数释放内存。这也是shared_ptr的策略。</li>
+</ol>
+<h2 id="auto-ptr和unique-ptr的区别、shared-ptr"><a href="#auto-ptr和unique-ptr的区别、shared-ptr" class="headerlink" title="auto_ptr和unique_ptr的区别、shared_ptr"></a>auto_ptr和unique_ptr的区别、shared_ptr</h2><ul>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">auto_ptr&lt;string&gt; ps(new string(&quot;liangzelang&quot;));</span><br><span class="line">auto_ptr&lt;string&gt; pd;</span><br><span class="line">pd = ps;   #1</span><br><span class="line"></span><br><span class="line">unique_ptr&lt;string&gt; ps(new string(&quot;liangzelang&quot;));</span><br><span class="line">unique_ptr&lt;string&gt; pd;</span><br><span class="line">pd = ps;   #2</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>上述代码所示，如果使用auto_ptr，ps转移了对象所有权之后，ps其实指向不确定，如果再使用pd这是一件非常危险的事情，留下了一个危险悬挂指针。unique_ptr在这里，就更加严格，编译器会认为#2是错误的，避免在程序运行阶段奔溃……</p>
+<ul>
+<li>当然我们经常会这样使用指针：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">unique_ptr&lt;string&gt; demo(const char * s)</span><br><span class="line">&#123;</span><br><span class="line">	unique_ptr&lt;string&gt; temp(new string(s));</span><br><span class="line">	return temp;</span><br><span class="line">&#125;</span><br><span class="line">unique_ptr&lt;string&gt; ps;</span><br><span class="line">ps = demo(&quot;this is test string&quot;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>那么问题来了，这里我们可以知道demo函数会返回一个临时unique_ptr（我们加它XX吧），temp会自动释放空间，在XX将对象所有权交给ps之后，也成危险悬挂指针了？？？显然不是，在临时unique_ptr归还所有权之后，会自动销毁的，临时嘛………………所以这是完全没有问题安全的。也就是说这种赋值是没有问题的。<br>总之，试图将一个unique_str赋值给另外一个的时候，如果源unique_ptr是一个临时右值，编译器允许；如果源unique_ptr将存在一段时间，编译器禁止。（有时，你非要这样，也是可以的这就得用到移动语义和右值引用的相关知识了）</p>
+<ul>
+<li><p>另外auto_ptr只能用于new得到的内存空间，如果是数组，使用new[],auto_ptr将不能使用,但是unique_ptr可以使用new或者new[]…</p>
+</li>
+<li><p>shared_ptr，如果真的想多个指针指向同一个对象，就是注意事项第三点方法，采用shared_ptr智能指针。</p>
+</li>
+</ul>
+<h2 id="智能指针的选择"><a href="#智能指针的选择" class="headerlink" title="智能指针的选择"></a>智能指针的选择</h2><ol>
+<li>多个指针指向同一个对象；涉及复制和赋值等操作的STL算法等 使用 shared_ptr；</li>
+<li>不是以上情况，使用unique_ptr；</li>
+<li>在满足2时，可使用auto_ptr(提醒一下，这是C++98的feature，C++11已经抛弃之，懂了吧)</li>
+</ol>
+<p>weak_ptr:</p>
+<h2 id="避免"><a href="#避免" class="headerlink" title="避免"></a>避免</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">string a(&quot;this is a test string&quot;);</span><br><span class="line">shared_ptr&lt;string&gt; ps(&amp;a);    //No</span><br></pre></td></tr></table></figure>
+<p>这些智能指针都只能用于new或者new[]获得的内存，堆。（敲黑板，new出来的内存都在堆，局部变量什么的都在栈上，区别就是……出门google）。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/06/01/CPP/智能指针/" data-id="ckfp7tbmd0006fspl0nykpwow" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/06/14/OpenCV/目标检测算法/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          目标跟踪算法--模板匹配
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/05/29/CPP/友元、异常和其他问题/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">友元、异常和其他相关问题</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h2 class="widget-title"><b>关于我</b></h2>
+    <div class="widget">
+ <front size="3"><b>邮箱</b>：liangzelang@gmail.com<br>
+ <b>现状</b>： 目前北京理工大学模式识别硕士在读，2018年毕业。个人喜欢图像处理、计算机视觉、机器学习等领域。更多以及<a href="http://cv.qiaobutang.com/r/5997e28c0cf202fca1a62686">个人简历</a></front>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">35</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Caffe/">Caffe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/">Markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV基础/">OpenCV基础</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ResNet/">ResNet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TLD/">TLD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VS2010/">VS2010</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c++</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/">ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图像处理/">图像处理</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/目标跟踪/">目标跟踪</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Caffe/" style="font-size: 10px;">Caffe</a> <a href="/tags/Linux/" style="font-size: 11.43px;">Linux</a> <a href="/tags/Markdown/" style="font-size: 10px;">Markdown</a> <a href="/tags/OpenCV/" style="font-size: 12.86px;">OpenCV</a> <a href="/tags/OpenCV基础/" style="font-size: 15.71px;">OpenCV基础</a> <a href="/tags/ResNet/" style="font-size: 10px;">ResNet</a> <a href="/tags/TLD/" style="font-size: 10px;">TLD</a> <a href="/tags/VS2010/" style="font-size: 10px;">VS2010</a> <a href="/tags/c/" style="font-size: 20px;">c++</a> <a href="/tags/leetcode/" style="font-size: 17.14px;">leetcode</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/图像处理/" style="font-size: 14.29px;">图像处理</a> <a href="/tags/数据结构与算法/" style="font-size: 18.57px;">数据结构与算法</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/目标跟踪/" style="font-size: 12.86px;">目标跟踪</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/30/Linux_shell/正则表达式/">正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/02/Leetcode/5-最长回文子串-C-中心扩展-暴力-md/">[5. 最长回文子串] C + 中心扩展 + 暴力</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/24/CPP/数据结构之图论基础/">数据结构之图论基础</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/24/CPP/数据结构之常见图论算法/">数据结构之常见图论算法</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/19/DeepLearning/caffe-finetuning/">Caffe ResNet50微调</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 liangzelang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+	<p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">主页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">个人</a>
+  
+</nav>
+    
+
+<script src="//ajax.useso.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

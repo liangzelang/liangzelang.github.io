@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Caffe ResNet50微调 | Zelang Liang</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="背景介绍最近在学习Caffe，但是周围没有人交流，很是吃力，故分享之，如果有错误大家一定要指出，也希望对其他人有一定帮助。ResNet模型是在2015年KaiMingHe提出来的，一举夺得了2015的ILSVRC ImageNet分类、识别、 定位的冠军（太腻害）。这个网络结构的特点就是没有最深只有更深……，在作者的github上，有相应的代码，大家如果感兴趣可以看看。我介绍一下我的数据，最近参加">
+<meta name="keywords" content="图像处理,深度学习,Caffe,ResNet">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Caffe ResNet50微调">
+<meta property="og:url" content="http://newbird.cn/2017/08/19/DeepLearning/caffe-finetuning/index.html">
+<meta property="og:site_name" content="Zelang Liang">
+<meta property="og:description" content="背景介绍最近在学习Caffe，但是周围没有人交流，很是吃力，故分享之，如果有错误大家一定要指出，也希望对其他人有一定帮助。ResNet模型是在2015年KaiMingHe提出来的，一举夺得了2015的ILSVRC ImageNet分类、识别、 定位的冠军（太腻害）。这个网络结构的特点就是没有最深只有更深……，在作者的github上，有相应的代码，大家如果感兴趣可以看看。我介绍一下我的数据，最近参加">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-09-30T09:34:19.065Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Caffe ResNet50微调">
+<meta name="twitter:description" content="背景介绍最近在学习Caffe，但是周围没有人交流，很是吃力，故分享之，如果有错误大家一定要指出，也希望对其他人有一定帮助。ResNet模型是在2015年KaiMingHe提出来的，一举夺得了2015的ILSVRC ImageNet分类、识别、 定位的冠军（太腻害）。这个网络结构的特点就是没有最深只有更深……，在作者的github上，有相应的代码，大家如果感兴趣可以看看。我介绍一下我的数据，最近参加">
+  
+    <link rel="alternate" href="/atom.xml" title="Zelang Liang" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zelang Liang</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">New Bird , New Beginning</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">主页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">个人</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://newbird.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-DeepLearning/caffe-finetuning" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/19/DeepLearning/caffe-finetuning/" class="article-date">
+  <time datetime="2017-08-19T14:04:25.000Z" itemprop="datePublished">2017-08-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Caffe ResNet50微调
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p>最近在学习Caffe，但是周围没有人交流，很是吃力，故分享之，如果有错误大家一定要指出，也希望对其他人有一定帮助。<br>ResNet模型是在2015年KaiMingHe提出来的，一举夺得了2015的ILSVRC ImageNet分类、识别、 定位的冠军（太腻害）。这个网络结构的特点就是没有最深只有更深……，在作者的<a href="https://github.com/KaimingHe" target="_blank" rel="noopener">github</a>上，有相应的代码，大家如果感兴趣可以看看。<br>我介绍一下我的数据，最近参加一个百度的比赛，100类宠物狗的识别。数据集一共18000张左右，但是数据质量一般，大小不定。最开始直接使用数据train from scratch，采用AlexNet错误率63%。我也是深度学习的初学者(水平就是看了一本书，看了一遍代码，跑了一遍例程)，所以决定go deeper，实验室服务器GPU是Tesla T40m可以跑一个稍微大一点的网络，所以选择ResNet50,顾名思义就是只有50层的残差网络。具体的网络结构图<a href="http://ethereon.github.io/netscope/#/gist/db945b393d40bfa26006" target="_blank" rel="noopener">如图所示</a>。使用ImageNet的pretrain模型进行finetune。我之前不太懂，直接拿18000张数据丢到网络中，过拟合严重，原因就是数据对于这种大型网络实在太少。（这其实也是技术交流的重要性，你自己搞一周，高手一句话可能就够了^_^）</p>
+<h2 id="Caffe-ResNet50-Finetune"><a href="#Caffe-ResNet50-Finetune" class="headerlink" title="Caffe ResNet50 Finetune"></a>Caffe ResNet50 Finetune</h2><p>我使用的是KaiMing He大神GitHub中的模型和相关配置<br>这是作者ResNet的repo，里面有预训练模型、网络定义等. <a href="https://github.com/KaimingHe/deep-residual-networks" target="_blank" rel="noopener">ResNet</a><br>其中有一个50层的ResNet caffemodel，一个deploy.prototxt。需要从one drivedown下来，非常慢，也可以在<a href="https://pan.baidu.com/s/1cgjfuY" target="_blank" rel="noopener">百度云</a>下载到caffemodel。<br>因此需要自己做的工作有：</p>
+<ol>
+<li>写一个train_val.prototxt配置文件，从deploy.prototxt改一下就OK</li>
+<li>修改train_val.prototxt一些参数</li>
+<li>准备数据集，最好转换为LMDB，速度能提高很多</li>
+</ol>
+<h2 id="具体实现步骤"><a href="#具体实现步骤" class="headerlink" title="具体实现步骤"></a>具体实现步骤</h2><h3 id="train-val-prototxt"><a href="#train-val-prototxt" class="headerlink" title="train_val.prototxt"></a>train_val.prototxt</h3><p>直接复制deploy.prototxt,然后修改。</p>
+<ol>
+<li>加入数据层</li>
+<li>根据自己的任务，修改最后全连接层的输出类别数量，我的为100. <code>num_output: 100</code></li>
+<li>在训练阶段把BN层中 ‘use_global_flag: false’ 全部设置为false，测试阶段全部设置为 true，所以这个实现需要分开写，然后用参数’include{ phase: train/test}’指明是啥阶段，我觉得这样有点麻烦，所以我是train.prototxt和test.prototxt分开写的，具体的见<a href="https://github.com/liangzelang" target="_blank" rel="noopener">我的github</a></li>
+<li>修改最后全连接层的<strong>名字、学习率</strong>，因为要重新根据我们自己的任务训练最后的全连接层，故不能使用pretrained model对应的名字，这样这层参数将被随机初始化，重新训练；学习率提高可以较快训练这一层。<br>这样训练和测试的网络结构文件就搞定了。</li>
+</ol>
+<h3 id="solver-prototxt"><a href="#solver-prototxt" class="headerlink" title="solver.prototxt"></a>solver.prototxt</h3><p>这个主要配置一些训练参数，例如学习率什么的，也是根据自己的任务、数据来动态调节的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">train_net: &quot;examples/fusion/f1/train.prototxt&quot;                                  </span><br><span class="line">test_net: &quot;examples/fusion/f1/test.prototxt&quot;</span><br><span class="line"># iter_size: 2</span><br><span class="line">test_iter: 3000</span><br><span class="line">test_interval: 365</span><br><span class="line"># ture: run from lastest snapshot, false: run from iteration 0</span><br><span class="line"># test_initialization: false</span><br><span class="line">display: 365</span><br><span class="line">base_lr: 0.001</span><br><span class="line">lr_policy: &quot;multistep&quot;</span><br><span class="line"># 5th epoch  0.0001</span><br><span class="line">stepvalue: 2920</span><br><span class="line"># 10th epoch 0.00001</span><br><span class="line">stepvalue: 9125</span><br><span class="line"># 20th epoch 0.000001</span><br><span class="line">stepvalue: 21900</span><br><span class="line"># 40th epoch 0.0000001</span><br><span class="line">stepvalue: 31025</span><br><span class="line"># 80th epoch 0.00000001</span><br><span class="line"># stepvalue: 36640</span><br><span class="line">gamma: 0.1</span><br><span class="line">max_iter: 36500</span><br><span class="line">momentum: 0.9</span><br><span class="line">weight_decay: 0.0001</span><br><span class="line">snapshot: 1000</span><br><span class="line">snapshot_prefix: &quot;examples/fusion/f1/f1&quot;</span><br><span class="line">solver_mode: GPU</span><br></pre></td></tr></table></figure></p>
+<h3 id="deploy-prototxt"><a href="#deploy-prototxt" class="headerlink" title="deploy.prototxt"></a>deploy.prototxt</h3><p>这个是最后使用训练得到的模型来进行分类的网络结构，其实跟test.prototxt差不多，我需要分类的是图片，所以就把test.prototxt的数据层改一下，loss和acc层改一下就可以啦。</p>
+<h3 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">###################                                                             </span><br><span class="line"># author:liangzelang</span><br><span class="line"># resnet50 train shell scripts</span><br><span class="line">####################</span><br><span class="line">#!/usr/bin/env sh</span><br><span class="line">./build/tools/caffe train \</span><br><span class="line">    --solver=examples/fusion/f1/solver.prototxt -weights examples/fusion/f1/resnet50.caffemodel</span><br></pre></td></tr></table></figure>
+<h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/08/19/DeepLearning/caffe-finetuning/" data-id="ckfp7tbmh000bfsplhgxk9akx" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Caffe/">Caffe</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ResNet/">ResNet</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/图像处理/">图像处理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/深度学习/">深度学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/08/24/CPP/数据结构之常见图论算法/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          数据结构之常见图论算法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/08/19/OpenCV/目标跟踪之TLD第一篇/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">目标跟踪之TLD第一篇</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h2 class="widget-title"><b>关于我</b></h2>
+    <div class="widget">
+ <front size="3"><b>邮箱</b>：liangzelang@gmail.com<br>
+ <b>现状</b>： 目前北京理工大学模式识别硕士在读，2018年毕业。个人喜欢图像处理、计算机视觉、机器学习等领域。更多以及<a href="http://cv.qiaobutang.com/r/5997e28c0cf202fca1a62686">个人简历</a></front>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">35</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Caffe/">Caffe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/">Markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV基础/">OpenCV基础</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ResNet/">ResNet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TLD/">TLD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VS2010/">VS2010</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c++</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/">ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图像处理/">图像处理</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/目标跟踪/">目标跟踪</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Caffe/" style="font-size: 10px;">Caffe</a> <a href="/tags/Linux/" style="font-size: 11.43px;">Linux</a> <a href="/tags/Markdown/" style="font-size: 10px;">Markdown</a> <a href="/tags/OpenCV/" style="font-size: 12.86px;">OpenCV</a> <a href="/tags/OpenCV基础/" style="font-size: 15.71px;">OpenCV基础</a> <a href="/tags/ResNet/" style="font-size: 10px;">ResNet</a> <a href="/tags/TLD/" style="font-size: 10px;">TLD</a> <a href="/tags/VS2010/" style="font-size: 10px;">VS2010</a> <a href="/tags/c/" style="font-size: 20px;">c++</a> <a href="/tags/leetcode/" style="font-size: 17.14px;">leetcode</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/图像处理/" style="font-size: 14.29px;">图像处理</a> <a href="/tags/数据结构与算法/" style="font-size: 18.57px;">数据结构与算法</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/目标跟踪/" style="font-size: 12.86px;">目标跟踪</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/30/Linux_shell/正则表达式/">正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/02/Leetcode/5-最长回文子串-C-中心扩展-暴力-md/">[5. 最长回文子串] C + 中心扩展 + 暴力</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/24/CPP/数据结构之图论基础/">数据结构之图论基础</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/24/CPP/数据结构之常见图论算法/">数据结构之常见图论算法</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/19/DeepLearning/caffe-finetuning/">Caffe ResNet50微调</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 liangzelang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+	<p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">主页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">个人</a>
+  
+</nav>
+    
+
+<script src="//ajax.useso.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

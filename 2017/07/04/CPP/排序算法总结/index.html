@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>排序算法总结 | Zelang Liang</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="排序有n个记录的序列为{R1，R2……Rn}，其对应关键字为{K1，K2……Kn}，需确定一种排列{P1,P2……Pn}使其关键字满足KP1&amp;lt;KP2&amp;lt;KP3……&amp;lt;KPn等关系。即使得序列成为一个按关键字有序的序列{Rp1，Rp2，……Rpn}，这样的操作就称为排序用人话说就是从大到小，要么从小到大排列就OK。  排序的稳定性存在两个关键字相等Ki = Kj(i != j,i &amp;l">
+<meta name="keywords" content="c++,数据结构与算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="排序算法总结">
+<meta property="og:url" content="http://newbird.cn/2017/07/04/CPP/排序算法总结/index.html">
+<meta property="og:site_name" content="Zelang Liang">
+<meta property="og:description" content="排序有n个记录的序列为{R1，R2……Rn}，其对应关键字为{K1，K2……Kn}，需确定一种排列{P1,P2……Pn}使其关键字满足KP1&amp;lt;KP2&amp;lt;KP3……&amp;lt;KPn等关系。即使得序列成为一个按关键字有序的序列{Rp1，Rp2，……Rpn}，这样的操作就称为排序用人话说就是从大到小，要么从小到大排列就OK。  排序的稳定性存在两个关键字相等Ki = Kj(i != j,i &amp;l">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-09-30T09:34:19.061Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="排序算法总结">
+<meta name="twitter:description" content="排序有n个记录的序列为{R1，R2……Rn}，其对应关键字为{K1，K2……Kn}，需确定一种排列{P1,P2……Pn}使其关键字满足KP1&amp;lt;KP2&amp;lt;KP3……&amp;lt;KPn等关系。即使得序列成为一个按关键字有序的序列{Rp1，Rp2，……Rpn}，这样的操作就称为排序用人话说就是从大到小，要么从小到大排列就OK。  排序的稳定性存在两个关键字相等Ki = Kj(i != j,i &amp;l">
+  
+    <link rel="alternate" href="/atom.xml" title="Zelang Liang" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zelang Liang</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">New Bird , New Beginning</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">主页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">个人</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://newbird.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-CPP/排序算法总结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/04/CPP/排序算法总结/" class="article-date">
+  <time datetime="2017-07-04T15:31:17.000Z" itemprop="datePublished">2017-07-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      排序算法总结
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><p>有n个记录的序列为{R1，R2……Rn}，其对应关键字为{K1，K2……Kn}，需确定一种排列{P1,P2……Pn}使其关键字满足KP1&lt;KP2&lt;KP3……&lt;KPn等关系。即使得序列成为一个按关键字有序的序列{Rp1，Rp2，……Rpn}，这样的操作就称为排序<br>用人话说就是从大到小，要么从小到大排列就OK。</p>
+<ul>
+<li><p>排序的稳定性<br>存在两个关键字相等Ki = Kj(i != j,i &lt; j),如果从小到大排序后 Ri仍在Rj前面，则是稳定排序，反之，则是不稳定排序。</p>
+</li>
+<li><p>内排序和外排序<br>内排序就是待排序所有记录放置于内存中，外排序需要在内外存进行多次交换，我们多使用内排序。<br>影响内排序的性能：时间性能，就是时间复杂度；辅助空间，就是空间复杂度；算法复杂性，是算法本身的复杂性</p>
+</li>
+<li><p>排序分类<br>按照算法复杂度排序算法可分为两类：</p>
+</li>
+</ul>
+<ol>
+<li>冒泡排序、简单选择排序、直接插入排序属于插入排序</li>
+<li>希尔排序、堆排序、归并排序、快速排序属于改进算法。<a id="more"></a>
+<h2 id="数据的产生"><a href="#数据的产生" class="headerlink" title="数据的产生"></a>数据的产生</h2>为了便于查看排序算法的效果，随机产生随机数，并存储在文件中，使用时读取即可<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">// 产生长度为length的随机数，并保持到文件</span><br><span class="line">bool generateRandom(const string &amp;  filename, int length)</span><br><span class="line">&#123;</span><br><span class="line">	//生成随机数文件</span><br><span class="line">	ofstream fout(filename);</span><br><span class="line">	double time_start = (double)clock();</span><br><span class="line">	srand(time(0));</span><br><span class="line">	for(int i = 0; i &lt; length; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		int tmp = rand();</span><br><span class="line">		if(i == 0)</span><br><span class="line">			fout &lt;&lt; tmp;</span><br><span class="line">		else</span><br><span class="line">			fout &lt;&lt; &quot; &quot; &lt;&lt; tmp;</span><br><span class="line">	&#125;</span><br><span class="line">	fout &lt;&lt; endl;</span><br><span class="line">	fout.close();</span><br><span class="line">	cout &lt;&lt; &quot;Done&quot; &lt;&lt; endl;</span><br><span class="line">	double time_end = (double)clock();</span><br><span class="line">	printf(&quot;IO time: %.2fms\n&quot;, time_end-time_start);</span><br><span class="line">	return true;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 打开文件，获取长度为length的随机数</span><br><span class="line">vector&lt;int&gt; parasRandom(const string &amp; filename, int length)</span><br><span class="line">&#123;</span><br><span class="line">	vector&lt;int&gt; a(length);</span><br><span class="line">	ifstream fin(filename);</span><br><span class="line">	double time_start = (double)clock();</span><br><span class="line">	srand(time(0));</span><br><span class="line">	for(int i = 0; i &lt; length; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		fin &gt;&gt; a[i];</span><br><span class="line">	&#125;</span><br><span class="line">	fin.close();</span><br><span class="line">	cout &lt;&lt; &quot;Done&quot; &lt;&lt; endl;</span><br><span class="line">	double time_end = (double)clock();</span><br><span class="line">	printf(&quot;IO time: %.2fms\n&quot;, time_end-time_start);</span><br><span class="line">	return a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="测试函数"><a href="#测试函数" class="headerlink" title="测试函数"></a>测试函数</h2><p>主函数……测试是换排序算法名称就OK了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;fstream&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">#include &lt;ctime&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	vector&lt;int&gt; tmp;</span><br><span class="line">	//generateRandom(&quot;Random.txt&quot;, 10000);</span><br><span class="line">	tmp = parasRandom(&quot;Random.txt&quot;, 1000);</span><br><span class="line">	for(int i = 0; i &lt; tmp.size(); i++)</span><br><span class="line">		cout &lt;&lt; tmp[i] &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; &quot;Result is: \n&quot; &lt;&lt; endl;</span><br><span class="line">	mergingSort(tmp,0);</span><br><span class="line">	for(auto it = tmp.begin(); it != tmp.end(); it++)</span><br><span class="line">		cout &lt;&lt; *it &lt;&lt; endl;</span><br><span class="line">	system(&quot;pause&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="冒泡法排序"><a href="#冒泡法排序" class="headerlink" title="冒泡法排序"></a>冒泡法排序</h2><p>复杂度： 最好的情况<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">// 从小到大</span><br><span class="line">// 时间复杂度： O(n*n)</span><br><span class="line">void bubbleSort(vector&lt;int&gt; &amp; a, const int n)</span><br><span class="line">&#123;</span><br><span class="line">	for(int i = 0; i &lt; a.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		for(int j = i+1; j &lt; a.size(); j++)</span><br><span class="line">		&#123;</span><br><span class="line">			if(a[j] &lt; a[i])</span><br><span class="line">				swap(a[i],a[j]);   //STL算法</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 时间复杂度 O(n*n)</span><br><span class="line">void bubbleSort1(vector&lt;int&gt; &amp; a, const int n)</span><br><span class="line">&#123;</span><br><span class="line">	for(int i = 0; i &lt; a.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		for(int j = a.size()-1; j &gt; i; j--)</span><br><span class="line">		&#123;</span><br><span class="line">			if(a[j] &lt; a[j-1])</span><br><span class="line">				swap(a[j],a[j-1]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 时间复杂度 最好的情况(顺序)：O(n-1)  最坏(逆序): O(n*(n-1)/2) 故O(n*n)</span><br><span class="line">void bubbleSort2(vector&lt;int&gt; &amp; a, const int n)</span><br><span class="line">&#123;</span><br><span class="line">	bool flag = true;</span><br><span class="line">	for(int i = 0; i &lt; a.size() &amp;&amp; flag; i ++)</span><br><span class="line">	&#123;</span><br><span class="line">		flag = false;  //如果这个一个循环都没有改变位置，说明不再需要改变了。退出大循环</span><br><span class="line">		for(int j = a.size()-1; j &gt; i; j--)</span><br><span class="line">		&#123;</span><br><span class="line">			if(a[j] &lt; a[j-1])</span><br><span class="line">			&#123;</span><br><span class="line">				flag = true;</span><br><span class="line">				swap(a[j],a[j-1]);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="简单选择排序"><a href="#简单选择排序" class="headerlink" title="简单选择排序"></a>简单选择排序</h2><p>其实冒泡法排序第一种实质就是简单选择排序，第二种才是正宗的冒泡法。所以这里就不贴代码了。时间复杂度O(n*n).</p>
+<h2 id="直接插入排序"><a href="#直接插入排序" class="headerlink" title="直接插入排序"></a>直接插入排序</h2><p>原理就是，一次性插入至比自己都大的前面，而不是不断交换<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">void insertSort(vector&lt;int&gt; &amp; a, const int n)</span><br><span class="line">&#123;</span><br><span class="line">	for(int i = 1; i &lt; a.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if(a[i] &lt; a[i-1])</span><br><span class="line">		&#123;</span><br><span class="line">			int temp = a[i];</span><br><span class="line">			int j,n = i -1;</span><br><span class="line">			bool zeroFlag = false;</span><br><span class="line">			for(j = i-1; a[j] &gt; temp; j--)  //这里没有设置端点，所以需要特别注意，可以设置哨兵</span><br><span class="line">			&#123;</span><br><span class="line">				n = j;</span><br><span class="line">				a[j+1] = a[j];</span><br><span class="line">				if(j == 0)</span><br><span class="line">				&#123;</span><br><span class="line">					break;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			a[n] = temp;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>时间复杂度： 最好的情况为顺序 O(n) 最坏的情况为逆序O(n<em>n) 故插入排序的时间复杂度为O(n</em>n)</p>
+<h1 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h1><ul>
+<li>原理： 采用跳跃分割策略，相隔某个增量的序列为子序列，把每个子序列从小到大搞定，增量递减为1时就OK了。当然其并不是一种稳定的排序方法<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">void shellSort(vector&lt;int&gt; &amp; a, const int n)</span><br><span class="line">&#123;</span><br><span class="line">	int i,j;</span><br><span class="line">	int increment = a.size();</span><br><span class="line">	do&#123;</span><br><span class="line">		increment = increment/3;   //初始化一个步长</span><br><span class="line">		for(i = increment; i &lt; a.size(); i++)</span><br><span class="line">		&#123;</span><br><span class="line">			if(a[i] &lt; a[i-increment])</span><br><span class="line">			&#123;</span><br><span class="line"></span><br><span class="line">				int temp = a[i];  //这个需要前移				</span><br><span class="line">				for(j = i-increment; j &gt;= 0 &amp;&amp; a[j] &gt; temp; j -= increment)</span><br><span class="line">				&#123;</span><br><span class="line">					swap(a[j],a[j+increment]);</span><br><span class="line">				&#125;				</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;while(increment&gt;1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>时间复杂度： 希尔增量时间复杂度O(n*n),有个叫Hibbard增量时间复杂度为O(n^(3/2)),跟增量序列有关。但是效果要优于O(n^2)的算法。</p>
+<h2 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h2><p>原理： 利用二叉树顶堆的性质实现排序，顶堆最大值永远在父结点，所以每次得到剩余待排序数据最大值，再将剩余数据调整成顶堆，循环即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">void heapSort(vector&lt;int&gt; &amp; a, const int n)</span><br><span class="line">&#123;</span><br><span class="line">	a.insert(a.begin(),a.size());</span><br><span class="line">	// heapSort begin</span><br><span class="line">	int i;</span><br><span class="line">	//把整个待排序数据搞成大顶堆这个部分很重要就基本构建了大概的从大到小的顺序</span><br><span class="line">	for(i = a[0]/2;i&gt;0;i--)        </span><br><span class="line">		heapAdjust(a,i,a[0]);</span><br><span class="line"></span><br><span class="line">	for(i = a[0]; i&gt;1; i--)       //循环把最大值放到队尾，再重新搞成大顶堆</span><br><span class="line">	&#123;</span><br><span class="line">		swap(a[1],a[i]);</span><br><span class="line">		heapAdjust(a,1,i-1);</span><br><span class="line">	&#125;</span><br><span class="line">	a.erase(a.begin());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//把以m为父节点的长度为n的二叉树调整为大顶堆</span><br><span class="line">void heapAdjust(vector&lt;int&gt; &amp; a, int m, int n)</span><br><span class="line">&#123;</span><br><span class="line">	int temp,j;</span><br><span class="line">	temp = a[m];   //暂存父节点</span><br><span class="line">	for(j = 2*m; j &lt;= n; j *= 2)</span><br><span class="line">	&#123;</span><br><span class="line">		if(j&lt;n &amp;&amp; a[j] &lt; a[j+1])  //这里j&lt;n而不是j&lt;=n是  j必是左节点，如果其是二叉树结尾，后面就无法比了</span><br><span class="line">			++j;</span><br><span class="line">		if(temp &gt;= a[j])  //如果temp大于了两个左右孩子就不用再往下比了，因为构建的时候已经是一个父节点比子节点大的顶堆了</span><br><span class="line">			break;</span><br><span class="line">		//a[m] = a[j];</span><br><span class="line">		swap(a[m],a[j]);</span><br><span class="line">		m = j;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>时间复杂度：构建顶堆的时间O(n),取堆顶记录并重建O(logn),一共取了n-1次堆顶，所以时间复杂度为O(nlogn).不稳定排序方法，适合数据较多的情况。</p>
+<h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><p>原理： 利用二叉树结构的思想，对待排序数据进行两两合并，再合并……<br>步骤： 先把待排序数据递归展开，分成一个个数据，再递归合并，最后成为原数据大小的数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">void mergingSort(vector&lt;int&gt; &amp; a, const int n)</span><br><span class="line">&#123;</span><br><span class="line">	mSort(a,a,0,a.size()-1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void mSort(vector&lt;int&gt; &amp; a,vector&lt;int&gt; &amp; b, int begin, int end)</span><br><span class="line">&#123;</span><br><span class="line">	int m;</span><br><span class="line">	vector&lt;int&gt; temp(a.size());</span><br><span class="line">	if(begin == end)</span><br><span class="line">		b[begin] = a[begin];</span><br><span class="line">	else</span><br><span class="line">	&#123;</span><br><span class="line">		m = (begin+end)/2;</span><br><span class="line">		mSort(a,temp,begin,m);</span><br><span class="line">		mSort(a,temp,m+1,end);</span><br><span class="line">		mMerge(temp,b,begin,m,end);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void mMerge(vector&lt;int&gt; &amp; a, vector&lt;int&gt; &amp; b,int begin, int middle, int end)</span><br><span class="line">&#123;</span><br><span class="line">	int j,k,l;</span><br><span class="line">	for(j=middle+1,k=begin; begin&lt;=middle&amp;&amp;j&lt;=end; k++)</span><br><span class="line">	&#123;</span><br><span class="line">		if(a[begin] &lt; a[j])</span><br><span class="line">			b[k] = a[begin++];</span><br><span class="line">		else</span><br><span class="line">			b[k] = a[j++];</span><br><span class="line">	&#125;</span><br><span class="line">	if(begin &lt;= middle)</span><br><span class="line">	&#123;</span><br><span class="line">		for(l=0; l &lt;= middle-begin; l++)</span><br><span class="line">			b[k+l] = a[begin+l];</span><br><span class="line">	&#125;</span><br><span class="line">	if(j&lt;=end)</span><br><span class="line">	&#123;</span><br><span class="line">		for(l=0;l &lt;= end-j; l++)</span><br><span class="line">			b[k+l] = a[j+l];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>时间复杂度： 每一次递归都把整个数据两两合并（不是两个，是两组）需要扫描所有数据，复杂度为O(n),根据二叉树性质，需要递归logn次，故时间复杂度为O(nlogn).</p>
+<ul>
+<li>上面是用的递归方式，非递归方式以后有时间再更新。</li>
+</ul>
+<h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><p>原理：一种比较高级的交换排序的方法，就是每次扫描数据，指定枢轴从而把数据分为两部分，使枢轴前面数据的比枢轴小，后面的比他大，再递归……<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">void quickSort(vector&lt;int&gt; &amp; a, const int n)</span><br><span class="line">&#123;</span><br><span class="line">	qSort(a,0,a.size());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void qSort(vector&lt;int&gt; &amp; a, int low, int high)</span><br><span class="line">&#123;</span><br><span class="line">	int pivot;  //快排中的精华，枢轴 前面都比他小， 后面都比他大</span><br><span class="line">	if(low &lt; high)</span><br><span class="line">	&#123;</span><br><span class="line">		pivot = getPivot(a,low,high);</span><br><span class="line">		qSort(a,low,pivot-1);</span><br><span class="line">		qSort(a,pivot,high);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int getPivot(vector&lt;int&gt; &amp; a, int low, int high)</span><br><span class="line">&#123;</span><br><span class="line">	int pivot = a[low];</span><br><span class="line">	while(low &lt; high)</span><br><span class="line">	&#123;</span><br><span class="line">		while(low &lt; high &amp;&amp; a[high] &gt;= pivot)</span><br><span class="line">			high--;</span><br><span class="line">		swap(a[low],a[high]);</span><br><span class="line">		while(low &lt; high &amp;&amp; a[low] &lt;= pivot)</span><br><span class="line">			low++;</span><br><span class="line">		swap(a[low],a[high]);</span><br><span class="line">	&#125;</span><br><span class="line">	return low;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>时间复杂度：跟枢轴的位置有关，平均时间复杂度为O(nlogn),由于有跳跃交换，非稳定排序。</p>
+<h2 id="快速排序的优化"><a href="#快速排序的优化" class="headerlink" title="快速排序的优化"></a>快速排序的优化</h2><p>其实排序算法都是在不断优化的过程中，即使是综合性能比较厉害的快速排序算法也有很大的优化空间：</p>
+<ol>
+<li>优化枢轴的选取<br>前面我们是直接指定第一个为枢轴，显然这是有问题的，所以优化方法是<strong>三数取中</strong>，或者<strong>九数取中</strong>。</li>
+<li>优化每次枢轴选取中的不必要交换<br>前面使用交换对性能有一定影响，但是如果把整个调整枢轴位置过程中换成替换，这样会有一定优化</li>
+<li>优化小数据量排序方法<br>前面直接就是用快排的迭代，但是如果数据量小，反而效果不好。故我们设定一个阈值，小的用插入，大的用快排</li>
+<li>优化递归<br>每个递归对性能都是致命的，所以尽量用循环替换</li>
+</ol>
+<p>优化后的代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">void quickSort1(vector&lt;int&gt; &amp; a, const int n) //优化枢轴的选择，不必要的交换，小数组排序，递归操作</span><br><span class="line">&#123;</span><br><span class="line">	qSort2(a,0,a.size()-1);</span><br><span class="line">&#125;</span><br><span class="line">int getPivot1(vector&lt;int&gt; &amp; a, int low, int high)</span><br><span class="line">&#123;</span><br><span class="line">	int pivot;</span><br><span class="line">	int m = (low+high)/2;</span><br><span class="line">	if(a[low] &gt; a[high])</span><br><span class="line">		swap(a[low],a[high]);</span><br><span class="line">	if(a[m] &gt; a[high])</span><br><span class="line">		swap(a[m],a[high]);</span><br><span class="line">	if(a[low] &gt; a[m])</span><br><span class="line">		swap(a[low], a[m]);</span><br><span class="line">	pivot = a[m];</span><br><span class="line">	while(low &lt; high)</span><br><span class="line">	&#123;</span><br><span class="line">		while(low &lt; high &amp;&amp; a[high] &gt;= pivot)</span><br><span class="line">			high--;</span><br><span class="line">		a[low] = a[high];</span><br><span class="line">		while(low &lt; high &amp;&amp; a[low] &lt;= pivot)</span><br><span class="line">			low++;</span><br><span class="line">		a[high] = a[low];</span><br><span class="line">	&#125;</span><br><span class="line">	a[low] = pivot;</span><br><span class="line">	return low;</span><br><span class="line">&#125;</span><br><span class="line">void qSort1(vector&lt;int&gt; &amp; a, int low, int high)</span><br><span class="line">&#123;</span><br><span class="line">	int pivot;</span><br><span class="line">	const int length = 7;</span><br><span class="line">	if(high-low &gt; length)</span><br><span class="line">	&#123;</span><br><span class="line">		pivot = getPivot1(a,low,high);</span><br><span class="line">		qSort1(a,low, pivot-1);</span><br><span class="line">		qSort1(a,pivot+1,high);</span><br><span class="line">	&#125;</span><br><span class="line">	else</span><br><span class="line">	&#123;</span><br><span class="line">		insertSort(a,0);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void qSort2(vector&lt;int&gt; &amp; a, int low, int high)</span><br><span class="line">&#123;</span><br><span class="line">	int pivot;</span><br><span class="line">	const int length = 7;</span><br><span class="line">	if(high-low &gt; length)</span><br><span class="line">	&#123;</span><br><span class="line">		while(low &lt; high)</span><br><span class="line">		&#123;</span><br><span class="line">			pivot = getPivot1(a,low,high);</span><br><span class="line">			qSort1(a,low, pivot-1);</span><br><span class="line">			//qSort1(a,pivot+1,high);</span><br><span class="line">			low = pivot + 1;    //以循环替换递归，减少递归提高性能</span><br><span class="line">		&#125;		</span><br><span class="line">	&#125;</span><br><span class="line">	else</span><br><span class="line">	&#123;</span><br><span class="line">		insertSort(a,0);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>排序算法代码在<a href="https://github.com/liangzelang" target="_blank" rel="noopener">我的github</a>可以下载，欢迎提PR或者issue，喜欢也可以star、fellow、fork。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/07/04/CPP/排序算法总结/" data-id="ckfp7tbmy000wfsplobmpjdx8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/07/14/CPP/数据结构之树/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          数据结构之树
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/07/04/Summary/更换源/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">ubuntu更换清华源</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h2 class="widget-title"><b>关于我</b></h2>
+    <div class="widget">
+ <front size="3"><b>邮箱</b>：liangzelang@gmail.com<br>
+ <b>现状</b>： 目前北京理工大学模式识别硕士在读，2018年毕业。个人喜欢图像处理、计算机视觉、机器学习等领域。更多以及<a href="http://cv.qiaobutang.com/r/5997e28c0cf202fca1a62686">个人简历</a></front>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">35</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Caffe/">Caffe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/">Markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV基础/">OpenCV基础</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ResNet/">ResNet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TLD/">TLD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VS2010/">VS2010</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c++</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/">ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图像处理/">图像处理</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/目标跟踪/">目标跟踪</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Caffe/" style="font-size: 10px;">Caffe</a> <a href="/tags/Linux/" style="font-size: 11.43px;">Linux</a> <a href="/tags/Markdown/" style="font-size: 10px;">Markdown</a> <a href="/tags/OpenCV/" style="font-size: 12.86px;">OpenCV</a> <a href="/tags/OpenCV基础/" style="font-size: 15.71px;">OpenCV基础</a> <a href="/tags/ResNet/" style="font-size: 10px;">ResNet</a> <a href="/tags/TLD/" style="font-size: 10px;">TLD</a> <a href="/tags/VS2010/" style="font-size: 10px;">VS2010</a> <a href="/tags/c/" style="font-size: 20px;">c++</a> <a href="/tags/leetcode/" style="font-size: 17.14px;">leetcode</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/图像处理/" style="font-size: 14.29px;">图像处理</a> <a href="/tags/数据结构与算法/" style="font-size: 18.57px;">数据结构与算法</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/目标跟踪/" style="font-size: 12.86px;">目标跟踪</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/30/Linux_shell/正则表达式/">正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/02/Leetcode/5-最长回文子串-C-中心扩展-暴力-md/">[5. 最长回文子串] C + 中心扩展 + 暴力</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/24/CPP/数据结构之图论基础/">数据结构之图论基础</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/24/CPP/数据结构之常见图论算法/">数据结构之常见图论算法</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/19/DeepLearning/caffe-finetuning/">Caffe ResNet50微调</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 liangzelang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+	<p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">主页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">个人</a>
+  
+</nav>
+    
+
+<script src="//ajax.useso.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

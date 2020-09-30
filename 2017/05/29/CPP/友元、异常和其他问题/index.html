@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>友元、异常和其他相关问题 | Zelang Liang</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="友元友元类友元函数用于类的扩展接口，类并非只能拥有友元函数，还能够将类作为友元类。友元类的所有方法都可以访问原始类的私有成员和保护成员。以电视机和遥控器的关系，解释友元的作用以及相关问题">
+<meta name="keywords" content="c++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="友元、异常和其他相关问题">
+<meta property="og:url" content="http://newbird.cn/2017/05/29/CPP/友元、异常和其他问题/index.html">
+<meta property="og:site_name" content="Zelang Liang">
+<meta property="og:description" content="友元友元类友元函数用于类的扩展接口，类并非只能拥有友元函数，还能够将类作为友元类。友元类的所有方法都可以访问原始类的私有成员和保护成员。以电视机和遥控器的关系，解释友元的作用以及相关问题">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-09-30T09:34:19.061Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="友元、异常和其他相关问题">
+<meta name="twitter:description" content="友元友元类友元函数用于类的扩展接口，类并非只能拥有友元函数，还能够将类作为友元类。友元类的所有方法都可以访问原始类的私有成员和保护成员。以电视机和遥控器的关系，解释友元的作用以及相关问题">
+  
+    <link rel="alternate" href="/atom.xml" title="Zelang Liang" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Zelang Liang</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">New Bird , New Beginning</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">主页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">个人</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://newbird.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-CPP/友元、异常和其他问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/29/CPP/友元、异常和其他问题/" class="article-date">
+  <time datetime="2017-05-29T12:57:36.000Z" itemprop="datePublished">2017-05-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      友元、异常和其他相关问题
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="友元"><a href="#友元" class="headerlink" title="友元"></a>友元</h1><h2 id="友元类"><a href="#友元类" class="headerlink" title="友元类"></a>友元类</h2><p>友元函数用于类的扩展接口，类并非只能拥有友元函数，还能够将类作为友元类。友元类的所有方法都可以访问原始类的私有成员和保护成员。<br>以电视机和遥控器的关系，解释友元的作用以及相关问题<br><a id="more"></a></p>
+<h3 id="友元的声明"><a href="#友元的声明" class="headerlink" title="友元的声明"></a>友元的声明</h3><p>友元声明的位置无关紧要，可以在原始类的私有、公有或保护部分。简单示例如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class TV</span><br><span class="line">&#123;</span><br><span class="line">private:</span><br><span class="line">	friend class Remote;</span><br><span class="line">	...</span><br><span class="line">&#125;;</span><br><span class="line">class Remote</span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">public:</span><br><span class="line">	void set_chan(TV &amp; t);</span><br><span class="line">	...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>如上面代码所示，只需要在原始类中任意位置<code>friend class Remote</code>，就可以声明友元类了。</p>
+<ol>
+<li><p>但是问题来了，Remote类中提到了TV类，，所以编译器必须先了解TV类，才能处理Remote类。上面的例子就是把TV的定义放在Remote前面。那么如果TV中包含了Remote成员函数，Remote中包含了TV类怎么办呢？？？这就用到前向声明(forward declaration)。【如果让Remote类成为友元类，是不用前向声明的，因为那条语句就说明Remote是个类】</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">class Remote;</span><br><span class="line">class TV</span><br><span class="line">&#123;</span><br><span class="line">private:</span><br><span class="line">	friend void Remote::set_chan(TV &amp; t);</span><br><span class="line">	...</span><br><span class="line">&#125;;</span><br><span class="line">class Remote</span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">public:</span><br><span class="line">	void set_chan(TV &amp; t);</span><br><span class="line">	...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>是上述代码这样吗？<b>显然，这样是错误的！！！</b>，因为虽然Remote的声明放在前面，但是编译器并没有看到随后TV类中Remote的那个方法的声明。正确打开方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">class TV;</span><br><span class="line">class Remote</span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">public:</span><br><span class="line">	void set_chan(TV &amp; t);</span><br><span class="line">	...</span><br><span class="line">&#125;;</span><br><span class="line">class TV</span><br><span class="line">&#123;</span><br><span class="line">private:</span><br><span class="line">	friend void Remote::set_chan(TV &amp; t);</span><br><span class="line">	...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>那么问题又来了，如果<code>void set_chan(TV &amp; t) {t.function();}</code>,这样就会造成2中提到的问题，就循环了。所以这里采用内联函数吧。<br>友元还有很多内容，比如两个类互相为友元，两个类有一个共同的友元等，处理原则和上面说的几个点一样：<b>在你使用某个类、某个类的成员函数之前，你声明这个类、这个成员函数了吗？编译器就是看一点。</b></p>
+<h1 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h1><p>异常就是像我这种程序猿给自己挖的坑，异常处理就是程序猿自己给自己兜底。程序运行会遇到很多异常情况导致程序无法运行下去，为了防止这种情况，就有了C++异常：为处理这些情况强大、灵活的工具。通常情况有这样几种处理方法。</p>
+<h2 id="调用abort"><a href="#调用abort" class="headerlink" title="调用abort()"></a>调用abort()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstdlib&gt;  // abort() 函数头文件</span><br><span class="line">using namespace std;</span><br><span class="line">double hmean(double a, double b);</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	double x, y, z;</span><br><span class="line">	while(cin &gt;&gt; x &gt;&gt; y)</span><br><span class="line">	&#123;</span><br><span class="line">		z = hmean(x, y);</span><br><span class="line">		cout &lt;&lt; &quot;The harmonic mean of &quot; &lt;&lt; x &lt;&lt; &quot; and &quot; &lt;&lt; y  &lt;&lt; &quot; is &quot; &lt;&lt; z &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; &quot;Please enter next set of numbers : &lt;q to quit&gt;: &quot; &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	cout &lt;&lt; &quot;Done.\n&quot;;</span><br><span class="line">	system(&quot;pause&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line">double hmean(double a, double b)</span><br><span class="line">&#123;</span><br><span class="line">	if(a == -b)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; &quot;untenable arguments to hmean().\n&quot;;</span><br><span class="line">		abort();</span><br><span class="line">	&#125;</span><br><span class="line">	return 2.0 * a * b / ( a + b );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这个例子就是求两个数a、b的调和平均数，但是a、b不能为相反数，如果有，程序就崩了，所以如果出现这种情况就调用abort();终止程序运行。【我并没有意识到这个有什么用】</p>
+<h2 id="返回错误码"><a href="#返回错误码" class="headerlink" title="返回错误码"></a>返回错误码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cfloat&gt;</span><br><span class="line"></span><br><span class="line">bool hmean(double a, double b, double * ans);</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	double x, y, z;</span><br><span class="line">	cout &lt;&lt; &quot;Please enter one set of number : &quot;;</span><br><span class="line">	while(cin &gt;&gt; x &gt;&gt; y)</span><br><span class="line">	&#123;</span><br><span class="line">		if(hmean(x, y, &amp;z))</span><br><span class="line">		&#123;</span><br><span class="line">			cout &lt;&lt; &quot;Harmonic mean of &quot;&lt;&lt; x &lt;&lt; &quot; and &quot; &lt;&lt; y &lt;&lt; &quot; is &quot; &lt;&lt; z &lt;&lt; endl;</span><br><span class="line">		&#125;</span><br><span class="line">		else</span><br><span class="line">		&#123;</span><br><span class="line">			cout &lt;&lt; &quot;One value should not be the negative of the other - try again.\n&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">		cout &lt;&lt; &quot;Please enter next set of numbers &lt;q to quit &gt;: &quot;;</span><br><span class="line">	&#125;</span><br><span class="line">	system(&quot;pause&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bool hmean(double a, double b, double * ans)</span><br><span class="line">&#123;</span><br><span class="line">	if(a == -b)</span><br><span class="line">	&#123;</span><br><span class="line">		*ans == DBL_MAX;</span><br><span class="line">		return false;</span><br><span class="line">	&#125;</span><br><span class="line">	else</span><br><span class="line">	&#123;</span><br><span class="line">		*ans = 2.0 * a * b /(a + b);</span><br><span class="line">		return true;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个例子和上面那个例子没有什么区别，就是检测到如果为相反数，不调用abort(),而是返回一个false……………………………………【我也没有感觉这个有什么用】</p>
+<h2 id="异常机制-try–catch"><a href="#异常机制-try–catch" class="headerlink" title="异常机制 try–catch"></a>异常机制 try–catch</h2><p>C++异常对异常的处理由3各部分：<br><b>引发异常</b>。程序出现问题时将引发异常，之前两种方法在异常引发后，是调用abort终止了程序，但是throw语句是跳转，即命令程序跳转到另一条语句。throw关键字表示引发异常，参数表示异常的特征，用以指导处理。<br><b>使用处理程序捕获异常</b>。采用异常处理程序捕获异常，catch关键字表示捕获异常，其参数指出异常处理程序要响应的异常类型。异常处理程序也叫catch块。<br><b>使用try块</b>。try块表示可能会引发异常的代码块，表面需要注意这些代码引发的异常；它后面跟多个catch块，表明try块引发的异常由这些catch块处理。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line">double hmean(double a, double b);</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	double x, y, z;</span><br><span class="line">	cout &lt;&lt; &quot;Enter one set of numbers : &quot;;</span><br><span class="line">	while(cin &gt;&gt; x &gt;&gt; y)</span><br><span class="line">	&#123;</span><br><span class="line">		try&#123;</span><br><span class="line">			z = hmean(x, y);</span><br><span class="line">		&#125;</span><br><span class="line">		catch(const char * s)</span><br><span class="line">		&#123;</span><br><span class="line">			cout &lt;&lt; s &lt;&lt; endl;</span><br><span class="line">			cout &lt;&lt; &quot;Enter next set of numbers : &quot;;</span><br><span class="line">			continue;</span><br><span class="line">		&#125;</span><br><span class="line">		cout &lt;&lt; &quot;Harmonic mean of &quot; &lt;&lt; x &lt;&lt; &quot; and &quot; &lt;&lt; y &lt;&lt; &quot; is &quot; &lt;&lt; z &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; &quot;Enter next set of numbers : &quot;;</span><br><span class="line">	&#125;</span><br><span class="line">	system(&quot;pause&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">double hmean(double a, double b)</span><br><span class="line">&#123;</span><br><span class="line">	if(a == -b)</span><br><span class="line">		throw &quot;bad hmean() arguments&quot;;</span><br><span class="line">	return 2.0 * a * b /(a + b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个例子和前面的两个一样。但是处理方法采用了try-catch的方法，就是检测到是相反数，就抛出异常(throw “bad hmean() arguments”;),然后根据这个抛出的异常信息，在catch中找到对应的catch处理部分。<b>需要注意的是，执行throw语句类似于执行返回语句，因为它也将终止函数的执行，但是throw不是返回至调用程序的地方，而是使程序沿函数调用序列后退，直至try块函数。</b>在寻找与异常类型匹配的异常处理程序（catch块）。如果没有引发异常，则跳过catch块。<br>还有就是，也可以将对象作为异常类型throw掉……………………具体实现方法和上面差不多。</p>
+<h2 id="异常规范"><a href="#异常规范" class="headerlink" title="异常规范"></a>异常规范</h2><p>C++11把异常规范从标准中剔除了，感兴趣有时间可以看看。</p>
+<h1 id="运行阶段类型识别-RTTI"><a href="#运行阶段类型识别-RTTI" class="headerlink" title="运行阶段类型识别(RTTI)"></a>运行阶段类型识别(RTTI)</h1><p>RTTI（Runtime Type Identification）是运行阶段类型识别，简单点就是在运行阶段确定对象的类型的一种标准方法。<br>在实际编程中，会遇到这样的情况，在总多类层次结构中，我们会选择使用基类指针来指向其中任意的派生类对象，但是问题来了，我想使用某个类的成员函数，那么这个指针能否直接调用这个函数呢，我们就会搞忘这个指针指向的到底是什么对象类型？？？当然如果这个函数是类层次结构中所有成员都拥有的虚函数，就无所谓了。</p>
+<h2 id="RTTI的工作原理"><a href="#RTTI的工作原理" class="headerlink" title="RTTI的工作原理"></a>RTTI的工作原理</h2><p>C++有3个支持RTTI的元素：dynamic_cast运算符、typeid运算符、type_info结构。</p>
+<ol>
+<li>dynamic_cast<br>dynamic_cast运算符，如果可以，使用一个指向基类的指针来生成一个派生类指针；否则，返回空指针。<br>假设有如下的类层次结构：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class Grand &#123;//has virtual methods&#125;;</span><br><span class="line">class Superb : public Grand &#123;&#125;</span><br><span class="line">class Magnificent : public Superb &#123;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>有如下指针：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Grand * pg = new Grand;</span><br><span class="line">Grand * ps = new Superb;</span><br><span class="line">Grand * pm = new Magnificent;</span><br><span class="line"></span><br><span class="line">Magnificent * p1 = (Magnificent *) pm;  //#1</span><br><span class="line">Magnificent * p2 = (Magnificent *) pg;  //#2</span><br><span class="line">Superb * p3 = (Magnificent *) pm;       //#3</span><br></pre></td></tr></table></figure></p>
+<p>可以得到的是，以上三种指针转换第一种和第三种是正确的，但是第二种是错误，因为pg是基类指针，强制转换为派生类指针，要求其可以调用派生类方法，显然会导致错误。<br>需要注意的是，与“指针指向的是什么类型的对象”相比，问题“类型转换是否安全正确”更加通用。因此来看看dynamic_cast的用法。<br><code>Superb * pm = dynamic_cast&lt;Super *&gt; pg;</code>,这各语句就指出pg能否安全的转换为Superb *，，如果可以赋值给pm， 如果不可以，pm被赋值为空指针；<br>具体的来看一个详细的例子：：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">// dynamic_case\&lt;\&gt; 也可以用于引用，但是与指针用法稍有不同：没有与空指针对于的引用值，无法使用特殊的引用值指示失败，因此dynamic_case将引发bad_cast的异常 P646</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstdlib&gt;</span><br><span class="line">#include &lt;ctime&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">class Grand&#123;</span><br><span class="line">private:</span><br><span class="line">	int hold;</span><br><span class="line">public:</span><br><span class="line">	Grand(int h = 0) : hold(h) &#123;&#125;</span><br><span class="line">	virtual void Speak() const &#123; cout &lt;&lt; &quot;I am a grand class!\n&quot;;&#125;</span><br><span class="line">	virtual int Value() const &#123; return hold;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Superb : public Grand</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">	Superb(int h = 0) : Grand(h) &#123;&#125;</span><br><span class="line">	void Speak() const &#123;cout &lt;&lt; &quot;I am a Superb class!!\n&quot;;&#125;</span><br><span class="line">	virtual void Say() const &#123; cout &lt;&lt; &quot;I holde the superb value of &quot; &lt;&lt; Value() &lt;&lt; &quot;!!\n&quot;;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Magnificent : public Superb</span><br><span class="line">&#123;</span><br><span class="line">private:</span><br><span class="line">	char ch;</span><br><span class="line">public:</span><br><span class="line">	Magnificent(int h = 0, char c = &apos;A&apos;) : Superb(h), ch(c) &#123;&#125;</span><br><span class="line">	void Speak() const &#123; cout &lt;&lt; &quot;I am a magnificent class \n&quot;;&#125;</span><br><span class="line">	void Say() const &#123; cout &lt;&lt; &quot;I hold the character &quot; &lt;&lt; ch &lt;&lt; &quot;and the integer &quot; &lt;&lt; Value() &lt;&lt; &quot;\n&quot;;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Grand * GetOne();</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	srand(time(0));   //srand() cstdlib  time(0) ctime</span><br><span class="line">	Grand * pg;</span><br><span class="line">	Superb * ps;</span><br><span class="line">	for(int i = 0; i &lt; 5; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		pg = GetOne();</span><br><span class="line">		pg-&gt;Speak();</span><br><span class="line">		if(ps = dynamic_cast&lt;Superb * &gt;(pg))</span><br><span class="line">			ps-&gt;Say();</span><br><span class="line">	&#125;</span><br><span class="line">	system(&quot;pause&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Grand * GetOne()</span><br><span class="line">&#123;</span><br><span class="line">	Grand * p;</span><br><span class="line">	switch(rand() % 3)</span><br><span class="line">	&#123;</span><br><span class="line">	case 0:</span><br><span class="line">		p = new Grand(rand() % 100);</span><br><span class="line">		break;</span><br><span class="line">	case 1:</span><br><span class="line">		p = new Superb(rand() % 100);</span><br><span class="line">		break;</span><br><span class="line">	case 2:</span><br><span class="line">		p = new Magnificent(rand() % 100, &apos;A&apos; + rand() % 26);</span><br><span class="line">		break;</span><br><span class="line">	&#125; </span><br><span class="line">	return p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ol start="2">
+<li>typeid运算符和typeinfo类<br>typeid运算符合sizeof有些相似，结构两种参数：类名、结果为对象的表达式。<br>typeid将返回一个对type_info对象的引用，type_info是在头文件typeinfo中定义的一个类，type_info重载了==和！=运算符，以便对类型进行比较。如果pg指向一个Magnificent对象，则下面结果为true，否则为false：<br><code>typeid(Magnificent) == typeid(*pg);</code>,那么问题又来了，如果pg是一个空指针呢，将引发bad_typeid异常。该异常是从exception类派生而来的，在typeinfo中声明的。<br>type_info类的实现随不同厂商而异，但包含一个name()成员，返回一个随实现而异的字符串。具体看下面的例子：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstdlib&gt;</span><br><span class="line">#include &lt;ctime&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">class Grand&#123;</span><br><span class="line">private:</span><br><span class="line">	int hold;</span><br><span class="line">public:</span><br><span class="line">	Grand(int h = 0) : hold(h) &#123;&#125;</span><br><span class="line">	virtual void Speak() const &#123; cout &lt;&lt; &quot;I am a grand class!\n&quot;;&#125;</span><br><span class="line">	virtual int Value() const &#123; return hold;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Superb : public Grand</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">	Superb(int h = 0) : Grand(h) &#123;&#125;</span><br><span class="line">	void Speak() const &#123;cout &lt;&lt; &quot;I am a Superb class!!\n&quot;;&#125;</span><br><span class="line">	virtual void Say() const &#123; cout &lt;&lt; &quot;I holde the superb value of &quot; &lt;&lt; Value() &lt;&lt; &quot;!!\n&quot;;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Magnificent : public Superb</span><br><span class="line">&#123;</span><br><span class="line">private:</span><br><span class="line">	char ch;</span><br><span class="line">public:</span><br><span class="line">	Magnificent(int h = 0, char c = &apos;A&apos;) : Superb(h), ch(c) &#123;&#125;</span><br><span class="line">	void Speak() const &#123; cout &lt;&lt; &quot;I am a magnificent class \n&quot;;&#125;</span><br><span class="line">	void Say() const &#123; cout &lt;&lt; &quot;I hold the character &quot; &lt;&lt; ch &lt;&lt; &quot;and the integer &quot; &lt;&lt; Value() &lt;&lt; &quot;\n&quot;;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Grand * GetOne();</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	srand(time(0));   //srand() cstdlib  time(0) ctime</span><br><span class="line">	Grand * pg;</span><br><span class="line">	Superb * ps;</span><br><span class="line">	for(int i = 0; i &lt; 5; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		pg = GetOne();</span><br><span class="line">		cout &lt;&lt; &quot;Now processing type &quot; &lt;&lt; typeid(*pg).name() &lt;&lt; endl;</span><br><span class="line">		pg-&gt;Speak();</span><br><span class="line">		if(ps = dynamic_cast&lt;Superb *&gt;(pg))</span><br><span class="line">			ps-&gt;Say();</span><br><span class="line">		if(typeid(Magnificent) ==typeid(*pg))</span><br><span class="line">			cout &lt;&lt; &quot;Yes, you&apos;re really magnificent.\n&quot;;</span><br><span class="line">	&#125;</span><br><span class="line">	system(&quot;pause&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Grand * GetOne()</span><br><span class="line">&#123;</span><br><span class="line">	Grand * p;</span><br><span class="line">	switch(rand() % 3)</span><br><span class="line">	&#123;</span><br><span class="line">	case 0:</span><br><span class="line">		p = new Grand(rand() % 100);</span><br><span class="line">		break;</span><br><span class="line">	case 1:</span><br><span class="line">		p = new Superb(rand() % 100);</span><br><span class="line">		break;</span><br><span class="line">	case 2:</span><br><span class="line">		p = new Magnificent(rand() % 100, &apos;A&apos; + rand() % 26);</span><br><span class="line">		break;</span><br><span class="line">	&#125; </span><br><span class="line">	return p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h2 id="嵌套类"><a href="#嵌套类" class="headerlink" title="嵌套类"></a>嵌套类</h2><p>这个内容并没有太多可讲的，需要重点关注的点：<b>嵌套类的作用域和访问控制</b>。</p>
+<h2 id="类型转换运算符"><a href="#类型转换运算符" class="headerlink" title="类型转换运算符"></a>类型转换运算符</h2><p>在RTTI中讲了一个类型转换运算符，但是还有几个其他的运算符,用法和dynamic_cast一样，运用的场景不一样而已：<br>dynamic_cast: 在类层次结构中进行向上转换，而不允许其他转换<br>const_cast： 用来修改类型的const或volatile属性。但是这个运算符没有很好的理解，可以改变类型，却又不能改变const的值，那么有什么用？？？<br>static_cast: <code>static_cast&lt;type-name&gt; (expression)</code>,仅当type-name可被隐式转换为expression所属类型或expression所属类型可被隐式转换为type-name，转换成立，否则将出错。有些不能隐式转换的也可使用static_cast强制转换，但是可能出错。同时也可以用于数值转换中。<br>reinterpret_cast：用于比如将一个long型数据转换为一个结构体（包含两个short型成员），这类危险转换依赖于底层编程技术，不可移植。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/05/29/CPP/友元、异常和其他问题/" data-id="ckfp7tbn5000zfspl7wbmnhrt" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/06/01/CPP/智能指针/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          智能指针
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/28/OpenCV/core组件进阶/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">core组件进阶</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h2 class="widget-title"><b>关于我</b></h2>
+    <div class="widget">
+ <front size="3"><b>邮箱</b>：liangzelang@gmail.com<br>
+ <b>现状</b>： 目前北京理工大学模式识别硕士在读，2018年毕业。个人喜欢图像处理、计算机视觉、机器学习等领域。更多以及<a href="http://cv.qiaobutang.com/r/5997e28c0cf202fca1a62686">个人简历</a></front>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">35</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Caffe/">Caffe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/">Markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV基础/">OpenCV基础</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ResNet/">ResNet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TLD/">TLD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VS2010/">VS2010</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c++</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/">ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图像处理/">图像处理</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/目标跟踪/">目标跟踪</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Caffe/" style="font-size: 10px;">Caffe</a> <a href="/tags/Linux/" style="font-size: 11.43px;">Linux</a> <a href="/tags/Markdown/" style="font-size: 10px;">Markdown</a> <a href="/tags/OpenCV/" style="font-size: 12.86px;">OpenCV</a> <a href="/tags/OpenCV基础/" style="font-size: 15.71px;">OpenCV基础</a> <a href="/tags/ResNet/" style="font-size: 10px;">ResNet</a> <a href="/tags/TLD/" style="font-size: 10px;">TLD</a> <a href="/tags/VS2010/" style="font-size: 10px;">VS2010</a> <a href="/tags/c/" style="font-size: 20px;">c++</a> <a href="/tags/leetcode/" style="font-size: 17.14px;">leetcode</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/图像处理/" style="font-size: 14.29px;">图像处理</a> <a href="/tags/数据结构与算法/" style="font-size: 18.57px;">数据结构与算法</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/目标跟踪/" style="font-size: 12.86px;">目标跟踪</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/30/Linux_shell/正则表达式/">正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/02/Leetcode/5-最长回文子串-C-中心扩展-暴力-md/">[5. 最长回文子串] C + 中心扩展 + 暴力</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/24/CPP/数据结构之图论基础/">数据结构之图论基础</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/24/CPP/数据结构之常见图论算法/">数据结构之常见图论算法</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/19/DeepLearning/caffe-finetuning/">Caffe ResNet50微调</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 liangzelang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+	<p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">主页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">个人</a>
+  
+</nav>
+    
+
+<script src="//ajax.useso.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
