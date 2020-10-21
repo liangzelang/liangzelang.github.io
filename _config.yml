@@ -88,7 +88,7 @@ theme: landscape
 deploy: 
 
 - type: git
-  repo: https://github.com/liangzelang/liangzelang.github.io.git
+  repo: git@github.com:liangzelang/liangzelang.github.io.git
   branch: master
 #- type: git
 #  repo: https://git.coding.net/liangzelang/liangzelangBlog.git
