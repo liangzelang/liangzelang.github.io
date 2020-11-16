@@ -71,6 +71,339 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Leetcode/750.角矩阵的数量" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/11/16/Leetcode/750.角矩阵的数量/" class="article-date">
+  <time datetime="2020-11-16T15:35:23.000Z" itemprop="datePublished">2020-11-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/16/Leetcode/750.角矩阵的数量/">leetcode 750.角矩阵的数量</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="https://pic.leetcode-cn.com/1604386035-boXARw-image.png" alt="image.png"></p>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><ol>
+<li>就是分析两两行之前能构成多少个矩阵，显然就是看两行有多少相同列位置的1（<code>grid[i][j] == grid[z][j] == 1</code>）,然后排列组合的公式(a * (a - 1)) / 2;</li>
+<li>1个for循环是遍历所有行，一个for循环是当前行之前的行（要挨个比较与之前的每行麻），一个for循环是列宽度，看两行有多个相同位置的1</li>
+<li>把所有结果相加</li>
+</ol>
+<h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><ul>
+<li>时间复杂度： O(n^3)，认为行列都是n</li>
+<li>空间复杂度： O(1)</li>
+</ul>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LEN 100</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">countCornerRectangles</span><span class="params">(<span class="keyword">int</span>** grid, <span class="keyword">int</span> gridSize, <span class="keyword">int</span>* gridColSize)</span></span>&#123;</span><br><span class="line">    <span class="comment">//int row[LEN] = &#123;0&#125;;</span></span><br><span class="line">    <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; gridSize; i ++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> z = <span class="number">0</span>; z &lt; i; z++) &#123;</span><br><span class="line">            <span class="keyword">int</span> temp = <span class="number">0</span>;       </span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; *gridColSize; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (grid[i][j] == <span class="number">1</span> &amp;&amp;  grid[z][j]  == <span class="number">1</span>) &#123;</span><br><span class="line">                    temp += <span class="number">1</span>;</span><br><span class="line">                &#125;                </span><br><span class="line">            &#125;</span><br><span class="line">            res += (temp * (temp <span class="number">-1</span>)) / <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2020/11/16/Leetcode/750.角矩阵的数量/" data-id="ckhkn4098000n0hpl9g9d4x1w" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-CPP/gdb终极指南" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/11/16/CPP/gdb终极指南/" class="article-date">
+  <time datetime="2020-11-16T15:35:23.000Z" itemprop="datePublished">2020-11-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/16/CPP/gdb终极指南/">gdb调试指南</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="gdb基本入门用法"><a href="#gdb基本入门用法" class="headerlink" title="gdb基本入门用法"></a>gdb基本入门用法</h3><ol>
+<li>gdb调试编译</li>
+</ol>
+<ul>
+<li>gdb调试需要使用的额外的信息，因此在编译程序的时候需要加上 <strong><code>-g</code></strong> 参数</li>
+</ul>
+<ol start="2">
+<li><p>gdb启动调试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* gdb &lt;your_program&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>gdb基本调试命令</p>
+</li>
+</ol>
+<ul>
+<li>启动gdb调试：<code>r</code></li>
+<li>启动程序：</li>
+<li>添加断点：</li>
+<li>查看断点：</li>
+<li>单步执行：</li>
+<li>跳过当前函数：</li>
+<li>进入函数(steps into)：</li>
+<li>查看当前函数调用栈：</li>
+</ul>
+<p>懂了以上的基本方法，基本就可以自己愉快的玩耍了。</p>
+<h3 id="gdb进阶用法"><a href="#gdb进阶用法" class="headerlink" title="gdb进阶用法"></a>gdb进阶用法</h3><ol>
+<li>多线程调试</li>
+</ol>
+<ul>
+<li>查看进程：<code>info inferiors</code></li>
+<li>查看线程：<code>info threads</code></li>
+<li>查看线程栈结构：<code>bt</code></li>
+<li>切换线程：<code>thread n</code> (n表示第几个线程)</li>
+</ul>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://wizardforcel.gitbooks.io/100-gdb-tips/content/index.html" target="_blank" rel="noopener">100个gdb技巧</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2020/11/16/CPP/gdb终极指南/" data-id="ckhkn408y00050hpljs3936mf" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gdb/">gdb</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/调试与定位/">调试与定位</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Leetcode/1230.抛掷硬币" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/11/16/Leetcode/1230.抛掷硬币/" class="article-date">
+  <time datetime="2020-11-16T15:35:23.000Z" itemprop="datePublished">2020-11-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/16/Leetcode/1230.抛掷硬币/">leetcode 1230.抛掷硬币</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="https://pic.leetcode-cn.com/1604404008-ilwMYw-image.png" alt="image.png"></p>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><ol>
+<li>这种类型的题目显然可以优化成最小结构，使用动态规划</li>
+<li>最小结构： <code>dp[i][j]</code>:  抛掷i次硬币，j次正面的概率</li>
+<li>状态转移方程： <code>dp[i][j] = dp[i-1][j]*(1-(prob[i-1])) + dp[i-1][j-1]*prob[i-1]</code>  （注意这里第i次的概率对应数组index要-1）</li>
+<li>边界条件分析，<code>dp[0][0]=1</code></li>
+</ol>
+<h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><ul>
+<li>时间复杂度：<code>O(n^2)</code></li>
+<li>空间复杂度：<code>O(n^2)</code> 认为row和col都为n</li>
+</ul>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">probabilityOfHeads</span><span class="params">(<span class="keyword">double</span>* prob, <span class="keyword">int</span> probSize, <span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">float</span>** dp = (<span class="keyword">float</span>**)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">float</span>*)*(probSize+<span class="number">1</span>));</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= probSize; i++) &#123;</span><br><span class="line">        dp[i] = (<span class="keyword">float</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">float</span>)*(target+<span class="number">1</span>));</span><br><span class="line">        (<span class="keyword">void</span>)<span class="built_in">memset</span>(dp[i], <span class="number">0</span>, <span class="keyword">sizeof</span>(<span class="keyword">float</span>)*(target+<span class="number">1</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= probSize; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= target; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (j &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                dp[i][j] = dp[i<span class="number">-1</span>][j]*(<span class="number">1</span>-prob[i<span class="number">-1</span>]) + dp[i<span class="number">-1</span>][j<span class="number">-1</span>]*prob[i<span class="number">-1</span>];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                dp[i][<span class="number">0</span>] = dp[i<span class="number">-1</span>][<span class="number">0</span>]*(<span class="number">1</span>-prob[i<span class="number">-1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;        </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[probSize][target];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2020/11/16/Leetcode/1230.抛掷硬币/" data-id="ckhkn4095000f0hpl7rrcmqyd" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Leetcode/1055. 形成字符串的最短路径" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/11/16/Leetcode/1055. 形成字符串的最短路径/" class="article-date">
+  <time datetime="2020-11-16T15:35:23.000Z" itemprop="datePublished">2020-11-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/16/Leetcode/1055. 形成字符串的最短路径/">leetcode 1055.形成字符串的最短路经</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="https://pic.leetcode-cn.com/1604921591-QkayHN-image.png" alt="image.png"></p>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><ol>
+<li>以target字符串为基准，从index=0开始与souce[i]比较，如果相同，source和target的index向后；如果不相同，source的下一个字符直至source结束；</li>
+<li>上一步完成后，可能source和target一个字符都没有匹配上，或者至少匹配上一个；判断一下如果一个都没有匹配上，肯定就直接返回-1了；如果至少匹配上一个，那就继续比较。</li>
+</ol>
+<h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><ul>
+<li>时间复杂度： O(n^2)</li>
+<li>空间复杂度： O(1)</li>
+</ul>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">shortestWay</span><span class="params">(<span class="keyword">char</span> * source, <span class="keyword">char</span> * target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> cnt = <span class="number">0</span>;  </span><br><span class="line">    <span class="keyword">int</span> t_index = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (t_index &lt; <span class="built_in">strlen</span>(target)) &#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = t_index;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">strlen</span>(source); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (source[i] == target[t_index]) &#123;</span><br><span class="line">                t_index++;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (tmp != t_index) &#123;</span><br><span class="line">            cnt++;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> cnt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2020/11/16/Leetcode/1055. 形成字符串的最短路径/" data-id="ckhkn4094000e0hpl4m9nxhn1" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Summary/202011_plan" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/11/16/Summary/202011_plan/" class="article-date">
+  <time datetime="2020-11-16T14:15:24.497Z" itemprop="datePublished">2020-11-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="2020-11计划"><a href="#2020-11计划" class="headerlink" title="2020.11计划"></a>2020.11计划</h2><h3 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h3><ul>
+<li><p>两章节基础知识及相关总结文档整理与上库  第8-12章 </p>
+</li>
+<li><p>管理系统完善相关功能，尝试相关设计工作流</p>
+</li>
+</ul>
+<h3 id="leetcode"><a href="#leetcode" class="headerlink" title="leetcode"></a>leetcode</h3><ul>
+<li>每天刷三题 因为本月20日需要考试</li>
+<li>题目如下：<ol>
+<li>动态规划： 750、 1230、 1055</li>
+<li>贪心算法：452、1231、1247、45、621、376</li>
+<li>字典树：(可能不考试)</li>
+<li><code>DFS</code>：</li>
+<li><code>BFS</code>：</li>
+<li>字符串：692、44、527、227、43、93、5</li>
+<li>滑动窗口：1100、159、1151、340、1208</li>
+<li>单调栈：402、1124、962、239、901、42、85、503、739、84</li>
+</ol>
+</li>
+</ul>
+<h3 id="开源项目学习"><a href="#开源项目学习" class="headerlink" title="开源项目学习"></a>开源项目学习</h3><ul>
+<li><code>OpenTLD</code>开源仓库的维护及原理、论文学习，总结</li>
+<li><code>Tensorflow</code> <code>control flow</code>论文的翻译与学习</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2020/11/16/Summary/202011_plan/" data-id="ckhkn409f000x0hpldebw7npw" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Summary/学习方法论总结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/11/16/Summary/学习方法论总结/" class="article-date">
+  <time datetime="2020-11-16T14:14:40.669Z" itemprop="datePublished">2020-11-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本文主要是记录平时看到的一些比较好的一些学习方法论，争取在后续的学习、工作、生活中能够利用起来，构建美好高效的生活。</p>
+<h2 id="1、科研论文阅读方法"><a href="#1、科研论文阅读方法" class="headerlink" title="1、科研论文阅读方法"></a>1、科研论文阅读方法</h2><p>地址： <a href="https://www.jiqizhixin.com/articles/2020-07-17-6" target="_blank" rel="noopener">吴恩达教你读论文-持续而缓慢的学习才是正道</a><br>该方法的核心</p>
+<h3 id="论文集或领域主题学习"><a href="#论文集或领域主题学习" class="headerlink" title="论文集或领域主题学习"></a>论文集或领域主题学习</h3><ol>
+<li>确定自己阅读和学习的领域主题</li>
+<li>通过任何可能途径收集领域主题相关的资源，包括研究论文、中篇文章、博客、视频、github等</li>
+<li>建立资源理解水平跟踪表格（如图1），以直观展示对于该主题的理解程度以及进度</li>
+<li>每篇论文理解<code>10%</code>-<code>20%</code>时基本确定了与主题的相关性，针对不同资源确定目标理解程度</li>
+<li>理解5-20篇论文能对领域有一个基本认识，足够作出技术实现；50-100篇就能对能源有很好的理解</li>
+<li></li>
+</ol>
+<h3 id="单篇论文学习"><a href="#单篇论文学习" class="headerlink" title="单篇论文学习"></a>单篇论文学习</h3><ol>
+<li>第一遍时，首先阅读标题、摘要和图形；第二遍时，需要阅读引言、结论；第三遍时，阅读其余部分</li>
+<li>第三遍需要阅读论文的全部内容，但是可以跳过任何不熟悉的复杂数学公式及术语</li>
+<li>对于深入领域的人，需要多阅读几遍以集中理解论文中的数学、技术、未知术语等</li>
+<li>进行结构化注释，用自己的话总结论文中的关键发现和技术<br>5、阅读论文的时候自问自答：<ul>
+<li>论文作者旨在实现或可能实现的目标是什么？</li>
+<li>如果论文中介绍了新的方法，新的方法的关键要素是什么？</li>
+<li>论文中哪些内容对自己有用？</li>
+<li>还要阅读哪些文献？</li>
+</ul>
+</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><blockquote>
+<p>“持续而缓慢的学习，而不是临时抱佛脚，才能带来长久的成长   — 吴恩达”</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2020/11/16/Summary/学习方法论总结/" data-id="ckhkn409h00110hplig3xhy49" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-CPP/C++并发编程学习总结1" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/11/11/CPP/C++并发编程学习总结1/" class="article-date">
@@ -179,7 +512,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://newbird.cn/2020/11/11/CPP/C++并发编程学习总结1/" data-id="ckhkkub5y000cdqplhw57e57v" class="article-share-link">Share</a>
+      <a data-url="http://newbird.cn/2020/11/11/CPP/C++并发编程学习总结1/" data-id="ckhkn409p00130hpli0bpglfi" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li></ul>
@@ -231,7 +564,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://newbird.cn/2020/11/11/Summary/hexo+github博客使用指南/" data-id="ckhkkub6l001pdqpl52tfwgc7" class="article-share-link">Share</a>
+      <a data-url="http://newbird.cn/2020/11/11/Summary/hexo+github博客使用指南/" data-id="ckhkn409g00100hplsw30b9od" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
@@ -318,7 +651,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://newbird.cn/2020/09/30/Linux_shell/正则表达式/" data-id="ckhkkub6e0014dqpl1abz1sk2" class="article-share-link">Share</a>
+      <a data-url="http://newbird.cn/2020/09/30/Linux_shell/正则表达式/" data-id="ckhkn4099000o0hplgxly05hc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
@@ -371,7 +704,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://newbird.cn/2020/08/02/Leetcode/5-最长回文子串-C-中心扩展-暴力-md/" data-id="ckhkkub69000wdqpl19k0h12n" class="article-share-link">Share</a>
+      <a data-url="http://newbird.cn/2020/08/02/Leetcode/5-最长回文子串-C-中心扩展-暴力-md/" data-id="ckhkn4097000l0hpl0pgfh48m" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
@@ -383,316 +716,10 @@
 
 
   
-    <article id="post-CPP/数据结构之图论基础" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/08/24/CPP/数据结构之图论基础/" class="article-date">
-  <time datetime="2017-08-24T12:53:48.000Z" itemprop="datePublished">2017-08-24</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/24/CPP/数据结构之图论基础/">数据结构之图论基础</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1、图的数据存储"><a href="#1、图的数据存储" class="headerlink" title="1、图的数据存储"></a>1、图的数据存储</h2><h2 id="1-1、-邻接矩阵"><a href="#1-1、-邻接矩阵" class="headerlink" title="1.1、 邻接矩阵"></a>1.1、 邻接矩阵</h2><p>图的邻接矩阵是由两个数组完成，一个一维数组存储<strong>图中的顶点</strong>;一个二维数组存储<strong>图中的边或弧</strong>。<br>如果图G有n个顶点，则邻接矩阵是一个n*n的方阵，定义为：<br>arc[i][j]等于1（如果（Vi，Vj）属于E），反之等于0。<br>有向图也差不多，有了出度和入度的概念<br>网 就是有权的图</p>
-<h2 id="邻接矩阵的创建"><a href="#邻接矩阵的创建" class="headerlink" title="邻接矩阵的创建"></a>邻接矩阵的创建</h2>
-        
-          <p class="article-more-link">
-            <a href="/2017/08/24/CPP/数据结构之图论基础/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://newbird.cn/2017/08/24/CPP/数据结构之图论基础/" data-id="ckhkkub64000jdqpl3y8d2th0" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-CPP/数据结构之常见图论算法" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/08/24/CPP/数据结构之常见图论算法/" class="article-date">
-  <time datetime="2017-08-24T12:53:48.000Z" itemprop="datePublished">2017-08-24</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/24/CPP/数据结构之常见图论算法/">数据结构之常见图论算法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="最小生成树"><a href="#最小生成树" class="headerlink" title="最小生成树"></a>最小生成树</h2><p>就是在有权图中，找到n个顶点n-1条边使得权重最小化。</p>
-<h3 id="prims算法"><a href="#prims算法" class="headerlink" title="prims算法"></a>prims算法</h3><h3 id="Kruskal算法"><a href="#Kruskal算法" class="headerlink" title="Kruskal算法"></a>Kruskal算法</h3><h2 id="最短路径"><a href="#最短路径" class="headerlink" title="最短路径"></a>最短路径</h2><h3 id="Dijkstra算法"><a href="#Dijkstra算法" class="headerlink" title="Dijkstra算法"></a>Dijkstra算法</h3><h3 id="Floyd算法"><a href="#Floyd算法" class="headerlink" title="Floyd算法"></a>Floyd算法</h3>
-        
-          <p class="article-more-link">
-            <a href="/2017/08/24/CPP/数据结构之常见图论算法/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://newbird.cn/2017/08/24/CPP/数据结构之常见图论算法/" data-id="ckhkkub65000ndqplsv4nv9lm" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-DeepLearning/caffe-finetuning" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/08/19/DeepLearning/caffe-finetuning/" class="article-date">
-  <time datetime="2017-08-19T14:04:25.000Z" itemprop="datePublished">2017-08-19</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/19/DeepLearning/caffe-finetuning/">Caffe ResNet50微调</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p>最近在学习Caffe，但是周围没有人交流，很是吃力，故分享之，如果有错误大家一定要指出，也希望对其他人有一定帮助。<br>ResNet模型是在2015年KaiMingHe提出来的，一举夺得了2015的ILSVRC ImageNet分类、识别、 定位的冠军（太腻害）。这个网络结构的特点就是没有最深只有更深……，在作者的<a href="https://github.com/KaimingHe" target="_blank" rel="noopener">github</a>上，有相应的代码，大家如果感兴趣可以看看。<br>我介绍一下我的数据，最近参加一个百度的比赛，100类宠物狗的识别。数据集一共18000张左右，但是数据质量一般，大小不定。最开始直接使用数据train from scratch，采用AlexNet错误率63%。我也是深度学习的初学者(水平就是看了一本书，看了一遍代码，跑了一遍例程)，所以决定go deeper，实验室服务器GPU是Tesla T40m可以跑一个稍微大一点的网络，所以选择ResNet50,顾名思义就是只有50层的残差网络。具体的网络结构图<a href="http://ethereon.github.io/netscope/#/gist/db945b393d40bfa26006" target="_blank" rel="noopener">如图所示</a>。使用ImageNet的pretrain模型进行finetune。我之前不太懂，直接拿18000张数据丢到网络中，过拟合严重，原因就是数据对于这种大型网络实在太少。（这其实也是技术交流的重要性，你自己搞一周，高手一句话可能就够了^_^）</p>
-<h2 id="Caffe-ResNet50-Finetune"><a href="#Caffe-ResNet50-Finetune" class="headerlink" title="Caffe ResNet50 Finetune"></a>Caffe ResNet50 Finetune</h2><p>我使用的是KaiMing He大神GitHub中的模型和相关配置<br>这是作者ResNet的repo，里面有预训练模型、网络定义等. <a href="https://github.com/KaimingHe/deep-residual-networks" target="_blank" rel="noopener">ResNet</a><br>其中有一个50层的ResNet caffemodel，一个deploy.prototxt。需要从one drivedown下来，非常慢，也可以在<a href="https://pan.baidu.com/s/1cgjfuY" target="_blank" rel="noopener">百度云</a>下载到caffemodel。<br>因此需要自己做的工作有：</p>
-<ol>
-<li>写一个train_val.prototxt配置文件，从deploy.prototxt改一下就OK</li>
-<li>修改train_val.prototxt一些参数</li>
-<li>准备数据集，最好转换为LMDB，速度能提高很多</li>
-</ol>
-<h2 id="具体实现步骤"><a href="#具体实现步骤" class="headerlink" title="具体实现步骤"></a>具体实现步骤</h2><h3 id="train-val-prototxt"><a href="#train-val-prototxt" class="headerlink" title="train_val.prototxt"></a>train_val.prototxt</h3><p>直接复制deploy.prototxt,然后修改。</p>
-<ol>
-<li>加入数据层</li>
-<li>根据自己的任务，修改最后全连接层的输出类别数量，我的为100. <code>num_output: 100</code></li>
-<li>在训练阶段把BN层中 ‘use_global_flag: false’ 全部设置为false，测试阶段全部设置为 true，所以这个实现需要分开写，然后用参数’include{ phase: train/test}’指明是啥阶段，我觉得这样有点麻烦，所以我是train.prototxt和test.prototxt分开写的，具体的见<a href="https://github.com/liangzelang" target="_blank" rel="noopener">我的github</a></li>
-<li>修改最后全连接层的<strong>名字、学习率</strong>，因为要重新根据我们自己的任务训练最后的全连接层，故不能使用pretrained model对应的名字，这样这层参数将被随机初始化，重新训练；学习率提高可以较快训练这一层。<br>这样训练和测试的网络结构文件就搞定了。</li>
-</ol>
-<h3 id="solver-prototxt"><a href="#solver-prototxt" class="headerlink" title="solver.prototxt"></a>solver.prototxt</h3><p>这个主要配置一些训练参数，例如学习率什么的，也是根据自己的任务、数据来动态调节的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">train_net: &quot;examples/fusion/f1/train.prototxt&quot;                                  </span><br><span class="line">test_net: &quot;examples/fusion/f1/test.prototxt&quot;</span><br><span class="line"># iter_size: 2</span><br><span class="line">test_iter: 3000</span><br><span class="line">test_interval: 365</span><br><span class="line"># ture: run from lastest snapshot, false: run from iteration 0</span><br><span class="line"># test_initialization: false</span><br><span class="line">display: 365</span><br><span class="line">base_lr: 0.001</span><br><span class="line">lr_policy: &quot;multistep&quot;</span><br><span class="line"># 5th epoch  0.0001</span><br><span class="line">stepvalue: 2920</span><br><span class="line"># 10th epoch 0.00001</span><br><span class="line">stepvalue: 9125</span><br><span class="line"># 20th epoch 0.000001</span><br><span class="line">stepvalue: 21900</span><br><span class="line"># 40th epoch 0.0000001</span><br><span class="line">stepvalue: 31025</span><br><span class="line"># 80th epoch 0.00000001</span><br><span class="line"># stepvalue: 36640</span><br><span class="line">gamma: 0.1</span><br><span class="line">max_iter: 36500</span><br><span class="line">momentum: 0.9</span><br><span class="line">weight_decay: 0.0001</span><br><span class="line">snapshot: 1000</span><br><span class="line">snapshot_prefix: &quot;examples/fusion/f1/f1&quot;</span><br><span class="line">solver_mode: GPU</span><br></pre></td></tr></table></figure></p>
-<h3 id="deploy-prototxt"><a href="#deploy-prototxt" class="headerlink" title="deploy.prototxt"></a>deploy.prototxt</h3><p>这个是最后使用训练得到的模型来进行分类的网络结构，其实跟test.prototxt差不多，我需要分类的是图片，所以就把test.prototxt的数据层改一下，loss和acc层改一下就可以啦。</p>
-<h3 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">###################                                                             </span><br><span class="line"># author:liangzelang</span><br><span class="line"># resnet50 train shell scripts</span><br><span class="line">####################</span><br><span class="line">#!/usr/bin/env sh</span><br><span class="line">./build/tools/caffe train \</span><br><span class="line">    --solver=examples/fusion/f1/solver.prototxt -weights examples/fusion/f1/resnet50.caffemodel</span><br></pre></td></tr></table></figure>
-<h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://newbird.cn/2017/08/19/DeepLearning/caffe-finetuning/" data-id="ckhkkub5p000bdqplxhtmvtt0" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Caffe/">Caffe</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ResNet/">ResNet</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/图像处理/">图像处理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/深度学习/">深度学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-OpenCV/目标跟踪之TLD第一篇" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/08/19/OpenCV/目标跟踪之TLD第一篇/" class="article-date">
-  <time datetime="2017-08-19T13:53:10.000Z" itemprop="datePublished">2017-08-19</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/19/OpenCV/目标跟踪之TLD第一篇/">目标跟踪之TLD第一篇</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="目标跟踪之TLD（Tracking-Learning-Detection）–第一篇"><a href="#目标跟踪之TLD（Tracking-Learning-Detection）–第一篇" class="headerlink" title="目标跟踪之TLD（Tracking-Learning-Detection）–第一篇"></a>目标跟踪之TLD（Tracking-Learning-Detection）–第一篇</h1><p>之前总结了目标跟踪领域的一些传统方法，光流、meanshift、camshift等，这些大概都是2010之前比较流行的方法。都是比较纯粹的跟踪方法，有很多需要完善的东西，比如camshift虽然对跟踪目标的形变不敏感，但是如果在目标与背景颜色相差不大的情况，跟踪效果很差；传统方法在跟踪目标消失或者被完全遮挡后，再出现无法进行准确的重新跟踪（其实也可以，就是依靠相关的目标检测方法啦）。</p>
-<p>今天要介绍的方法就是在2012年Kalal的TLD方法，主要是长时间跟踪的一种方法，把检测、跟踪、学习融合在一起。<br>OpenCV3.2.0已经加入了TLD算法，但是我目前的版本是2.4,所以今天这个TLD的实现是Github上面的大神实现的。稍后也会加上OpenCV上面的TLD效果。<br>
-        
-          <p class="article-more-link">
-            <a href="/2017/08/19/OpenCV/目标跟踪之TLD第一篇/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://newbird.cn/2017/08/19/OpenCV/目标跟踪之TLD第一篇/" data-id="ckhkkub6i001fdqplo5hbgng2" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenCV/">OpenCV</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TLD/">TLD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/图像处理/">图像处理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/目标跟踪/">目标跟踪</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-OpenCV/目标跟踪之OpticalFlow-1" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/08/19/OpenCV/目标跟踪之OpticalFlow-1/" class="article-date">
-  <time datetime="2017-08-19T13:52:43.000Z" itemprop="datePublished">2017-08-19</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/19/OpenCV/目标跟踪之OpticalFlow-1/">目标跟踪之OpticalFlow</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="OpticalFlow-光流法"><a href="#OpticalFlow-光流法" class="headerlink" title="OpticalFlow 光流法"></a>OpticalFlow 光流法</h2><p>在视频序列中，把视频帧中每个像素与速度相关联，或者与同一像素点两帧之间的位移相关联，那么我们就可以得到稠密光流。<a href>Horm-Schunck方法</a>是计算光流的速度场。OpenCV是计算两帧之间对像素领域匹配，也叫块匹配；两种方法都是稠密跟踪。但是计算量都不小，所以不重点介绍。</p>
-<h2 id="Lucas—Kanada光流法"><a href="#Lucas—Kanada光流法" class="headerlink" title="Lucas—Kanada光流法"></a>Lucas—Kanada光流法</h2><p>相比上面的稠密光流，伟大的前人搞出了稀疏光流法，就是找出一些合适跟踪的特征点来进行跟踪匹配，即减少了运算量，效果还不差。稀疏光流法中当属LK光流法最有名。</p>
-<h3 id="LK算法原理"><a href="#LK算法原理" class="headerlink" title="LK算法原理"></a>LK算法原理</h3>
-        
-          <p class="article-more-link">
-            <a href="/2017/08/19/OpenCV/目标跟踪之OpticalFlow-1/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://newbird.cn/2017/08/19/OpenCV/目标跟踪之OpticalFlow-1/" data-id="ckhkkub6i001gdqplekgbgyiz" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenCV/">OpenCV</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/图像处理/">图像处理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/目标跟踪/">目标跟踪</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-OpenCV/目标跟踪之meanshift-camshift" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/08/19/OpenCV/目标跟踪之meanshift-camshift/" class="article-date">
-  <time datetime="2017-08-19T13:52:08.000Z" itemprop="datePublished">2017-08-19</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/19/OpenCV/目标跟踪之meanshift-camshift/">目标跟踪之meanshift/camshift</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="目标跟踪–meanshift和CamShift"><a href="#目标跟踪–meanshift和CamShift" class="headerlink" title="目标跟踪–meanshift和CamShift"></a>目标跟踪–meanshift和CamShift</h1><p>之前讲过最简单的目标跟踪方法：模板匹配（其实是目标检测范畴），这个方法有很多局限。因此又产生了很多其他的目标跟踪方法，例如应用广泛的meanshift。<br>meanshift是一种在数据密度分布中寻找局部极值的稳定的方法，对数据的密度直方图引用爬山算法即可。1998年的时候，人们开始把这种数据寻优的算法应用于图像的目标跟踪领域。<br>OpenCV也实现了这个算法，大致过程就是：</p>
-<ol>
-<li>选择跟踪的区域</li>
-<li>计算跟踪区域直方图的概率分布(这里可以选择颜色+纹理的特征进行反向投影)</li>
-<li>计算新一帧图像的概率分布</li>
-<li>运用meanshift算法计算目标新中心</li>
-</ol>
-<h2 id="跟踪效果"><a href="#跟踪效果" class="headerlink" title="跟踪效果"></a>跟踪效果</h2>
-        
-          <p class="article-more-link">
-            <a href="/2017/08/19/OpenCV/目标跟踪之meanshift-camshift/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://newbird.cn/2017/08/19/OpenCV/目标跟踪之meanshift-camshift/" data-id="ckhkkub6k001mdqpls3ogcm6o" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenCV/">OpenCV</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/图像处理/">图像处理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/目标跟踪/">目标跟踪</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
   </nav>
 
 </section>
@@ -714,7 +741,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">37</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">41</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -724,7 +751,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Caffe/">Caffe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/">Markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV基础/">OpenCV基础</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ResNet/">ResNet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TLD/">TLD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VS2010/">VS2010</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c++</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/">ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图像处理/">图像处理</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/目标跟踪/">目标跟踪</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Caffe/">Caffe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/">Markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV基础/">OpenCV基础</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ResNet/">ResNet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TLD/">TLD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VS2010/">VS2010</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c++</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gdb/">gdb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/">ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图像处理/">图像处理</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/目标跟踪/">目标跟踪</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/调试与定位/">调试与定位</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -734,7 +761,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Caffe/" style="font-size: 10px;">Caffe</a> <a href="/tags/Linux/" style="font-size: 11.43px;">Linux</a> <a href="/tags/Markdown/" style="font-size: 10px;">Markdown</a> <a href="/tags/OpenCV/" style="font-size: 12.86px;">OpenCV</a> <a href="/tags/OpenCV基础/" style="font-size: 15.71px;">OpenCV基础</a> <a href="/tags/ResNet/" style="font-size: 10px;">ResNet</a> <a href="/tags/TLD/" style="font-size: 10px;">TLD</a> <a href="/tags/VS2010/" style="font-size: 10px;">VS2010</a> <a href="/tags/c/" style="font-size: 20px;">c++</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/leetcode/" style="font-size: 17.14px;">leetcode</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/图像处理/" style="font-size: 14.29px;">图像处理</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/数据结构与算法/" style="font-size: 18.57px;">数据结构与算法</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/目标跟踪/" style="font-size: 12.86px;">目标跟踪</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+      <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/Caffe/" style="font-size: 10px;">Caffe</a> <a href="/tags/Linux/" style="font-size: 11.43px;">Linux</a> <a href="/tags/Markdown/" style="font-size: 10px;">Markdown</a> <a href="/tags/OpenCV/" style="font-size: 12.86px;">OpenCV</a> <a href="/tags/OpenCV基础/" style="font-size: 15.71px;">OpenCV基础</a> <a href="/tags/ResNet/" style="font-size: 10px;">ResNet</a> <a href="/tags/TLD/" style="font-size: 10px;">TLD</a> <a href="/tags/VS2010/" style="font-size: 10px;">VS2010</a> <a href="/tags/c/" style="font-size: 20px;">c++</a> <a href="/tags/gdb/" style="font-size: 10px;">gdb</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/leetcode/" style="font-size: 17.14px;">leetcode</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/图像处理/" style="font-size: 14.29px;">图像处理</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/数据结构与算法/" style="font-size: 18.57px;">数据结构与算法</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/目标跟踪/" style="font-size: 12.86px;">目标跟踪</a> <a href="/tags/调试与定位/" style="font-size: 10px;">调试与定位</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
     </div>
   </div>
 
@@ -743,7 +770,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -756,23 +783,23 @@
       <ul>
         
           <li>
-            <a href="/2020/11/11/CPP/C++并发编程学习总结1/">C++多线程编程指南</a>
+            <a href="/2020/11/16/Leetcode/750.角矩阵的数量/">leetcode 750.角矩阵的数量</a>
           </li>
         
           <li>
-            <a href="/2020/11/11/Summary/hexo+github博客使用指南/">hexo使用指南</a>
+            <a href="/2020/11/16/CPP/gdb终极指南/">gdb调试指南</a>
           </li>
         
           <li>
-            <a href="/2020/09/30/Linux_shell/正则表达式/">正则表达式</a>
+            <a href="/2020/11/16/Leetcode/1230.抛掷硬币/">leetcode 1230.抛掷硬币</a>
           </li>
         
           <li>
-            <a href="/2020/08/02/Leetcode/5-最长回文子串-C-中心扩展-暴力-md/">[5. 最长回文子串] C + 中心扩展 + 暴力</a>
+            <a href="/2020/11/16/Leetcode/1055. 形成字符串的最短路径/">leetcode 1055.形成字符串的最短路经</a>
           </li>
         
           <li>
-            <a href="/2017/08/24/CPP/数据结构之图论基础/">数据结构之图论基础</a>
+            <a href="/2020/11/16/Summary/202011_plan/">(no title)</a>
           </li>
         
       </ul>
