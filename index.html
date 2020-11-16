@@ -69,52 +69,621 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><% if (pagination == 2){ %>
-  <% page.posts.each(function(post){ %>
-    <%- partial('article', {post: post, index: true}) %>
-  <% }) %>
-<% } else { %>
-  <% var last; %>
-  <% page.posts.each(function(post, i){ %>
-    <% var year = post.date.year(); %>
-    <% if (last != year){ %>
-      <% if (last != null){ %>
-        </div></section>
-      <% } %>
-      <% last = year; %>
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="<%- url_for(config.archive_dir + '/' + year) %>" class="archive-year"><%= year %></a>
-        </div>
-        <div class="archives">
-    <% } %>
-    <%- partial('archive-post', {post: post, even: i % 2 == 0}) %>
-  <% }) %>
-  <% if (page.posts.length){ %>
-    </div></section>
-  <% } %>
-<% } %>
-<% if (page.total > 1){ %>
+        <section id="main">
+  
+    <article id="post-CPP/C++并发编程学习总结1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/11/11/CPP/C++并发编程学习总结1/" class="article-date">
+  <time datetime="2020-11-11T15:39:01.000Z" itemprop="datePublished">2020-11-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/11/CPP/C++并发编程学习总结1/">C++多线程编程指南</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="序"><a href="#序" class="headerlink" title="序"></a>序</h2><p>实际代码设计和实现中，常存在多任务并行，因此多线程编程对于一个合格工程师是必备技能，因此准备挖个坑专门来写多线程编程的知识，一是检验自己的学习成果，二是通过自己的分享为他人学习有一点点启发和贡献。</p>
+<p>线程是操作系统直接支持的执行单元，所以高级语言通常都是内置线程库；但传统C++(C++98)是没有线程库的，一直到了C++11的是时候才引入了线程库。当前C++线程支持库包含了线程（C++11）、互斥（C++11）、条件变量（C++11）、信号量（C++20）、闩与屏障（C++20）以及future（C++11）的内建支持。（上述标准主要列的首次引入的时间点）</p>
+<p>本指南主要还是围绕常用的线程特性介绍，包含以下几个方向内容：</p>
+<ul>
+<li>线程 <thread>  ：主要包含<code>std::thread</code>类，同时<code>std::this_thread</code>这个头文件中，可以直接指向当前的线程；</thread></li>
+<li>互斥 <mutex> ： 主要包含<code>mutex</code>相关的类，以及用于互斥量管理的<code>lock</code>类；</mutex></li>
+<li>条件变量 &lt;condition_variable&gt; ：主要包含<code>std::condition_variable</code>及<code>std::condition_variabe_any</code>等条件变量相关的类；</li>
+<li>Future <future> ：主要包含<code>std::future</code>类。</future></li>
+</ul>
+<p>展示一个最基本简单的多线程例子：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">thread_task</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"hello thread"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="function">thread <span class="title">t</span><span class="params">(thread_task)</span></span>;</span><br><span class="line">    t.join();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>由于默认的gcc不会加载pthread库，因此需要在编译的时候加上<code>-pthread</code>选项。</p>
+<h2 id="线程-lt-thread-gt"><a href="#线程-lt-thread-gt" class="headerlink" title="线程 &lt;thread&gt;"></a>线程 <code>&lt;thread&gt;</code></h2><h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">编号</th>
+<th style="text-align:left">构造函数</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">0</td>
+<td style="text-align:left">thread() noexcept;</td>
+<td style="text-align:left">默认构造函数，创建一个空的thread实例</td>
+</tr>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">thread( thread&amp;&amp; other ) noexcept;</td>
+<td style="text-align:left">移动构造函数，入参是右值引用，调用移动构造函数之后other不再指向任何线程实例</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">template&lt; class Function, class… Args &gt; explicit thread( Function&amp;&amp; f, Args&amp;&amp;… args );</td>
+<td style="text-align:left">初始化构造函数，新线程实例调用<code>f</code>函数,函数参数为<code>args</code></td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">thread( const thread&amp; ) = delete;</td>
+<td style="text-align:left">拷贝构造函数，但是<code>thread</code>不支持拷贝构造函数，已删除</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>需要注意的是，移动或按值复制线程函数的参数。若需要传递引用参数给线程函数，则必须包装它（例如用 std::ref 或 std::cref ）。<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;utility&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;chrono&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f1</span><span class="params">(<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; ++i) &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Thread 1 executing\n"</span>;</span><br><span class="line">        ++n;</span><br><span class="line">        <span class="built_in">std</span>::this_thread::sleep_for(<span class="built_in">std</span>::chrono::milliseconds(<span class="number">10</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f2</span><span class="params">(<span class="keyword">int</span>&amp; n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; ++i) &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Thread 2 executing\n"</span>;</span><br><span class="line">        ++n;</span><br><span class="line">        <span class="built_in">std</span>::this_thread::sleep_for(<span class="built_in">std</span>::chrono::milliseconds(<span class="number">10</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">foo</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">bar</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; ++i) &#123;</span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Thread 3 executing\n"</span>;</span><br><span class="line">            ++n;</span><br><span class="line">            <span class="built_in">std</span>::this_thread::sleep_for(<span class="built_in">std</span>::chrono::milliseconds(<span class="number">10</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> n = <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">baz</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">operator</span><span class="params">()</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; ++i) &#123;</span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Thread 4 executing\n"</span>;</span><br><span class="line">            ++n;</span><br><span class="line">            <span class="built_in">std</span>::this_thread::sleep_for(<span class="built_in">std</span>::chrono::milliseconds(<span class="number">10</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> n = <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = <span class="number">0</span>;</span><br><span class="line">    foo f;</span><br><span class="line">    baz b;</span><br><span class="line">    <span class="built_in">std</span>::thread t1; <span class="comment">// t1 不是线程</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="function">thread <span class="title">t2</span><span class="params">(f1, n + <span class="number">1</span>)</span></span>; <span class="comment">// 按值传递</span></span><br><span class="line">    std::thread t3(f2, std::ref(n)); // 按引用传递</span><br><span class="line">    std::thread t4(std::move(t3)); // t4 现在运行 f2() 。 t3 不再是线程</span><br><span class="line">    <span class="built_in">std</span>::<span class="function">thread <span class="title">t5</span><span class="params">(&amp;foo::bar, &amp;f)</span></span>; <span class="comment">// t5 在对象 f 上运行 foo::bar()</span></span><br><span class="line">    std::thread t6(std::ref(b)); // t6 在对象 b 上运行 baz::operator()</span><br><span class="line">    t2.join();</span><br><span class="line">    t4.join();</span><br><span class="line">    t5.join();</span><br><span class="line">    t6.join();</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Final value of n is "</span> &lt;&lt; n &lt;&lt; <span class="string">'\n'</span>;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Final value of foo::n is "</span> &lt;&lt; f.n &lt;&lt; <span class="string">'\n'</span>;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Final value of baz::n is "</span> &lt;&lt; b.n &lt;&lt; <span class="string">'\n'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="成员函数"><a href="#成员函数" class="headerlink" title="成员函数"></a>成员函数</h3><ul>
+<li>get_id : 获取当前线程ID</li>
+<li>joinable ：线程是否可被join,<a href="https://zh.cppreference.com/w/cpp/thread/thread/joinable" target="_blank" rel="noopener">joinable概念</a></li>
+<li>join : join线程（等待线程执行完成）</li>
+<li>detach ：Detach线程（线程独立运行）</li>
+<li>swap ：交换thread的状态，其实是std::thread对std::swap算法的重载</li>
+</ul>
+<h2 id="互斥量-lt-mutex-gt"><a href="#互斥量-lt-mutex-gt" class="headerlink" title="互斥量 &lt;mutex&gt;"></a>互斥量 <code>&lt;mutex&gt;</code></h2><h2 id="条件变量-lt-condition-variable-gt"><a href="#条件变量-lt-condition-variable-gt" class="headerlink" title="条件变量 &lt;condition_variable&gt;"></a>条件变量 <code>&lt;condition_variable&gt;</code></h2><h2 id="Future-lt-future-gt"><a href="#Future-lt-future-gt" class="headerlink" title="Future  &lt;future&gt;"></a>Future  <code>&lt;future&gt;</code></h2><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.jianshu.com/p/cbf9588b2afb" target="_blank" rel="noopener">并发与并行的区别</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2020/11/11/CPP/C++并发编程学习总结1/" data-id="ckhkauenu0001cbpl1g3mr3ch" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Summary/hexo+github博客使用指南" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/11/11/Summary/hexo+github博客使用指南/" class="article-date">
+  <time datetime="2020-11-11T15:30:21.000Z" itemprop="datePublished">2020-11-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/11/Summary/hexo+github博客使用指南/">hexo使用指南</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="写作"><a href="#写作" class="headerlink" title="写作"></a>写作</h2><p>创建新的文章</p>
+<ul>
+<li><figure class="highlight plain"><figcaption><span>new [layout] <title>```</title></span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">## 多平台设备同步</span><br><span class="line">经常在不同设备上写博客，所以需要需要在不同的平台设备上同步。主要就是依赖`github`,搞两个分支`master`和`hexo_source`分支，分别作为`github_pages`分支以及`hexo`博客源码分支。</span><br><span class="line">这里由于github_pages好像只能展示master分支,所以源码分支就是非master分支了，但是可以把源码分支设置为主分支，每次写完博客，使用hexo deploy可以把博客静态网页自动推到`master`分支，然后再上传源码至`hexo_source`分支：</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>git add -u<br>git commit -m “xxx”<br>git push origin hexo_source<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">这样就完成了博客发布和整个博客源码的同步。</span><br><span class="line"></span><br><span class="line">如果在新的设备上更新博客的话，</span><br></pre></td></tr></table></figure></p>
+<p>//拉取博客repo<br>git clone xxx.git<br>cd xxx</p>
+<p>//安装hexo博客必要的软件</p>
+<p>//愉快码字</p>
+<p>//博客发布及源码同步<br><code>`</code></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2020/11/11/Summary/hexo+github博客使用指南/" data-id="ckhkaueoh000wcbpljlgcepoh" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Linux_shell/正则表达式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/30/Linux_shell/正则表达式/" class="article-date">
+  <time datetime="2020-09-30T00:00:17.000Z" itemprop="datePublished">2020-09-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/30/Linux_shell/正则表达式/">正则表达式</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Python中的正则表达式"><a href="#Python中的正则表达式" class="headerlink" title="Python中的正则表达式"></a>Python中的正则表达式</h1><p>实际编程开发中，会遇到很多字符串处理相关的工作，因此专为处理匹配字符串的正则表达式一定需要花时间学习的。</p>
+<h2 id="基础表达"><a href="#基础表达" class="headerlink" title="基础表达"></a>基础表达</h2><p>我们以匹配一个简单的邮箱<a href="mailto:*liangzelang@gmail.com" target="_blank" rel="noopener">*liangzelang@gmail.com</a>*为例介绍正则表达式的入门方法。</p>
+<h3 id="基本元素表达"><a href="#基本元素表达" class="headerlink" title="基本元素表达"></a>基本元素表达</h3><ul>
+<li><code>\w</code>表示匹配一个字母或数字</li>
+<li><code>\d</code>表示匹配一个数字</li>
+<li><code>\s</code>表示匹配一个空格</li>
+<li><code>.</code>表示匹配任意字符</li>
+</ul>
+<h3 id="基本数量表达"><a href="#基本数量表达" class="headerlink" title="基本数量表达"></a>基本数量表达</h3><p>有了上述的基本表达，那么我们可以看一下如果匹配不同数量的字符</p>
+<ul>
+<li><code>+</code>表示一个或以上的字符，如<code>\d+</code>表示匹配一个或以上的数字字符串，可以匹配<code>1</code>和<code>123456</code></li>
+<li><code>*</code>表示任意个字符，可以是0个，如<code>\w*</code>表示匹配任何个字母或数字</li>
+<li><code>?</code>表示0个或1个字符，如<code>&lt;?liangzelang&gt;?</code>表示匹配<code>liangzelang</code> 或 <code>&lt;liangzelang&gt;</code></li>
+<li><code>{n}</code>表示n个字符，同时可以限定数量范围<code>{m,n}</code>,表示m–n个字符</li>
+</ul>
+<h3 id="特殊字符表达"><a href="#特殊字符表达" class="headerlink" title="特殊字符表达"></a>特殊字符表达</h3><ul>
+<li><code>\</code>转义符，实际工作中会用到很多特殊字符<code>* . ? + $ ^ [ ] ( ) { } | \ /</code>等，这个时候需要加上<code>\</code>转义符</li>
+</ul>
+<p>了解了上面的基本表达可以顺利写出邮箱的正则表达式：<br><code>\w+@\w+\.\w+</code> ,为了更直观python的用例如下：</p>
+<h2 id="进阶表达"><a href="#进阶表达" class="headerlink" title="进阶表达"></a>进阶表达</h2><p>匹配<code>192.168.1.1</code>这个IP地址，可以容易得到<code>\d+\.\d+\.\d+\.\d+</code>,但是这样有个问题就是如果是<code>999.999.999.999</code>也匹配上了,因此我们需要匹配的更加准确</p>
+<h3 id="精确范围表达"><a href="#精确范围表达" class="headerlink" title="精确范围表达"></a>精确范围表达</h3><ul>
+<li><code>[]</code>表示匹配的字符串范围，如<code>[0-9A-Za-z]</code>表示一个数字或者字母</li>
+<li><code>^</code>表示匹配字符串起始</li>
+<li><code>$</code>表示匹配字符串结尾</li>
+<li><code>[A|B]</code>表示匹配A或者B<br>那么正则表达式<code>&#39;^[2[0-5][0-5]|1[0-9][0-9]|[0-9]?[0-9][\.]?]{4}$&#39;</code> 可以匹配<code>192.168.1.1</code></li>
+</ul>
+<h2 id="python-re库"><a href="#python-re库" class="headerlink" title="python re库"></a>python re库</h2><p>以上就是在python中使用正则表达式的基础知识，python中有专门的正则表达式库<code>re</code>,该库主要包含一些处理正则表达式的函数接口：<br><img src="./re.png" alt="re模块相关API接口"></p>
+<h3 id="匹配正则表达式-re-match"><a href="#匹配正则表达式-re-match" class="headerlink" title="匹配正则表达式 re.match"></a>匹配正则表达式 re.match</h3><p>以上文讲到的匹配email地址：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> re.match(<span class="string">r'\w+@\w+\.\w+'</span>, <span class="string">'liangzelang@gmail.com'</span>):</span><br><span class="line">    print(<span class="string">"OK"</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">"not match"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>匹配IP地址：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> re.match(<span class="string">r'^[2[0-5][0-5]|1[0-9][0-9]|[0-9]?[0-9][\.]?]&#123;4&#125;$'</span>, <span class="string">'192.168.1.1'</span>):</span><br><span class="line">    print(<span class="string">"IP ok"</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">"IP not match"</span>)</span><br></pre></td></tr></table></figure></p>
+<h3 id="切分字符-re-split"><a href="#切分字符-re-split" class="headerlink" title="切分字符 re.split"></a>切分字符 re.split</h3><p>如果使用正常的字符串切分函数是无法去除多余的字符或者空格的：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'a b  c'</span>.split(<span class="string">' '</span>)</span><br><span class="line">[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">''</span>, <span class="string">'c'</span>]</span><br></pre></td></tr></table></figure></p>
+<p>使用re.split函数：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> re</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>re.split(<span class="string">r'\s+'</span>, <span class="string">'a b  c'</span>)</span><br><span class="line">[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>]</span><br></pre></td></tr></table></figure></p>
+<h3 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h3><p>上文中我们匹配了邮箱和IP，那如果我们要找到邮箱中对应的用户名、邮箱服务商或者IP地址的网段，那么就需要把匹配到的字符串分组；</p>
+<ul>
+<li><code>()</code>表示需要提取的分组</li>
+</ul>
+<p>re.match函数返回的Match对象正好有group方法可以提供匹配到每个分组字符串。<br><img src="./re.match_api.png" alt="match对象的方法"><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> re</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>m = re.match(<span class="string">r'^(\w+)@(\w+)\.(\w+)$'</span>, <span class="string">'liangzelang@gmail.com'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>m</span><br><span class="line">&lt;re.Match object; span=(<span class="number">0</span>, <span class="number">21</span>), match=<span class="string">'liangzelang@gmail.com'</span>&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>m.group(<span class="number">0</span>)</span><br><span class="line"><span class="string">'liangzelang@gmail.com'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>m.group(<span class="number">1</span>)</span><br><span class="line"><span class="string">'liangzelang'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>m.group(<span class="number">2</span>)</span><br><span class="line"><span class="string">'gmail'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>m.group(<span class="number">3</span>)</span><br><span class="line"><span class="string">'com'</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="编译-re-compile"><a href="#编译-re-compile" class="headerlink" title="编译 re.compile"></a>编译 re.compile</h3><p>实际使用中一般先编译正则表达式，可以确保正则表达式本身没有语法错误，然后再使用编译后的正则表达式直接匹配使用。如果反复使用效率会有较大提升。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>re.compile(<span class="string">r'^(\w+)@(\w+)\.(\w+)$'</span>)</span><br><span class="line">re.compile(<span class="string">'^(\\w+)@(\\w+)\\.(\\w+)$'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>email = re.compile(<span class="string">r'^(\w+)@(\w+)\.(\w+)$'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>email.match(<span class="string">'liangzelang@gmail.com'</span>).groups()</span><br><span class="line">(<span class="string">'liangzelang'</span>, <span class="string">'gmail'</span>, <span class="string">'com'</span>)</span><br></pre></td></tr></table></figure></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017639890281664" target="_blank" rel="noopener">正则表达式</a></li>
+<li><a href="https://www.jianshu.com/p/0053af01554e" target="_blank" rel="noopener">re库的用法介绍
+</a></li>
+</ul>
+<h1 id="Linux正则表达式"><a href="#Linux正则表达式" class="headerlink" title="Linux正则表达式"></a>Linux正则表达式</h1><ul>
+<li>未完待续</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2020/09/30/Linux_shell/正则表达式/" data-id="ckhkaueoc000lcbpl845ldbsz" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Leetcode/5-最长回文子串-C-中心扩展-暴力-md" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/08/02/Leetcode/5-最长回文子串-C-中心扩展-暴力-md/" class="article-date">
+  <time datetime="2020-08-02T13:48:21.000Z" itemprop="datePublished">2020-08-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/08/02/Leetcode/5-最长回文子串-C-中心扩展-暴力-md/">[5. 最长回文子串] C + 中心扩展 + 暴力</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Leetcode-No-5"><a href="#Leetcode-No-5" class="headerlink" title="Leetcode No.5"></a>Leetcode No.5</h2><ul>
+<li><b>给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为 1000。</b></li>
+</ul>
+<p><b>示例:</b><br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">示例 <span class="number">1</span>：</span><br><span class="line">输入: <span class="string">"babad"</span></span><br><span class="line">输出: <span class="string">"bab"</span></span><br><span class="line">注意: <span class="string">"aba"</span> 也是一个有效答案。</span><br><span class="line"></span><br><span class="line">示例 <span class="number">2</span>：</span><br><span class="line">输入: <span class="string">"cbbd"</span></span><br><span class="line">输出: <span class="string">"bb"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> [<span class="number">0</span>, <span class="number">1</span>].</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://pic.leetcode-cn.com/15a55cf50b8c3e9ad272f581e5b7174c94fcbbdbadb990a7a11b0c22b4cb361f-image.png" alt="result" height="175" width="475"></p>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><ol>
+<li>没有思路，只有暴力解，以每个点为中心向两边扩散；</li>
+<li>但是条件1中又需要考虑奇数偶数的情况，原本想的是每次传个left和right，但是题解搞了一种骚操作，就是通过中心点i和长度len，直接求出left和right</li>
+</ol>
+<h2 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h2><p>时间复杂度： O(n^2)<br>空间复杂度： O(n)</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//start: 19:35</span></span><br><span class="line"><span class="comment">// 解前思路：没啥思路，弱点就在字符串这块，难，先暴力一下：以每个点作为中心点来判断</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX(x, y) (x &gt; y) ? x : y</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">loopPalindrome</span><span class="params">(<span class="keyword">char</span>* s, <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (r &gt;= <span class="built_in">strlen</span>(s)) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> len = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (l &gt;= <span class="number">0</span> &amp;&amp; r &lt;= <span class="built_in">strlen</span>(s) &amp;&amp; s[l] == s[r]) &#123;</span><br><span class="line">        l--;</span><br><span class="line">        r++;</span><br><span class="line">        len = r - l - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> len;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">char</span> * <span class="title">longestPalindrome</span><span class="params">(<span class="keyword">char</span> * s)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (s == <span class="literal">NULL</span>) <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">int</span> r = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> l = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> len = <span class="built_in">strlen</span>(s);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> len1 = loopPalindrome(s, i, i);</span><br><span class="line">        <span class="keyword">int</span> len = loopPalindrome(s, i, i + <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">int</span> maxLen = MAX(len1, len);</span><br><span class="line">        <span class="keyword">if</span> (maxLen &gt; (r - l + <span class="number">1</span>)) &#123;</span><br><span class="line">            l = i - (maxLen - <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">            r = i + maxLen / <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">char</span>* res = (<span class="keyword">char</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">char</span>) * (r - l + <span class="number">2</span>));</span><br><span class="line">    <span class="built_in">memcpy</span>(res, &amp;s[l], (r - l + <span class="number">1</span>));</span><br><span class="line">    res[r - l + <span class="number">1</span>] = <span class="string">'\0'</span>;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">作者：liangzelang</span><br><span class="line">链接：https:<span class="comment">//leetcode-cn.com/problems/longest-palindromic-substring/solution/5-zui-chang-hui-wen-zi-chuan-c-zhong-xin-kuo-zhan-/</span></span><br><span class="line">来源：力扣（LeetCode）</span><br><span class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2020/08/02/Leetcode/5-最长回文子串-C-中心扩展-暴力-md/" data-id="ckhkaueob000jcbplfd9su48e" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-CPP/数据结构之图论基础" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/24/CPP/数据结构之图论基础/" class="article-date">
+  <time datetime="2017-08-24T12:53:48.000Z" itemprop="datePublished">2017-08-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/24/CPP/数据结构之图论基础/">数据结构之图论基础</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1、图的数据存储"><a href="#1、图的数据存储" class="headerlink" title="1、图的数据存储"></a>1、图的数据存储</h2><h2 id="1-1、-邻接矩阵"><a href="#1-1、-邻接矩阵" class="headerlink" title="1.1、 邻接矩阵"></a>1.1、 邻接矩阵</h2><p>图的邻接矩阵是由两个数组完成，一个一维数组存储<strong>图中的顶点</strong>;一个二维数组存储<strong>图中的边或弧</strong>。<br>如果图G有n个顶点，则邻接矩阵是一个n*n的方阵，定义为：<br>arc[i][j]等于1（如果（Vi，Vj）属于E），反之等于0。<br>有向图也差不多，有了出度和入度的概念<br>网 就是有权的图</p>
+<h2 id="邻接矩阵的创建"><a href="#邻接矩阵的创建" class="headerlink" title="邻接矩阵的创建"></a>邻接矩阵的创建</h2>
+        
+          <p class="article-more-link">
+            <a href="/2017/08/24/CPP/数据结构之图论基础/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/08/24/CPP/数据结构之图论基础/" data-id="ckhkaueox0011cbplo8jpf9oz" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-CPP/数据结构之常见图论算法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/24/CPP/数据结构之常见图论算法/" class="article-date">
+  <time datetime="2017-08-24T12:53:48.000Z" itemprop="datePublished">2017-08-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/24/CPP/数据结构之常见图论算法/">数据结构之常见图论算法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="最小生成树"><a href="#最小生成树" class="headerlink" title="最小生成树"></a>最小生成树</h2><p>就是在有权图中，找到n个顶点n-1条边使得权重最小化。</p>
+<h3 id="prims算法"><a href="#prims算法" class="headerlink" title="prims算法"></a>prims算法</h3><h3 id="Kruskal算法"><a href="#Kruskal算法" class="headerlink" title="Kruskal算法"></a>Kruskal算法</h3><h2 id="最短路径"><a href="#最短路径" class="headerlink" title="最短路径"></a>最短路径</h2><h3 id="Dijkstra算法"><a href="#Dijkstra算法" class="headerlink" title="Dijkstra算法"></a>Dijkstra算法</h3><h3 id="Floyd算法"><a href="#Floyd算法" class="headerlink" title="Floyd算法"></a>Floyd算法</h3>
+        
+          <p class="article-more-link">
+            <a href="/2017/08/24/CPP/数据结构之常见图论算法/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/08/24/CPP/数据结构之常见图论算法/" data-id="ckhkauep00016cbpljj3bxjo5" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-DeepLearning/caffe-finetuning" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/19/DeepLearning/caffe-finetuning/" class="article-date">
+  <time datetime="2017-08-19T14:04:25.000Z" itemprop="datePublished">2017-08-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/19/DeepLearning/caffe-finetuning/">Caffe ResNet50微调</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p>最近在学习Caffe，但是周围没有人交流，很是吃力，故分享之，如果有错误大家一定要指出，也希望对其他人有一定帮助。<br>ResNet模型是在2015年KaiMingHe提出来的，一举夺得了2015的ILSVRC ImageNet分类、识别、 定位的冠军（太腻害）。这个网络结构的特点就是没有最深只有更深……，在作者的<a href="https://github.com/KaimingHe" target="_blank" rel="noopener">github</a>上，有相应的代码，大家如果感兴趣可以看看。<br>我介绍一下我的数据，最近参加一个百度的比赛，100类宠物狗的识别。数据集一共18000张左右，但是数据质量一般，大小不定。最开始直接使用数据train from scratch，采用AlexNet错误率63%。我也是深度学习的初学者(水平就是看了一本书，看了一遍代码，跑了一遍例程)，所以决定go deeper，实验室服务器GPU是Tesla T40m可以跑一个稍微大一点的网络，所以选择ResNet50,顾名思义就是只有50层的残差网络。具体的网络结构图<a href="http://ethereon.github.io/netscope/#/gist/db945b393d40bfa26006" target="_blank" rel="noopener">如图所示</a>。使用ImageNet的pretrain模型进行finetune。我之前不太懂，直接拿18000张数据丢到网络中，过拟合严重，原因就是数据对于这种大型网络实在太少。（这其实也是技术交流的重要性，你自己搞一周，高手一句话可能就够了^_^）</p>
+<h2 id="Caffe-ResNet50-Finetune"><a href="#Caffe-ResNet50-Finetune" class="headerlink" title="Caffe ResNet50 Finetune"></a>Caffe ResNet50 Finetune</h2><p>我使用的是KaiMing He大神GitHub中的模型和相关配置<br>这是作者ResNet的repo，里面有预训练模型、网络定义等. <a href="https://github.com/KaimingHe/deep-residual-networks" target="_blank" rel="noopener">ResNet</a><br>其中有一个50层的ResNet caffemodel，一个deploy.prototxt。需要从one drivedown下来，非常慢，也可以在<a href="https://pan.baidu.com/s/1cgjfuY" target="_blank" rel="noopener">百度云</a>下载到caffemodel。<br>因此需要自己做的工作有：</p>
+<ol>
+<li>写一个train_val.prototxt配置文件，从deploy.prototxt改一下就OK</li>
+<li>修改train_val.prototxt一些参数</li>
+<li>准备数据集，最好转换为LMDB，速度能提高很多</li>
+</ol>
+<h2 id="具体实现步骤"><a href="#具体实现步骤" class="headerlink" title="具体实现步骤"></a>具体实现步骤</h2><h3 id="train-val-prototxt"><a href="#train-val-prototxt" class="headerlink" title="train_val.prototxt"></a>train_val.prototxt</h3><p>直接复制deploy.prototxt,然后修改。</p>
+<ol>
+<li>加入数据层</li>
+<li>根据自己的任务，修改最后全连接层的输出类别数量，我的为100. <code>num_output: 100</code></li>
+<li>在训练阶段把BN层中 ‘use_global_flag: false’ 全部设置为false，测试阶段全部设置为 true，所以这个实现需要分开写，然后用参数’include{ phase: train/test}’指明是啥阶段，我觉得这样有点麻烦，所以我是train.prototxt和test.prototxt分开写的，具体的见<a href="https://github.com/liangzelang" target="_blank" rel="noopener">我的github</a></li>
+<li>修改最后全连接层的<strong>名字、学习率</strong>，因为要重新根据我们自己的任务训练最后的全连接层，故不能使用pretrained model对应的名字，这样这层参数将被随机初始化，重新训练；学习率提高可以较快训练这一层。<br>这样训练和测试的网络结构文件就搞定了。</li>
+</ol>
+<h3 id="solver-prototxt"><a href="#solver-prototxt" class="headerlink" title="solver.prototxt"></a>solver.prototxt</h3><p>这个主要配置一些训练参数，例如学习率什么的，也是根据自己的任务、数据来动态调节的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">train_net: &quot;examples/fusion/f1/train.prototxt&quot;                                  </span><br><span class="line">test_net: &quot;examples/fusion/f1/test.prototxt&quot;</span><br><span class="line"># iter_size: 2</span><br><span class="line">test_iter: 3000</span><br><span class="line">test_interval: 365</span><br><span class="line"># ture: run from lastest snapshot, false: run from iteration 0</span><br><span class="line"># test_initialization: false</span><br><span class="line">display: 365</span><br><span class="line">base_lr: 0.001</span><br><span class="line">lr_policy: &quot;multistep&quot;</span><br><span class="line"># 5th epoch  0.0001</span><br><span class="line">stepvalue: 2920</span><br><span class="line"># 10th epoch 0.00001</span><br><span class="line">stepvalue: 9125</span><br><span class="line"># 20th epoch 0.000001</span><br><span class="line">stepvalue: 21900</span><br><span class="line"># 40th epoch 0.0000001</span><br><span class="line">stepvalue: 31025</span><br><span class="line"># 80th epoch 0.00000001</span><br><span class="line"># stepvalue: 36640</span><br><span class="line">gamma: 0.1</span><br><span class="line">max_iter: 36500</span><br><span class="line">momentum: 0.9</span><br><span class="line">weight_decay: 0.0001</span><br><span class="line">snapshot: 1000</span><br><span class="line">snapshot_prefix: &quot;examples/fusion/f1/f1&quot;</span><br><span class="line">solver_mode: GPU</span><br></pre></td></tr></table></figure></p>
+<h3 id="deploy-prototxt"><a href="#deploy-prototxt" class="headerlink" title="deploy.prototxt"></a>deploy.prototxt</h3><p>这个是最后使用训练得到的模型来进行分类的网络结构，其实跟test.prototxt差不多，我需要分类的是图片，所以就把test.prototxt的数据层改一下，loss和acc层改一下就可以啦。</p>
+<h3 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">###################                                                             </span><br><span class="line"># author:liangzelang</span><br><span class="line"># resnet50 train shell scripts</span><br><span class="line">####################</span><br><span class="line">#!/usr/bin/env sh</span><br><span class="line">./build/tools/caffe train \</span><br><span class="line">    --solver=examples/fusion/f1/solver.prototxt -weights examples/fusion/f1/resnet50.caffemodel</span><br></pre></td></tr></table></figure>
+<h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/08/19/DeepLearning/caffe-finetuning/" data-id="ckhkaueo7000ccbpl2up9kdos" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Caffe/">Caffe</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ResNet/">ResNet</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/图像处理/">图像处理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/深度学习/">深度学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-OpenCV/目标跟踪之TLD第一篇" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/19/OpenCV/目标跟踪之TLD第一篇/" class="article-date">
+  <time datetime="2017-08-19T13:53:10.000Z" itemprop="datePublished">2017-08-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/19/OpenCV/目标跟踪之TLD第一篇/">目标跟踪之TLD第一篇</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="目标跟踪之TLD（Tracking-Learning-Detection）–第一篇"><a href="#目标跟踪之TLD（Tracking-Learning-Detection）–第一篇" class="headerlink" title="目标跟踪之TLD（Tracking-Learning-Detection）–第一篇"></a>目标跟踪之TLD（Tracking-Learning-Detection）–第一篇</h1><p>之前总结了目标跟踪领域的一些传统方法，光流、meanshift、camshift等，这些大概都是2010之前比较流行的方法。都是比较纯粹的跟踪方法，有很多需要完善的东西，比如camshift虽然对跟踪目标的形变不敏感，但是如果在目标与背景颜色相差不大的情况，跟踪效果很差；传统方法在跟踪目标消失或者被完全遮挡后，再出现无法进行准确的重新跟踪（其实也可以，就是依靠相关的目标检测方法啦）。</p>
+<p>今天要介绍的方法就是在2012年Kalal的TLD方法，主要是长时间跟踪的一种方法，把检测、跟踪、学习融合在一起。<br>OpenCV3.2.0已经加入了TLD算法，但是我目前的版本是2.4,所以今天这个TLD的实现是Github上面的大神实现的。稍后也会加上OpenCV上面的TLD效果。<br>
+        
+          <p class="article-more-link">
+            <a href="/2017/08/19/OpenCV/目标跟踪之TLD第一篇/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/08/19/OpenCV/目标跟踪之TLD第一篇/" data-id="ckhkaueof000scbplxmvpssbc" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenCV/">OpenCV</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TLD/">TLD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/图像处理/">图像处理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/目标跟踪/">目标跟踪</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-OpenCV/目标跟踪之OpticalFlow-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/19/OpenCV/目标跟踪之OpticalFlow-1/" class="article-date">
+  <time datetime="2017-08-19T13:52:43.000Z" itemprop="datePublished">2017-08-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/19/OpenCV/目标跟踪之OpticalFlow-1/">目标跟踪之OpticalFlow</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="OpticalFlow-光流法"><a href="#OpticalFlow-光流法" class="headerlink" title="OpticalFlow 光流法"></a>OpticalFlow 光流法</h2><p>在视频序列中，把视频帧中每个像素与速度相关联，或者与同一像素点两帧之间的位移相关联，那么我们就可以得到稠密光流。<a href>Horm-Schunck方法</a>是计算光流的速度场。OpenCV是计算两帧之间对像素领域匹配，也叫块匹配；两种方法都是稠密跟踪。但是计算量都不小，所以不重点介绍。</p>
+<h2 id="Lucas—Kanada光流法"><a href="#Lucas—Kanada光流法" class="headerlink" title="Lucas—Kanada光流法"></a>Lucas—Kanada光流法</h2><p>相比上面的稠密光流，伟大的前人搞出了稀疏光流法，就是找出一些合适跟踪的特征点来进行跟踪匹配，即减少了运算量，效果还不差。稀疏光流法中当属LK光流法最有名。</p>
+<h3 id="LK算法原理"><a href="#LK算法原理" class="headerlink" title="LK算法原理"></a>LK算法原理</h3>
+        
+          <p class="article-more-link">
+            <a href="/2017/08/19/OpenCV/目标跟踪之OpticalFlow-1/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/08/19/OpenCV/目标跟踪之OpticalFlow-1/" data-id="ckhkaueof000rcbplbgan7bpj" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenCV/">OpenCV</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/图像处理/">图像处理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/目标跟踪/">目标跟踪</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-OpenCV/目标跟踪之meanshift-camshift" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/19/OpenCV/目标跟踪之meanshift-camshift/" class="article-date">
+  <time datetime="2017-08-19T13:52:08.000Z" itemprop="datePublished">2017-08-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/19/OpenCV/目标跟踪之meanshift-camshift/">目标跟踪之meanshift/camshift</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="目标跟踪–meanshift和CamShift"><a href="#目标跟踪–meanshift和CamShift" class="headerlink" title="目标跟踪–meanshift和CamShift"></a>目标跟踪–meanshift和CamShift</h1><p>之前讲过最简单的目标跟踪方法：模板匹配（其实是目标检测范畴），这个方法有很多局限。因此又产生了很多其他的目标跟踪方法，例如应用广泛的meanshift。<br>meanshift是一种在数据密度分布中寻找局部极值的稳定的方法，对数据的密度直方图引用爬山算法即可。1998年的时候，人们开始把这种数据寻优的算法应用于图像的目标跟踪领域。<br>OpenCV也实现了这个算法，大致过程就是：</p>
+<ol>
+<li>选择跟踪的区域</li>
+<li>计算跟踪区域直方图的概率分布(这里可以选择颜色+纹理的特征进行反向投影)</li>
+<li>计算新一帧图像的概率分布</li>
+<li>运用meanshift算法计算目标新中心</li>
+</ol>
+<h2 id="跟踪效果"><a href="#跟踪效果" class="headerlink" title="跟踪效果"></a>跟踪效果</h2>
+        
+          <p class="article-more-link">
+            <a href="/2017/08/19/OpenCV/目标跟踪之meanshift-camshift/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/08/19/OpenCV/目标跟踪之meanshift-camshift/" data-id="ckhkaueog000tcbpllu535i0l" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenCV/">OpenCV</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/图像处理/">图像处理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/目标跟踪/">目标跟踪</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
   <nav id="page-nav">
-    <%- paginator({
-      prev_text: "&laquo; " + __('prev'),
-      next_text: __('next') + " &raquo;"
-    }) %>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
   </nav>
-<% } %>
+
 </section>
         
           <aside id="sidebar">
   
-    
+    <% if (site.tags.length){ %>
   <div class="widget-wrap">
     <h2 class="widget-title"><b>关于我</b></h2>
     <div class="widget">
  <front size="3"><b>邮箱</b>：liangzelang@gmail.com<br>
- <b>现状</b>： 目前就职于华为2012实验室，从事深度学习框架的软件开发工作。个人喜欢图像处理、计算机视觉等领域。更多以及<a href="http://cv.qiaobutang.com/r/5997e28c0cf202fca1a62686">个人简历</a></front>
+ <b>现状</b>： 目前北京理工大学模式识别硕士在读，2018年毕业。个人喜欢图像处理、计算机视觉、机器学习等领域。我的<a href="http://oapeb119y.bkt.clouddn.com/%E9%99%84%E4%BB%B6%E4%BA%8C%EF%BC%9A%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86.pdf">个人简历</a></front>
     </div>
   </div>
-
+<% } %>
 
   
     
@@ -179,7 +748,7 @@
           </li>
         
           <li>
-            <a href="/2017/08/24/CPP/数据结构之常见图论算法/">数据结构之常见图论算法</a>
+            <a href="/2017/08/24/CPP/数据结构之图论基础/">数据结构之图论基础</a>
           </li>
         
       </ul>

@@ -69,52 +69,629 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><% if (pagination == 2){ %>
-  <% page.posts.each(function(post){ %>
-    <%- partial('article', {post: post, index: true}) %>
-  <% }) %>
-<% } else { %>
-  <% var last; %>
-  <% page.posts.each(function(post, i){ %>
-    <% var year = post.date.year(); %>
-    <% if (last != year){ %>
-      <% if (last != null){ %>
-        </div></section>
-      <% } %>
-      <% last = year; %>
+        <section id="main">
+  
+  
+    
+    
+      
+      
       <section class="archives-wrap">
         <div class="archive-year-wrap">
-          <a href="<%- url_for(config.archive_dir + '/' + year) %>" class="archive-year"><%= year %></a>
+          <a href="/archives/2020" class="archive-year">2020</a>
         </div>
         <div class="archives">
-    <% } %>
-    <%- partial('archive-post', {post: post, even: i % 2 == 0}) %>
-  <% }) %>
-  <% if (page.posts.length){ %>
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2020/11/11/CPP/C++并发编程学习总结1/" class="archive-article-date">
+  <time datetime="2020-11-11T15:39:01.000Z" itemprop="datePublished">11月 11</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2020/11/11/CPP/C++并发编程学习总结1/">C++多线程编程指南</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2020/11/11/Summary/hexo+github博客使用指南/" class="archive-article-date">
+  <time datetime="2020-11-11T15:30:21.000Z" itemprop="datePublished">11月 11</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2020/11/11/Summary/hexo+github博客使用指南/">hexo使用指南</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2020/09/30/Linux_shell/正则表达式/" class="archive-article-date">
+  <time datetime="2020-09-30T00:00:17.000Z" itemprop="datePublished">9月 30</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2020/09/30/Linux_shell/正则表达式/">正则表达式</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2020/08/02/Leetcode/5-最长回文子串-C-中心扩展-暴力-md/" class="archive-article-date">
+  <time datetime="2020-08-02T13:48:21.000Z" itemprop="datePublished">8月 2</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2020/08/02/Leetcode/5-最长回文子串-C-中心扩展-暴力-md/">[5. 最长回文子串] C + 中心扩展 + 暴力</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+      
+        </div></section>
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2017" class="archive-year">2017</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2017/08/24/CPP/数据结构之图论基础/" class="archive-article-date">
+  <time datetime="2017-08-24T12:53:48.000Z" itemprop="datePublished">8月 24</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/08/24/CPP/数据结构之图论基础/">数据结构之图论基础</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2017/08/24/CPP/数据结构之常见图论算法/" class="archive-article-date">
+  <time datetime="2017-08-24T12:53:48.000Z" itemprop="datePublished">8月 24</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/08/24/CPP/数据结构之常见图论算法/">数据结构之常见图论算法</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2017/08/19/DeepLearning/caffe-finetuning/" class="archive-article-date">
+  <time datetime="2017-08-19T14:04:25.000Z" itemprop="datePublished">8月 19</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/08/19/DeepLearning/caffe-finetuning/">Caffe ResNet50微调</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2017/08/19/OpenCV/目标跟踪之TLD第一篇/" class="archive-article-date">
+  <time datetime="2017-08-19T13:53:10.000Z" itemprop="datePublished">8月 19</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/08/19/OpenCV/目标跟踪之TLD第一篇/">目标跟踪之TLD第一篇</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2017/08/19/OpenCV/目标跟踪之OpticalFlow-1/" class="archive-article-date">
+  <time datetime="2017-08-19T13:52:43.000Z" itemprop="datePublished">8月 19</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/08/19/OpenCV/目标跟踪之OpticalFlow-1/">目标跟踪之OpticalFlow</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2017/08/19/OpenCV/目标跟踪之meanshift-camshift/" class="archive-article-date">
+  <time datetime="2017-08-19T13:52:08.000Z" itemprop="datePublished">8月 19</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/08/19/OpenCV/目标跟踪之meanshift-camshift/">目标跟踪之meanshift/camshift</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2017/08/19/CPP/数据结构之链表-队列-串/" class="archive-article-date">
+  <time datetime="2017-08-19T13:51:27.000Z" itemprop="datePublished">8月 19</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/08/19/CPP/数据结构之链表-队列-串/">数据结构之链表-队列-串</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2017/07/14/CPP/数据结构之树/" class="archive-article-date">
+  <time datetime="2017-07-14T02:53:48.000Z" itemprop="datePublished">7月 14</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/07/14/CPP/数据结构之树/">数据结构之树</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2017/07/04/CPP/排序算法总结/" class="archive-article-date">
+  <time datetime="2017-07-04T15:31:17.000Z" itemprop="datePublished">7月 4</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/07/04/CPP/排序算法总结/">排序算法总结</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2017/07/04/Summary/更换源/" class="archive-article-date">
+  <time datetime="2017-07-04T15:30:21.000Z" itemprop="datePublished">7月 4</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/07/04/Summary/更换源/">ubuntu更换清华源</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2017/06/14/Summary/Markdown用法总结/" class="archive-article-date">
+  <time datetime="2017-06-14T15:12:17.000Z" itemprop="datePublished">6月 14</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/06/14/Summary/Markdown用法总结/">Markdown用法总结</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2017/06/14/OpenCV/目标检测算法/" class="archive-article-date">
+  <time datetime="2017-06-14T14:48:49.000Z" itemprop="datePublished">6月 14</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/06/14/OpenCV/目标检测算法/">目标跟踪算法--模板匹配</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2017/06/01/CPP/智能指针/" class="archive-article-date">
+  <time datetime="2017-06-01T12:57:36.000Z" itemprop="datePublished">6月 1</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/06/01/CPP/智能指针/">智能指针</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2017/05/29/CPP/友元、异常和其他问题/" class="archive-article-date">
+  <time datetime="2017-05-29T12:57:36.000Z" itemprop="datePublished">5月 29</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/05/29/CPP/友元、异常和其他问题/">友元、异常和其他相关问题</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2017/03/28/OpenCV/core组件进阶/" class="archive-article-date">
+  <time datetime="2017-03-28T14:54:25.000Z" itemprop="datePublished">3月 28</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/03/28/OpenCV/core组件进阶/">core组件进阶</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2017/03/28/OpenCV/OpenCV数据结构与基本绘图/" class="archive-article-date">
+  <time datetime="2017-03-28T14:54:20.000Z" itemprop="datePublished">3月 28</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/03/28/OpenCV/OpenCV数据结构与基本绘图/">OpenCV数据结构与基本绘图</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2017/03/12/CPP/虚析构函数的作用/" class="archive-article-date">
+  <time datetime="2017-03-11T23:09:46.000Z" itemprop="datePublished">3月 12</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/03/12/CPP/虚析构函数的作用/">虚析构函数的作用</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2017/03/12/CPP/虚函数的工作原理/" class="archive-article-date">
+  <time datetime="2017-03-11T23:09:16.000Z" itemprop="datePublished">3月 12</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/03/12/CPP/虚函数的工作原理/">虚函数的工作原理</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2017/03/12/CPP/模板的具体化和实例化/" class="archive-article-date">
+  <time datetime="2017-03-11T23:08:12.000Z" itemprop="datePublished">3月 12</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/03/12/CPP/模板的具体化和实例化/">模板的具体化和实例化</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2017/03/12/CPP/CPP中如何输出char型指针地址/" class="archive-article-date">
+  <time datetime="2017-03-11T23:07:40.000Z" itemprop="datePublished">3月 12</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/03/12/CPP/CPP中如何输出char型指针地址/">C++中如何输出char型指针地址</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2017/03/12/CPP/派生类与基类之间的特殊关系/" class="archive-article-date">
+  <time datetime="2017-03-11T22:51:52.000Z" itemprop="datePublished">3月 12</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/03/12/CPP/派生类与基类之间的特殊关系/">派生类与基类之间的特殊关系</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2017/03/01/OpenCV/HigtGUI的初识/" class="archive-article-date">
+  <time datetime="2017-02-28T22:48:02.000Z" itemprop="datePublished">3月 1</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/03/01/OpenCV/HigtGUI的初识/">HigtGUI的初识</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+      
+        </div></section>
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2016" class="archive-year">2016</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2016/12/29/CPP/c-成员运算符/" class="archive-article-date">
+  <time datetime="2016-12-29T15:49:13.000Z" itemprop="datePublished">12月 29</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2016/12/29/CPP/c-成员运算符/">c++成员运算符</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2016/12/29/CPP/sizeof-和-strlen的区别/" class="archive-article-date">
+  <time datetime="2016-12-29T15:39:01.000Z" itemprop="datePublished">12月 29</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2016/12/29/CPP/sizeof-和-strlen的区别/">sizeof和strlen的区别</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2016/12/29/CPP/C-指针注意事项/" class="archive-article-date">
+  <time datetime="2016-12-29T15:34:47.000Z" itemprop="datePublished">12月 29</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2016/12/29/CPP/C-指针注意事项/">C++指针注意事项</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2016/12/28/Leetcode/414-the-third-maxium-number/" class="archive-article-date">
+  <time datetime="2016-12-28T15:26:04.000Z" itemprop="datePublished">12月 28</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2016/12/28/Leetcode/414-the-third-maxium-number/">414. the third maxium number</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+  
     </div></section>
-  <% } %>
-<% } %>
-<% if (page.total > 1){ %>
+  
+
+
   <nav id="page-nav">
-    <%- paginator({
-      prev_text: "&laquo; " + __('prev'),
-      next_text: __('next') + " &raquo;"
-    }) %>
+    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">下一页 &raquo;</a>
   </nav>
-<% } %>
+
 </section>
         
           <aside id="sidebar">
   
-    
+    <% if (site.tags.length){ %>
   <div class="widget-wrap">
     <h2 class="widget-title"><b>关于我</b></h2>
     <div class="widget">
  <front size="3"><b>邮箱</b>：liangzelang@gmail.com<br>
- <b>现状</b>： 目前就职于华为2012实验室，从事深度学习框架的软件开发工作。个人喜欢图像处理、计算机视觉等领域。更多以及<a href="http://cv.qiaobutang.com/r/5997e28c0cf202fca1a62686">个人简历</a></front>
+ <b>现状</b>： 目前北京理工大学模式识别硕士在读，2018年毕业。个人喜欢图像处理、计算机视觉、机器学习等领域。我的<a href="http://oapeb119y.bkt.clouddn.com/%E9%99%84%E4%BB%B6%E4%BA%8C%EF%BC%9A%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86.pdf">个人简历</a></front>
     </div>
   </div>
-
+<% } %>
 
   
     
@@ -179,7 +756,7 @@
           </li>
         
           <li>
-            <a href="/2017/08/24/CPP/数据结构之常见图论算法/">数据结构之常见图论算法</a>
+            <a href="/2017/08/24/CPP/数据结构之图论基础/">数据结构之图论基础</a>
           </li>
         
       </ul>

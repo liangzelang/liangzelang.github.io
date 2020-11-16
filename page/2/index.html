@@ -69,52 +69,549 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><% if (pagination == 2){ %>
-  <% page.posts.each(function(post){ %>
-    <%- partial('article', {post: post, index: true}) %>
-  <% }) %>
-<% } else { %>
-  <% var last; %>
-  <% page.posts.each(function(post, i){ %>
-    <% var year = post.date.year(); %>
-    <% if (last != year){ %>
-      <% if (last != null){ %>
-        </div></section>
-      <% } %>
-      <% last = year; %>
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="<%- url_for(config.archive_dir + '/' + year) %>" class="archive-year"><%= year %></a>
-        </div>
-        <div class="archives">
-    <% } %>
-    <%- partial('archive-post', {post: post, even: i % 2 == 0}) %>
-  <% }) %>
-  <% if (page.posts.length){ %>
-    </div></section>
-  <% } %>
-<% } %>
-<% if (page.total > 1){ %>
+        <section id="main">
+  
+    <article id="post-CPP/数据结构之链表-队列-串" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/19/CPP/数据结构之链表-队列-串/" class="article-date">
+  <time datetime="2017-08-19T13:51:27.000Z" itemprop="datePublished">2017-08-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/19/CPP/数据结构之链表-队列-串/">数据结构之链表-队列-串</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>其实在编程中，简单的链表、队列等都构成所有复杂算法、复杂数据结构的基础。因此我们了解了这些数据结构基础，对于那些复合而成的数据结构也就自然明白。</p>
+<h2 id="1、链表"><a href="#1、链表" class="headerlink" title="1、链表"></a>1、链表</h2><p>顺序表是一种按照某种规则排列在一起的表，它有两种存储方式：一是表元素全部依次相邻存储（顺序存储结构）这里就不详细介绍顺序存储结构了；一是表元素可以放在任意位置，由相应指针指明其相邻元素位置（链式存储），所以也叫链表。<br>链表也分单链表、双链表、循环链表。<br>
+        
+          <p class="article-more-link">
+            <a href="/2017/08/19/CPP/数据结构之链表-队列-串/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/08/19/CPP/数据结构之链表-队列-串/" data-id="ckhkaueoz0015cbplli7l6apb" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-CPP/数据结构之树" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/14/CPP/数据结构之树/" class="article-date">
+  <time datetime="2017-07-14T02:53:48.000Z" itemprop="datePublished">2017-07-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/14/CPP/数据结构之树/">数据结构之树</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="树的相关概念"><a href="#树的相关概念" class="headerlink" title="树的相关概念"></a>树的相关概念</h2><p>树在数据结构中非常重要，应用也有很多。下面只记录一些重要的、基础性的概念。</p>
+<ul>
+<li>结点：树由结点构成的，有根节点、叶结点等。结点有用的子树数就是结点的度，叶结点度为0.同一个父节点的结点互为兄弟，跟人一样，就不介绍，有点弱智的感觉。</li>
+<li>树的深度： 树的根层次为1，根的子结点层次为2，依次类推。树中结点的最大层次即为树的深度或者高度。</li>
+</ul>
+<h2 id="树的存储结构和实现"><a href="#树的存储结构和实现" class="headerlink" title="树的存储结构和实现"></a>树的存储结构和实现</h2><p>在上面概念中说了树中的结点关系和人一样，树的存储就是把这些结点关系存起来。根据人的经验，从不同角度介绍某个人的方式是不一样的，介绍你亲姐：这是我姐，这是我父母的女儿……数的存储和实现也一样。</p>
+<ol>
+<li>双亲表示法   <strong>|data|parent|</strong>
+        
+          <p class="article-more-link">
+            <a href="/2017/07/14/CPP/数据结构之树/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/07/14/CPP/数据结构之树/" data-id="ckhkaueo00006cbplrrb0p0hn" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-CPP/排序算法总结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/04/CPP/排序算法总结/" class="article-date">
+  <time datetime="2017-07-04T15:31:17.000Z" itemprop="datePublished">2017-07-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/04/CPP/排序算法总结/">排序算法总结</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><p>有n个记录的序列为{R1，R2……Rn}，其对应关键字为{K1，K2……Kn}，需确定一种排列{P1,P2……Pn}使其关键字满足KP1&lt;KP2&lt;KP3……&lt;KPn等关系。即使得序列成为一个按关键字有序的序列{Rp1，Rp2，……Rpn}，这样的操作就称为排序<br>用人话说就是从大到小，要么从小到大排列就OK。</p>
+<ul>
+<li><p>排序的稳定性<br>存在两个关键字相等Ki = Kj(i != j,i &lt; j),如果从小到大排序后 Ri仍在Rj前面，则是稳定排序，反之，则是不稳定排序。</p>
+</li>
+<li><p>内排序和外排序<br>内排序就是待排序所有记录放置于内存中，外排序需要在内外存进行多次交换，我们多使用内排序。<br>影响内排序的性能：时间性能，就是时间复杂度；辅助空间，就是空间复杂度；算法复杂性，是算法本身的复杂性</p>
+</li>
+<li><p>排序分类<br>按照算法复杂度排序算法可分为两类：</p>
+</li>
+</ul>
+<ol>
+<li>冒泡排序、简单选择排序、直接插入排序属于插入排序</li>
+<li>希尔排序、堆排序、归并排序、快速排序属于改进算法。
+        
+          <p class="article-more-link">
+            <a href="/2017/07/04/CPP/排序算法总结/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/07/04/CPP/排序算法总结/" data-id="ckhkaueoq000ycbpl9x30jq54" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Summary/更换源" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/04/Summary/更换源/" class="article-date">
+  <time datetime="2017-07-04T15:30:21.000Z" itemprop="datePublished">2017-07-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/04/Summary/更换源/">ubuntu更换清华源</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="何为源"><a href="#何为源" class="headerlink" title="何为源"></a>何为源</h2><p><code>sudo apt-get update</code>这个命令我们常用来更新一下源列表，这里面就是一些网址信息，这个网址信息里面有各种软件什么的，非常正规安全的那种。</p>
+<p>我们安装Ubuntu的时候，有一个默认的源列表，但是呢，这个源列表里面有很多都没有办法访问了，我不知道是不是国情问题。所以造成的问题就是我们经常要更新一些软件就失败……</p>
+<p>国内企业、高校研究机构都都提供ubuntu的源列表。比较好用的是清华源、阿里源。<br>
+        
+          <p class="article-more-link">
+            <a href="/2017/07/04/Summary/更换源/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/07/04/Summary/更换源/" data-id="ckhkaueoi000xcbpld2m511sa" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/">ubuntu</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Summary/Markdown用法总结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/14/Summary/Markdown用法总结/" class="article-date">
+  <time datetime="2017-06-14T15:12:17.000Z" itemprop="datePublished">2017-06-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/14/Summary/Markdown用法总结/">Markdown用法总结</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>Markdown是时下程序员圈子最火的文档格式，它的宗旨就是<b>易写易读</b></li>
+<li><p>目前很多论坛、博客都支持Markdown，Github、Stack overflow等程序猿熟知的社区都支持Markdown。Markdown也兼容HTML，所以前端对这个几乎没有学习成本。而且我本人博客也是使用的Markdown格式，因此有必要把一些常用的Markdown语法做一个简要的介绍，技多不压身嘛。</p>
+</li>
+<li><p>以下介绍常用的Markdown语法</p>
+</li>
+<li><a href="#1"><b>标题</b></a></li>
+<li><a href="#2"><b>字体</b></a></li>
+<li><a href="#3"><b>代码与代码块</b></a></li>
+<li><a href="#4"><b>分割线</b></a></li>
+<li><a href="#5"><b>列表</b></a></li>
+<li><a href="#6"><b>图片&amp;链接</b></a></li>
+<li><a href="#7"><b>视频</b></a></li>
+</ul>
+        
+          <p class="article-more-link">
+            <a href="/2017/06/14/Summary/Markdown用法总结/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/06/14/Summary/Markdown用法总结/" data-id="ckhkaueog000ucbplahquvqzj" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Markdown/">Markdown</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-OpenCV/目标检测算法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/14/OpenCV/目标检测算法/" class="article-date">
+  <time datetime="2017-06-14T14:48:49.000Z" itemprop="datePublished">2017-06-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/14/OpenCV/目标检测算法/">目标跟踪算法--模板匹配</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p>目前目标跟踪在机器视觉领域发展较快，有很多跟踪方法，例如传统的模板匹配、camshift、meanshift等算法。最近在疯狂学习opencv中，所以从最简单的模板匹配实现开始。</p>
+</li>
+<li><p>为了提高兴趣，做一个人脸检测与跟踪算法，检测部分算法见【人脸检测】。这里采用鼠标选取跟踪的目标，在利用模板匹配的方式进行目标跟踪。</p>
+        
+          <p class="article-more-link">
+            <a href="/2017/06/14/OpenCV/目标检测算法/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/06/14/OpenCV/目标检测算法/" data-id="ckhkaueoe000qcbplm7inpypv" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenCV基础/">OpenCV基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-CPP/智能指针" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/01/CPP/智能指针/" class="article-date">
+  <time datetime="2017-06-01T12:57:36.000Z" itemprop="datePublished">2017-06-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/01/CPP/智能指针/">智能指针</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>普通指针在内存管理方面非常不方便，new和delete必须成对使用，非常容易出现错误。</p>
+<h2 id="智能指针模板类"><a href="#智能指针模板类" class="headerlink" title="智能指针模板类"></a>智能指针模板类</h2><p>定义了类似指针的对象，可以将new得到的内存地址赋给这些对象，当这些智能指针过期时，将自动调用其（智能指针对象）的析构函数，这些析构函数将使用delete来释放内存。<br>因此如果使用智能指针指向new的内存，无需手动释放这些内存，智能指针过期时，内存自动被释放。<br>
+        
+          <p class="article-more-link">
+            <a href="/2017/06/01/CPP/智能指针/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/06/01/CPP/智能指针/" data-id="ckhkaueo10007cbpl738irwnu" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-CPP/友元、异常和其他问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/29/CPP/友元、异常和其他问题/" class="article-date">
+  <time datetime="2017-05-29T12:57:36.000Z" itemprop="datePublished">2017-05-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/29/CPP/友元、异常和其他问题/">友元、异常和其他相关问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="友元"><a href="#友元" class="headerlink" title="友元"></a>友元</h1><h2 id="友元类"><a href="#友元类" class="headerlink" title="友元类"></a>友元类</h2><p>友元函数用于类的扩展接口，类并非只能拥有友元函数，还能够将类作为友元类。友元类的所有方法都可以访问原始类的私有成员和保护成员。<br>以电视机和遥控器的关系，解释友元的作用以及相关问题<br>
+        
+          <p class="article-more-link">
+            <a href="/2017/05/29/CPP/友元、异常和其他问题/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/05/29/CPP/友元、异常和其他问题/" data-id="ckhkaueoy0012cbpldc32rhxd" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-OpenCV/core组件进阶" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/28/OpenCV/core组件进阶/" class="article-date">
+  <time datetime="2017-03-28T14:54:25.000Z" itemprop="datePublished">2017-03-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/28/OpenCV/core组件进阶/">core组件进阶</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p>LUT函数： LOOK UP TABLE 操作<br>用于批量元素查找、扫描和操作图像。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//首先我们建立一个mat型用于查表</span><br><span class="line">Mat lookUpTable(1, 256, CV_8U);</span><br><span class="line">uchar* p = lookUpTable.data;</span><br><span class="line">for( int i = 0; i &lt; 256; ++ i)</span><br><span class="line">&#123;</span><br><span class="line">	p[i] = table[i];</span><br><span class="line">&#125;</span><br><span class="line">//然后我们调用函数(I 是输入， J 是输出)：</span><br><span class="line">for(int i = 0; i &lt; times; ++ i)</span><br><span class="line">	LUT(I, lookUpTable, J);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>计时函数<br>‘getTickCount()’函数： 返回CPU自某个时间以来走过的时钟周期；<br>‘getTickFrequency()’函数： 返回CPU一秒钟的时钟周期；<br>故使用以上两个函数可以得到某段程度的运行时间：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">double time1 = static_cast&lt;double&gt;(getTickCount()); //记录起始时间</span><br><span class="line">// 你的程序...</span><br><span class="line">time1 = ((double)getTickCount() - time1) / getTickFrequency();</span><br><span class="line">cout &lt;&lt; &quot;程序运行时间 : &quot; &lt;&lt; time1 &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>访问图中像素的方法<br>图像处理最基本的就是处理每个点的像素啦，所以呢，如何访问每个像素点呢。</p>
+</li>
+</ul>
+<ol>
+<li>指针访问： C操作符[]<br>如果是一幅 640 *320 的图像，就把他看成是一个二维数组 pic[640][320]。两个嵌套的for循环，即可完成图像像素点的遍历。</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/03/28/OpenCV/core组件进阶/" data-id="ckhkaueoe000pcbpl5kju7cmi" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenCV基础/">OpenCV基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-OpenCV/OpenCV数据结构与基本绘图" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/28/OpenCV/OpenCV数据结构与基本绘图/" class="article-date">
+  <time datetime="2017-03-28T14:54:20.000Z" itemprop="datePublished">2017-03-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/28/OpenCV/OpenCV数据结构与基本绘图/">OpenCV数据结构与基本绘图</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li><p>IplImage与Mat<br>在最开始，OpenCV使用基于C语言接口构建，因此在较早版本的OpenCV中使用IplImage存储图像数据。这就造成了一定的问题，在调试了的时候，需要程序员手动release为IplImage分配的内存，不然可能造成内存泄漏。<br>在OpenCV2.0以来，就引入了C++接口，也就产生了基于C++的Mat数据结构，没错，它是可以自动内存管理的，因此我们现在用的最多的就是Mat数据结构了。Mat类很方便，不用手动分配内存、释放内存。<br>那么为什么IplImage还继续顽强存在呢，那就是因为大部分嵌入式系统只支持C语言.</p>
+</li>
+<li><p>Mat类 包含两个数据部分，一个部分是矩阵头（矩阵尺寸、存储方法、存储地址等），另一部分指向存储所有像素值得矩阵。</p>
+</li>
+</ol>
+<p>需要记住的是，大多时候复制Mat类，只是引用矩阵头，而不是复制整个像素矩阵，这将导致巨大的时间成本。因此，OpenCV采用引用计数机制，每个Mat对象都有独自的矩阵头，但是共享一个像素矩阵。常见的复制构造函数、赋值符号都是只复制矩阵头，而不是复制整个像素矩阵。<br>
+        
+          <p class="article-more-link">
+            <a href="/2017/03/28/OpenCV/OpenCV数据结构与基本绘图/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/03/28/OpenCV/OpenCV数据结构与基本绘图/" data-id="ckhkaueod000ncbplf7713mmz" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenCV基础/">OpenCV基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
   <nav id="page-nav">
-    <%- paginator({
-      prev_text: "&laquo; " + __('prev'),
-      next_text: __('next') + " &raquo;"
-    }) %>
+    <a class="extend prev" rel="prev" href="/">&laquo; 上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">下一页 &raquo;</a>
   </nav>
-<% } %>
+
 </section>
         
           <aside id="sidebar">
   
-    
+    <% if (site.tags.length){ %>
   <div class="widget-wrap">
     <h2 class="widget-title"><b>关于我</b></h2>
     <div class="widget">
  <front size="3"><b>邮箱</b>：liangzelang@gmail.com<br>
- <b>现状</b>： 目前就职于华为2012实验室，从事深度学习框架的软件开发工作。个人喜欢图像处理、计算机视觉等领域。更多以及<a href="http://cv.qiaobutang.com/r/5997e28c0cf202fca1a62686">个人简历</a></front>
+ <b>现状</b>： 目前北京理工大学模式识别硕士在读，2018年毕业。个人喜欢图像处理、计算机视觉、机器学习等领域。我的<a href="http://oapeb119y.bkt.clouddn.com/%E9%99%84%E4%BB%B6%E4%BA%8C%EF%BC%9A%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86.pdf">个人简历</a></front>
     </div>
   </div>
-
+<% } %>
 
   
     
@@ -179,7 +676,7 @@
           </li>
         
           <li>
-            <a href="/2017/08/24/CPP/数据结构之常见图论算法/">数据结构之常见图论算法</a>
+            <a href="/2017/08/24/CPP/数据结构之图论基础/">数据结构之图论基础</a>
           </li>
         
       </ul>

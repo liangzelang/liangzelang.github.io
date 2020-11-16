@@ -69,52 +69,557 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><% if (pagination == 2){ %>
-  <% page.posts.each(function(post){ %>
-    <%- partial('article', {post: post, index: true}) %>
-  <% }) %>
-<% } else { %>
-  <% var last; %>
-  <% page.posts.each(function(post, i){ %>
-    <% var year = post.date.year(); %>
-    <% if (last != year){ %>
-      <% if (last != null){ %>
-        </div></section>
-      <% } %>
-      <% last = year; %>
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="<%- url_for(config.archive_dir + '/' + year) %>" class="archive-year"><%= year %></a>
-        </div>
-        <div class="archives">
-    <% } %>
-    <%- partial('archive-post', {post: post, even: i % 2 == 0}) %>
-  <% }) %>
-  <% if (page.posts.length){ %>
-    </div></section>
-  <% } %>
-<% } %>
-<% if (page.total > 1){ %>
+        <section id="main">
+  
+    <article id="post-CPP/虚析构函数的作用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/12/CPP/虚析构函数的作用/" class="article-date">
+  <time datetime="2017-03-11T23:09:46.000Z" itemprop="datePublished">2017-03-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/12/CPP/虚析构函数的作用/">虚析构函数的作用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>为什么要使用虚析构函数？<br>如果有这样两个类：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class person&#123;</span><br><span class="line">	person(...);</span><br><span class="line">	virtual ~person();</span><br><span class="line">	virtual void show();  //具体定义就不写了，反正和派生类不一样</span><br><span class="line">&#125;;</span><br><span class="line">class student : public person&#123;</span><br><span class="line">	virtual void show();  </span><br><span class="line">&#125;;</span><br><span class="line">person temp_p(...);</span><br><span class="line">student temp_s(...);</span><br><span class="line">person * temp1 = temp_p;</span><br><span class="line">person * temp2 = temp_s;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>为了发挥C++多态的特性，我们一般会使用虚函数，采用基类指针或者引用来 对基类对象或者派生类对象进行操作。但是这样会有一个问题，如果析构函数不是虚函数，那么基类指针temp2结束代码段时，就只会调用指针类型(就是基类)的析构函数。如果这个基类指针指向的是派生类对象，那么派生类的析构函数就不会被调用，显然是有一定问题隐患的。<br>因此，使用虚析构函数可以确保正确的析构函数序列被调用。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/03/12/CPP/虚析构函数的作用/" data-id="ckhkaueo6000bcbplggwdqrw8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-CPP/虚函数的工作原理" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/12/CPP/虚函数的工作原理/" class="article-date">
+  <time datetime="2017-03-11T23:09:16.000Z" itemprop="datePublished">2017-03-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/12/CPP/虚函数的工作原理/">虚函数的工作原理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>为什么需要虚函数？<br>在编写程序的过程中，一定会遇到这样的场景。派生类继承了基类的方法,但是我们希望同一个方法在派生类和基类中的行为不同，就是方法取决于调用的对象（这种复杂的行为就是多态）。实现多态的公有继承有两种重要的机制。</li>
+</ul>
+<ol>
+<li>在派生类中重新定义基类方法 （可以定义不同方法）</li>
+<li>虚函数 （可以使基类引用或指针可以调用派生类新定义的方法）</li>
+</ol>
+<ul>
+<li>虚函数基本语法？<br>在需要重新定义的方法前添加关键字 virtual，然后分别定义即可。
+        
+          <p class="article-more-link">
+            <a href="/2017/03/12/CPP/虚函数的工作原理/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/03/12/CPP/虚函数的工作原理/" data-id="ckhkaueo4000acbpls8ksh8bx" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-CPP/模板的具体化和实例化" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/12/CPP/模板的具体化和实例化/" class="article-date">
+  <time datetime="2017-03-11T23:08:12.000Z" itemprop="datePublished">2017-03-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/12/CPP/模板的具体化和实例化/">模板的具体化和实例化</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>什么是模板的具体化和实例化呢？有以下模板<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">void Swap(T &amp;a, T &amp;b);</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt; void Swap(T &amp;a, T  &amp;b)</span><br><span class="line">&#123;</span><br><span class="line">	T temp;</span><br><span class="line">	temp = a;</span><br><span class="line">	a = b;</span><br><span class="line">	b = temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	using namespace std;</span><br><span class="line">	int i = 10;</span><br><span class="line">	int j = 20;</span><br><span class="line">	Swap(i, j);   // 标志1</span><br><span class="line">	...</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在上面的模板函数声明中，声明一个交换类型为T的两个元素。代码包含函数模板并不会生产函数定义，它只是一个用于生产函数定义的方案。当编译器使用模板为特定类型生产函数定义时（程序标志1处），得到的是<b>模板实例化</b>，值得注意的是这里实例化的方式为隐式实例化，因为编译器发现你用的int类型参数，所以就隐式实例化。<br>在C++中，还有一种实例化方式：<b>显式实例化</b>，语法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">template void Swap&lt;int&gt;(int, int);  //显式实例化</span><br></pre></td></tr></table></figure></p>
+<p>与实例化不太一样的是<b>显式具体化</b>,具体的声明语法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">template &lt;&gt; void Swap(int &amp;, int &amp;);</span><br><span class="line">template &lt;&gt; void Swap&lt;int&gt;(int &amp;, int &amp;);</span><br></pre></td></tr></table></figure></p>
+<p>显示具体化不同的是：需要专门为int类型显式地定义函数定义，显式具体化声明在关键字template后包含&lt;&gt;,而显式实例化没有。</p>
+<p>此时，我们会发现有很多不同的函数定义，那么我们使用某个函数的时候，编译器到底使用的哪个函数原型呢？ 编译器选择原型的时候，非模板函数版本 &gt; 显式具体化 &gt; 通用模板版本。</p>
+<p>另外一点，同一个类型的显示实例化和显式具体化不能同时使用，会出错。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/03/12/CPP/模板的具体化和实例化/" data-id="ckhkaueo10008cbplsf7j607c" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-CPP/CPP中如何输出char型指针地址" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/12/CPP/CPP中如何输出char型指针地址/" class="article-date">
+  <time datetime="2017-03-11T23:07:40.000Z" itemprop="datePublished">2017-03-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/12/CPP/CPP中如何输出char型指针地址/">C++中如何输出char型指针地址</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>C++ 中std::cout对于char类型的指针，将默认输出这个类型指向的字符串，也就是：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">char * temp = &quot;Hello, CPP.\n&quot;;</span><br><span class="line">std::cout &lt;&lt; temp &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">OUTPUT:  Hello, CPP</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>那么我们要想输出这个字符串的地址怎么办？？？</p>
+<ul>
+<li>首先，我们要清楚为什么会这样呢，因为如果是int类型的指针就不会呀。这是因为C++标准库中IO类对’&lt;&lt;’运算符进行了重载，因此呢， 在遇到 char * 类型数据的时候，就自动使用相应的重载函数，把那个char型指针指向的字符串输出了。</li>
+<li><p>那么，How 2 solve this problem? 类型转换呀，你把它转换为int型指针？ 这是可以的， 但是这时下策。使用’static_cast<const void *>‘,把char型指针转换为无类型指针。如下：</const></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">char * temp = &quot;Hello, CPP.\n&quot;;</span><br><span class="line">std::cout &lt;&lt; temp &lt;&lt; endl;</span><br><span class="line">std::cout &lt;&lt; static_cast&lt;const void *&gt;(temp) &lt;&lt; endl;</span><br><span class="line">OUTPUT:  </span><br><span class="line">Hello, CPP</span><br><span class="line">某个地址</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>一些学渣还会有疑问，static_cast&lt;&gt;()这是什么鬼？那么拾起那么《C++ primer》，你会发现C++还是很有趣的。</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/03/12/CPP/CPP中如何输出char型指针地址/" data-id="ckhkauenz0005cbpl7sj8l4z9" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-CPP/派生类与基类之间的特殊关系" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/12/CPP/派生类与基类之间的特殊关系/" class="article-date">
+  <time datetime="2017-03-11T22:51:52.000Z" itemprop="datePublished">2017-03-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/12/CPP/派生类与基类之间的特殊关系/">派生类与基类之间的特殊关系</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>继承是C++中一项非常重要的特性，继承派生使得C++的代码重用实现可能。基类与其派生类之间也有着较为特殊的关系<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class person&#123;</span><br><span class="line">private:</span><br><span class="line">	string name;</span><br><span class="line">	double height;</span><br><span class="line">public:</span><br><span class="line">	void Funciton_One();</span><br><span class="line">&#125;;</span><br><span class="line">class student : public person&#123;</span><br><span class="line">private:</span><br><span class="line">	int student_ID;</span><br><span class="line">public:</span><br><span class="line">	void Funciton_TWo();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>由上述简要代码可以知道，student类从person类派生出来，继承了person类的实现（存储了基类数据成员）与接口（可以使用基类方法）。<br><b>重点</b><br>基类指针可以在不进行显式转换的情况下，指向派生类对象；同理，<br>基类引用也可以在不进行显式转换的情况下引用派生类对象。<br>但是，反过来确实不允许的，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">person Zhang(……);</span><br><span class="line">student Lee(……)；</span><br><span class="line">person * Temp1 = &amp;Lee; // Allowed</span><br><span class="line">person &amp; Temp2 = Lee;  // Allowed</span><br><span class="line">student * temp1 = &amp;Zhang; // Not Allowed</span><br><span class="line">student &amp; temp2 = Zhang;  // Not Allowed</span><br></pre></td></tr></table></figure></p>
+<p>从上面代码可以看出这一特殊的关系。虽然基类引用和指针可以引用和指向派生类对象，但是基类引用和指针只能调用基类方法。这也正常，你试想，使用基类引用为派生类对象调用基类方法，显然是可以的，因为派生类继承了基类方法；相反，如果使用派生类引用为基类对象调用派生类方法，这明显会发生错误。<br>这一关系也存在于以基类引用（指针）作为形参的函数。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/03/12/CPP/派生类与基类之间的特殊关系/" data-id="ckhkaueo30009cbpl9x6kgn49" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-OpenCV/HigtGUI的初识" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/01/OpenCV/HigtGUI的初识/" class="article-date">
+  <time datetime="2017-02-28T22:48:02.000Z" itemprop="datePublished">2017-03-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/01/OpenCV/HigtGUI的初识/">HigtGUI的初识</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li><b>imread()函数</b><br> Mat imread(const string &amp; filename, int flags = 1);<br>其中第一个参数表示要读取的图像文件名， const string &amp;类型的filename。值得注意的是图像的路径。支持多种类型的图像载入，主流的有bmp\jpg\jpeg\png\ppm\pgm\ras\tif等类型。<br>第二个参数表示载入标识，就是需要以何种方式把原图像呈现，默认参数为1。可以在OpenCV的图像标识枚举中选取：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">enum</span><br><span class="line">&#123;</span><br><span class="line">/* 8bit, color or not */</span><br><span class="line">//新的版本中已经取消，忽略，原通道读取</span><br><span class="line">    CV_LOAD_IMAGE_UNCHANGED  =-1, </span><br><span class="line">/* 8bit, gray */</span><br><span class="line">//原图像转换为灰度图像输出</span><br><span class="line">    CV_LOAD_IMAGE_GRAYSCALE  =0,</span><br><span class="line">/* ?, color */</span><br><span class="line">//原图像转换为彩色图像输出，如果原图像是灰度图像，输出还是灰度</span><br><span class="line">    CV_LOAD_IMAGE_COLOR      =1,</span><br><span class="line">/* any depth, ? */</span><br><span class="line">//如果图像深度为16或者32位，则输出相应深度的图像，否则转换为8位深度图像</span><br><span class="line">    CV_LOAD_IMAGE_ANYDEPTH   =2,</span><br><span class="line">/* ?, any color */</span><br><span class="line">//原图像色彩保持不变</span><br><span class="line">    CV_LOAD_IMAGE_ANYCOLOR   =4</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>但是OpenCV3中这些宏都失效，故采用数字。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mat img = imread(&quot;pic.jpg&quot;,2|4)  //载入无损的源图像</span><br></pre></td></tr></table></figure></p>
+        
+          <p class="article-more-link">
+            <a href="/2017/03/01/OpenCV/HigtGUI的初识/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/03/01/OpenCV/HigtGUI的初识/" data-id="ckhkaueoc000mcbpl1hi9c70y" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenCV基础/">OpenCV基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-CPP/c-成员运算符" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/29/CPP/c-成员运算符/" class="article-date">
+  <time datetime="2016-12-29T15:49:13.000Z" itemprop="datePublished">2016-12-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/29/CPP/c-成员运算符/">c++成员运算符</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>总结一下成员运算符的简单知识。</p>
+<ul>
+<li><p>成员运算符有直接成员运算符 <code>.</code> 和间接成员运算符 <code>-&gt;</code> </p>
+</li>
+<li><p>直接成员运算符 ‘.’<br>直接成员运算符主要是在直接引用，类本身以及内部引用时使用。人话就是对象使用</p>
+</li>
+<li><p>间接成员运算符 ‘-&gt;’<br>间接成员运算符主要是在间接引用时使用。人话就是指向对象的指针使用</p>
+</li>
+<li><p>有时，C++新手在指定结构成员时，搞不清楚何时应使用句点运算符，何时应使用箭头运算符。规则很简单，如果结构标识符是结构名称，则使用句点运算符（直接成员运算符）；如果标识符是指向结构的指针，则使用箭头运算符。</p>
+</li>
+</ul>
+<p><b>Example:</b></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//利用结构，演示直接成员运算符和间接成员运算符的用法</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">inflatable</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">char</span> name[<span class="number">20</span>];</span><br><span class="line">	<span class="keyword">float</span> volume;</span><br><span class="line">	<span class="keyword">double</span> price;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">	inflatable *ps = <span class="keyword">new</span> inflatable;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"enter name of inflable item: "</span>;</span><br><span class="line">	<span class="built_in">cin</span>.get(ps-&gt;name,<span class="number">20</span>);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"enter volume in cubic feet : "</span>;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; (*ps).volume;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"enter price : $"</span>;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; ps-&gt;price;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Name: "</span> &lt;&lt; (*ps).name &lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"volume : "</span>&lt;&lt; ps-&gt;volume &lt;&lt;<span class="string">"cubic feet\n"</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Price: $"</span> &lt;&lt; ps-&gt;price &lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	<span class="keyword">delete</span> ps;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2016/12/29/CPP/c-成员运算符/" data-id="ckhkaueny0003cbplr1wlkrlo" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-CPP/sizeof-和-strlen的区别" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/29/CPP/sizeof-和-strlen的区别/" class="article-date">
+  <time datetime="2016-12-29T15:39:01.000Z" itemprop="datePublished">2016-12-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/29/CPP/sizeof-和-strlen的区别/">sizeof和strlen的区别</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在一些场景下,希望得到数组的大小，字符串的长度，char型数组的长度等等，很自然想到sizeof以及strlen,但是非常容易搞混弄错.下面简要列出一些区别：</p>
+<ol>
+<li><p>sizeof操作符的结果类型是size_t，它在头文件中typedef为unsigned int类型。<br>该类型保证能容纳实现所建立的最大对象的字节大小。 </p>
+</li>
+<li><p>sizeof是操作符，strlen是函数。 </p>
+</li>
+<li><p>sizeof可以用类型做参数，strlen只能用char*做参数，且必须是以’’\0’’结尾的。<br>sizeof还可以用函数做参数，比如： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">short f();</span><br><span class="line">printf(&quot;%d\n&quot;, sizeof(f()));</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>输出的结果是 <code>sizeof(short)</code> ，即2。 </p>
+        
+          <p class="article-more-link">
+            <a href="/2016/12/29/CPP/sizeof-和-strlen的区别/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2016/12/29/CPP/sizeof-和-strlen的区别/" data-id="ckhkauenx0002cbplxnpqv98j" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-CPP/C-指针注意事项" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/29/CPP/C-指针注意事项/" class="article-date">
+  <time datetime="2016-12-29T15:34:47.000Z" itemprop="datePublished">2016-12-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/29/CPP/C-指针注意事项/">C++指针注意事项</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p>一定要在对指针使用解除运算符（*）之前，将指针初始化为一个确定的适当的地址，这是关于使用指针的金科玉律。</p>
+</li>
+<li><p>使用delete的关键在于，将他用于new分配的内存。这并不意味这要使用用于new的指针，而是用于new分配的地址。<br><b>Example:</b></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *ps = <span class="keyword">new</span> <span class="keyword">int</span>;    <span class="comment">//allocate memory</span></span><br><span class="line"><span class="keyword">int</span> *pq = ps;         <span class="comment">//set second pointer to same block</span></span><br><span class="line"><span class="keyword">delete</span> pq;			  <span class="comment">//delete with second pointer</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>以上方法为同一使用new分配的空间，创建了两个指针，通常不会这么做，这将增加删除同一内存块两次的可能性。遵守</p>
+<ul>
+<li>使用new和delete时，需要以下规则。</li>
+</ul>
+<ol>
+<li>不要使用delete来释放不是new分配的内存；</li>
+<li>不要使用delete释放同一个内存块两次；</li>
+<li>如果使用new []为数组分配内存，则应使用delete []来释放</li>
+<li>如果使用new []为一个实体分配内存，则应使用delete来释放</li>
+<li>对空指针使用delete是安全的</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2016/12/29/CPP/C-指针注意事项/" data-id="ckhkauenz0004cbpl8a7dqmi0" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Leetcode/414-the-third-maxium-number" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/28/Leetcode/414-the-third-maxium-number/" class="article-date">
+  <time datetime="2016-12-28T15:26:04.000Z" itemprop="datePublished">2016-12-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/28/Leetcode/414-the-third-maxium-number/">414. the third maxium number</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>Given a non-empty array of integers, return the third maximum number in this array. If it does not exist, return the maximum number. The time complexity must be in O(n).<br><b>Example 1:</b><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Input: [<span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">Output: <span class="number">1</span></span><br><span class="line"></span><br><span class="line">Explanation: The third maximum is <span class="number">1.</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><b>Example 2:</b><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Input: [<span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line"></span><br><span class="line">Output: <span class="number">2</span></span><br><span class="line"></span><br><span class="line">Explanation: The third maximum does not exist, so the maximum (2) is returned instead.</span><br></pre></td></tr></table></figure></p>
+<p><b>Example 3:</b><br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Input: [<span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">Output: <span class="number">1</span></span><br><span class="line"></span><br><span class="line">Explanation: Note that the third maximum here means the third maximum distinct number.</span><br><span class="line">Both numbers with value <span class="number">2</span> are both considered as second maximum.</span><br></pre></td></tr></table></figure></p>
+<h1 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h1><ul>
+<li>翻译：给一个非空整型数组，返回第三大的数字，如果不存在则返回最大的数字，要求时间复杂度为0（n）
+        
+          <p class="article-more-link">
+            <a href="/2016/12/28/Leetcode/414-the-third-maxium-number/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2016/12/28/Leetcode/414-the-third-maxium-number/" data-id="ckhkaueoa000icbpl1u3yjvai" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
   <nav id="page-nav">
-    <%- paginator({
-      prev_text: "&laquo; " + __('prev'),
-      next_text: __('next') + " &raquo;"
-    }) %>
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo; 上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">下一页 &raquo;</a>
   </nav>
-<% } %>
+
 </section>
         
           <aside id="sidebar">
   
-    
+    <% if (site.tags.length){ %>
   <div class="widget-wrap">
     <h2 class="widget-title"><b>关于我</b></h2>
     <div class="widget">
  <front size="3"><b>邮箱</b>：liangzelang@gmail.com<br>
- <b>现状</b>： 目前就职于华为2012实验室，从事深度学习框架的软件开发工作。个人喜欢图像处理、计算机视觉等领域。更多以及<a href="http://cv.qiaobutang.com/r/5997e28c0cf202fca1a62686">个人简历</a></front>
+ <b>现状</b>： 目前北京理工大学模式识别硕士在读，2018年毕业。个人喜欢图像处理、计算机视觉、机器学习等领域。我的<a href="http://oapeb119y.bkt.clouddn.com/%E9%99%84%E4%BB%B6%E4%BA%8C%EF%BC%9A%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86.pdf">个人简历</a></front>
     </div>
   </div>
-
+<% } %>
 
   
     
@@ -179,7 +684,7 @@
           </li>
         
           <li>
-            <a href="/2017/08/24/CPP/数据结构之常见图论算法/">数据结构之常见图论算法</a>
+            <a href="/2017/08/24/CPP/数据结构之图论基础/">数据结构之图论基础</a>
           </li>
         
       </ul>

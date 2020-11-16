@@ -69,52 +69,283 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><% if (pagination == 2){ %>
-  <% page.posts.each(function(post){ %>
-    <%- partial('article', {post: post, index: true}) %>
-  <% }) %>
-<% } else { %>
-  <% var last; %>
-  <% page.posts.each(function(post, i){ %>
-    <% var year = post.date.year(); %>
-    <% if (last != year){ %>
-      <% if (last != null){ %>
-        </div></section>
-      <% } %>
-      <% last = year; %>
+        <section id="main">
+  
+  
+    
+    
+      
+      
       <section class="archives-wrap">
         <div class="archive-year-wrap">
-          <a href="<%- url_for(config.archive_dir + '/' + year) %>" class="archive-year"><%= year %></a>
+          <a href="/archives/2020" class="archive-year">2020</a>
         </div>
         <div class="archives">
-    <% } %>
-    <%- partial('archive-post', {post: post, even: i % 2 == 0}) %>
-  <% }) %>
-  <% if (page.posts.length){ %>
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2020/08/02/Leetcode/5-最长回文子串-C-中心扩展-暴力-md/" class="archive-article-date">
+  <time datetime="2020-08-02T13:48:21.000Z" itemprop="datePublished">8月 2</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2020/08/02/Leetcode/5-最长回文子串-C-中心扩展-暴力-md/">[5. 最长回文子串] C + 中心扩展 + 暴力</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+      
+        </div></section>
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2017" class="archive-year">2017</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2017/08/24/CPP/数据结构之常见图论算法/" class="archive-article-date">
+  <time datetime="2017-08-24T12:53:48.000Z" itemprop="datePublished">8月 24</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/08/24/CPP/数据结构之常见图论算法/">数据结构之常见图论算法</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2017/08/24/CPP/数据结构之图论基础/" class="archive-article-date">
+  <time datetime="2017-08-24T12:53:48.000Z" itemprop="datePublished">8月 24</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/08/24/CPP/数据结构之图论基础/">数据结构之图论基础</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2017/08/19/CPP/数据结构之链表-队列-串/" class="archive-article-date">
+  <time datetime="2017-08-19T13:51:27.000Z" itemprop="datePublished">8月 19</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/08/19/CPP/数据结构之链表-队列-串/">数据结构之链表-队列-串</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2017/07/14/CPP/数据结构之树/" class="archive-article-date">
+  <time datetime="2017-07-14T02:53:48.000Z" itemprop="datePublished">7月 14</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/07/14/CPP/数据结构之树/">数据结构之树</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2017/07/04/CPP/排序算法总结/" class="archive-article-date">
+  <time datetime="2017-07-04T15:31:17.000Z" itemprop="datePublished">7月 4</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/07/04/CPP/排序算法总结/">排序算法总结</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+      
+        </div></section>
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2016" class="archive-year">2016</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2016/12/28/Leetcode/414-the-third-maxium-number/" class="archive-article-date">
+  <time datetime="2016-12-28T15:26:04.000Z" itemprop="datePublished">12月 28</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2016/12/28/Leetcode/414-the-third-maxium-number/">414. the third maxium number</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2016/12/26/Leetcode/1-two-sum/" class="archive-article-date">
+  <time datetime="2016-12-26T15:35:23.000Z" itemprop="datePublished">12月 26</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2016/12/26/Leetcode/1-two-sum/">1.two sum</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2016/12/23/Leetcode/461-hamming-distance-md/" class="archive-article-date">
+  <time datetime="2016-12-23T02:11:23.000Z" itemprop="datePublished">12月 23</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2016/12/23/Leetcode/461-hamming-distance-md/">461.hamming distance</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2016/12/23/Leetcode/442-find-all-duplicates-in-an-array-md/" class="archive-article-date">
+  <time datetime="2016-12-23T02:09:57.000Z" itemprop="datePublished">12月 23</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2016/12/23/Leetcode/442-find-all-duplicates-in-an-array-md/">442.find all duplicates in an array</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2016/12/23/Leetcode/412-fizz-buzz-md/" class="archive-article-date">
+  <time datetime="2016-12-23T02:09:06.000Z" itemprop="datePublished">12月 23</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2016/12/23/Leetcode/412-fizz-buzz-md/">412. fizz buzz</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2016/12/23/Leetcode/202-happy-number-md/" class="archive-article-date">
+  <time datetime="2016-12-23T02:08:24.000Z" itemprop="datePublished">12月 23</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2016/12/23/Leetcode/202-happy-number-md/">202.happy number</a>
+    </h1>
+  
+
+    </header>
+  </div>
+</article>
+  
+  
     </div></section>
-  <% } %>
-<% } %>
-<% if (page.total > 1){ %>
-  <nav id="page-nav">
-    <%- paginator({
-      prev_text: "&laquo; " + __('prev'),
-      next_text: __('next') + " &raquo;"
-    }) %>
-  </nav>
-<% } %>
+  
+
+
 </section>
         
           <aside id="sidebar">
   
-    
+    <% if (site.tags.length){ %>
   <div class="widget-wrap">
     <h2 class="widget-title"><b>关于我</b></h2>
     <div class="widget">
  <front size="3"><b>邮箱</b>：liangzelang@gmail.com<br>
- <b>现状</b>： 目前就职于华为2012实验室，从事深度学习框架的软件开发工作。个人喜欢图像处理、计算机视觉等领域。更多以及<a href="http://cv.qiaobutang.com/r/5997e28c0cf202fca1a62686">个人简历</a></front>
+ <b>现状</b>： 目前北京理工大学模式识别硕士在读，2018年毕业。个人喜欢图像处理、计算机视觉、机器学习等领域。我的<a href="http://oapeb119y.bkt.clouddn.com/%E9%99%84%E4%BB%B6%E4%BA%8C%EF%BC%9A%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86.pdf">个人简历</a></front>
     </div>
   </div>
-
+<% } %>
 
   
     
@@ -179,7 +410,7 @@
           </li>
         
           <li>
-            <a href="/2017/08/24/CPP/数据结构之常见图论算法/">数据结构之常见图论算法</a>
+            <a href="/2017/08/24/CPP/数据结构之图论基础/">数据结构之图论基础</a>
           </li>
         
       </ul>
