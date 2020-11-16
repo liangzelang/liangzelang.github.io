@@ -69,328 +69,39 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-Leetcode/442-find-all-duplicates-in-an-array-md" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/12/23/Leetcode/442-find-all-duplicates-in-an-array-md/" class="article-date">
-  <time datetime="2016-12-23T02:09:57.000Z" itemprop="datePublished">2016-12-23</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/23/Leetcode/442-find-all-duplicates-in-an-array-md/">442.find all duplicates in an array</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><p>Given an array of integers, 1 ≤ a[i] ≤ n (n = size of array), some elements appear twice and others appear once.</p>
-</li>
-<li><p>Find all the elements that appear twice in this array.</p>
-</li>
-<li><p>Could you do it without extra space and in O(n) runtime?</p>
-</li>
-</ul>
-<p><b>Example:</b><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Input:</span><br><span class="line">[4,3,2,7,8,2,3,1]</span><br><span class="line"></span><br><span class="line">Output:</span><br><span class="line">[2,3]</span><br></pre></td></tr></table></figure></p>
-<h1 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h1><ul>
-<li>翻译：一个整型数组，[1,n]其中n为数组大小，其中有些元素出现2次，有些出现1次，求出现2次的元素，0(n)复杂度
-        
-          <p class="article-more-link">
-            <a href="/2016/12/23/Leetcode/442-find-all-duplicates-in-an-array-md/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://newbird.cn/2016/12/23/Leetcode/442-find-all-duplicates-in-an-array-md/" data-id="ckgipfxpx000g93plomjlh1as" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Leetcode/412-fizz-buzz-md" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/12/23/Leetcode/412-fizz-buzz-md/" class="article-date">
-  <time datetime="2016-12-23T02:09:06.000Z" itemprop="datePublished">2016-12-23</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/23/Leetcode/412-fizz-buzz-md/">412. fizz buzz</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><p>Write a program that outputs the string representation of numbers from 1 to n.</p>
-</li>
-<li><p>But for multiples of three it should output “Fizz” instead of the number and for the multiples of five output “Buzz”. For numbers which are multiples of both three and five output “FizzBuzz”.</p>
-</li>
-</ul>
-<p><b>Example:</b><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">n = <span class="number">15</span>,</span><br><span class="line"></span><br><span class="line">Return:</span><br><span class="line">[</span><br><span class="line">    <span class="string">"1"</span>,</span><br><span class="line">    <span class="string">"2"</span>,</span><br><span class="line">    <span class="string">"Fizz"</span>,</span><br><span class="line">    <span class="string">"4"</span>,</span><br><span class="line">    <span class="string">"Buzz"</span>,</span><br><span class="line">    <span class="string">"Fizz"</span>,</span><br><span class="line">    <span class="string">"7"</span>,</span><br><span class="line">    <span class="string">"8"</span>,</span><br><span class="line">    <span class="string">"Fizz"</span>,</span><br><span class="line">    <span class="string">"Buzz"</span>,</span><br><span class="line">    <span class="string">"11"</span>,</span><br><span class="line">    <span class="string">"Fizz"</span>,</span><br><span class="line">    <span class="string">"13"</span>,</span><br><span class="line">    <span class="string">"14"</span>,</span><br><span class="line">    <span class="string">"FizzBuzz"</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
-<h1 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h1><ul>
-<li>翻译：写一个程序输出1到n的字符串表达，但是 如果是3的倍数，不输出对应数字的字符串，而是输出“Fizz” ，如果是5的倍数，不输出对应数字的字符串，而是输出“Buzz”， 若同时是3和5的倍数，则输出 “FizzBuzz”。
-        
-          <p class="article-more-link">
-            <a href="/2016/12/23/Leetcode/412-fizz-buzz-md/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://newbird.cn/2016/12/23/Leetcode/412-fizz-buzz-md/" data-id="ckgipfxpx000e93pl70llb5il" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Leetcode/202-happy-number-md" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/12/23/Leetcode/202-happy-number-md/" class="article-date">
-  <time datetime="2016-12-23T02:08:24.000Z" itemprop="datePublished">2016-12-23</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/23/Leetcode/202-happy-number-md/">202.happy number</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><p>write an algorithm to determine if a number is ‘happy’</p>
-</li>
-<li><p>A happy number is a number defined by the following process: Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay),or it loops endlessly in a cycle which does not include 1. Those numbers for which this process ends in 1 are happy numbers.</p>
-</li>
-</ul>
-<p><b>Example:</b> 19 is a happy number</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1^2 + 9^2 = 82</span><br><span class="line">8^2 + 2^2 = 68</span><br><span class="line">6^2 + 8^2 = 100</span><br><span class="line">1^2 + 0^2 + 0^2 = 1</span><br></pre></td></tr></table></figure>
-<h1 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h1><ul>
-<li><b>翻译</b>： 判断一个正整数是否为一个happy-number，一个正整数各位的平方和代替次正整数，不断迭代，如果迭代出1，则为happy-number，否则不是而且会出现无限循环。
-        
-          <p class="article-more-link">
-            <a href="/2016/12/23/Leetcode/202-happy-number-md/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://newbird.cn/2016/12/23/Leetcode/202-happy-number-md/" data-id="ckgipfxpw000d93plwo3hj5a7" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Linux_shell/Linux下gedit打开文件产生带波浪号（～）的备份文件" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/12/20/Linux_shell/Linux下gedit打开文件产生带波浪号（～）的备份文件/" class="article-date">
-  <time datetime="2016-12-20T00:00:17.000Z" itemprop="datePublished">2016-12-20</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/20/Linux_shell/Linux下gedit打开文件产生带波浪号（～）的备份文件/">Linux下gedit打开文件产生带波浪号（～）的备份文件</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>  在ubuntu系统下，使用gedit编辑器打开文件（如test.md），会自动生成一个备份文件，文件名字为（原文件名＋波浪号 test.md~）,这种情况是为了防止系统或者编辑器突然崩溃，以恢复文件使用。但是有时候看着特别繁琐和凌乱。所以一下为解决办法，相反也可以开启自动备份功能。</p>
-<h1 id="如何快速删除此类备份文件"><a href="#如何快速删除此类备份文件" class="headerlink" title="如何快速删除此类备份文件"></a>如何快速删除此类备份文件</h1><pre><code>rm -rf *.*~
-</code></pre><ul>
-<li>-f –force 忽略不存在文件，强制删除并不提示</li>
-<li>-r –recursive 删除该目录及其子目录下所有符合条件的文件</li>
-<li><em>.</em>~ *代表任意，任意文件名+’.’+任意文件类型后缀+’~’,满足该条件的文件都删除</li>
-</ul>
-<h1 id="如何设置取消生成自动备份文件"><a href="#如何设置取消生成自动备份文件" class="headerlink" title="如何设置取消生成自动备份文件"></a>如何设置取消生成自动备份文件</h1><ul>
-<li>gedit编辑器：　最大化窗口-&gt;Edit-&gt;Preferences-&gt;Editor-&gt;file saving-&gt;取消’Creat a backup copy of files before saving’选项，中文系统同理。</li>
-<li>Vi/Vim编辑器:<br>  vi ~/.vimrc<br>  set nobackup<br>通过以上方法可以实现删除或者取消自动备份文件功能，相反可以开启自动备份功能。</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://newbird.cn/2016/12/20/Linux_shell/Linux下gedit打开文件产生带波浪号（～）的备份文件/" data-id="ckgipfxpz000j93plvhoz97dc" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-OpenCV/VS2010+OpenCV2.4.10的安装与配置" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/09/25/OpenCV/VS2010+OpenCV2.4.10的安装与配置/" class="article-date">
-  <time datetime="2016-09-24T22:56:32.000Z" itemprop="datePublished">2016-09-25</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/25/OpenCV/VS2010+OpenCV2.4.10的安装与配置/">VS2010+OpenCV2.4.10的安装与配置</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>由于本人最近要做图像处理的一些工作，因此将相应的流程记录备份，方便自己，也为他人提供一个思路吧。<br><br>平台操作系统： Win7 32位 旗舰版<br></p>
-<h2 id="1、VS2010的安装"><a href="#1、VS2010的安装" class="headerlink" title="1、VS2010的安装"></a>1、VS2010的安装</h2><p>直接点击 AutoRun.exe或者Setup.exe按照提示一步步安装即可。需要选择安装那些模块，按自己的开发需要选择，如果实在不懂，全部安装。<br></p>
-<h2 id="2、OpenCV的安装"><a href="#2、OpenCV的安装" class="headerlink" title="2、OpenCV的安装"></a>2、OpenCV的安装</h2><p>我用的是OpenCV2.4.10，安装非常简单。只要选择安装位置就可以自动完成，如图1。需要记住该安装地址（本文假设安装在D盘根目录下 D:\）。<br><img src="http://oapeb119y.bkt.clouddn.com/1.png" alt="图1"><br><img src="http://oapeb119y.bkt.clouddn.com/2.png" alt="图2"></p>
-<h2 id="3、OpenCV的配置"><a href="#3、OpenCV的配置" class="headerlink" title="3、OpenCV的配置"></a>3、OpenCV的配置</h2>
-        
-          <p class="article-more-link">
-            <a href="/2016/09/25/OpenCV/VS2010+OpenCV2.4.10的安装与配置/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://newbird.cn/2016/09/25/OpenCV/VS2010+OpenCV2.4.10的安装与配置/" data-id="ckgipfxq1000n93pl33lamd3t" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenCV基础/">OpenCV基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VS2010/">VS2010</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Summary/New-Begining" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/20/Summary/New-Begining/" class="article-date">
-  <time datetime="2016-07-20T08:21:14.000Z" itemprop="datePublished">2016-07-20</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/生活/">生活</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/20/Summary/New-Begining/">菜鸟，新的征程</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>我想首先我要介绍一下我的现状。我目前在北京理工读研究生，研究方向是模式识别与智能系统。<br><br>2015年07月本科毕业，那个时候自己既没有选择工作，考研也失败了。我非常焦虑和担心，幸好有父母和朋友的支持和帮助，我决定了二战。由于二战，这个网站也关闭了一年多。现在也终于重新上线了，我把他弄成了我个人的博客，分享生活，交流技术。<br><br>我个人主要会分享<code>C|C++|Shell|Python|模式识别|ML&amp;&amp;DL|数据结构与算法|Markdown|Git|Linux</code>等相关方面的内容。你对相关内容有任何看法与见解，非常欢迎一起沟通交流。<br><br>菜鸟，新的征程。New bird，New beginning。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://newbird.cn/2016/07/20/Summary/New-Begining/" data-id="ckgipfxq4000u93plzwx94a20" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
-
+        <section id="main"><% if (pagination == 2){ %>
+  <% page.posts.each(function(post){ %>
+    <%- partial('article', {post: post, index: true}) %>
+  <% }) %>
+<% } else { %>
+  <% var last; %>
+  <% page.posts.each(function(post, i){ %>
+    <% var year = post.date.year(); %>
+    <% if (last != year){ %>
+      <% if (last != null){ %>
+        </div></section>
+      <% } %>
+      <% last = year; %>
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="<%- url_for(config.archive_dir + '/' + year) %>" class="archive-year"><%= year %></a>
+        </div>
+        <div class="archives">
+    <% } %>
+    <%- partial('archive-post', {post: post, even: i % 2 == 0}) %>
+  <% }) %>
+  <% if (page.posts.length){ %>
+    </div></section>
+  <% } %>
+<% } %>
+<% if (page.total > 1){ %>
   <nav id="page-nav">
-    <a class="extend prev" rel="prev" href="/page/3/">&laquo; 上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+    <%- paginator({
+      prev_text: "&laquo; " + __('prev'),
+      next_text: __('next') + " &raquo;"
+    }) %>
   </nav>
-
+<% } %>
 </section>
         
           <aside id="sidebar">
@@ -410,7 +121,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">35</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">37</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -420,7 +131,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Caffe/">Caffe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/">Markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV基础/">OpenCV基础</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ResNet/">ResNet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TLD/">TLD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VS2010/">VS2010</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c++</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/">ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图像处理/">图像处理</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/目标跟踪/">目标跟踪</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Caffe/">Caffe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/">Markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV基础/">OpenCV基础</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ResNet/">ResNet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TLD/">TLD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VS2010/">VS2010</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c++</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/">ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图像处理/">图像处理</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/目标跟踪/">目标跟踪</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -430,7 +141,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Caffe/" style="font-size: 10px;">Caffe</a> <a href="/tags/Linux/" style="font-size: 11.43px;">Linux</a> <a href="/tags/Markdown/" style="font-size: 10px;">Markdown</a> <a href="/tags/OpenCV/" style="font-size: 12.86px;">OpenCV</a> <a href="/tags/OpenCV基础/" style="font-size: 15.71px;">OpenCV基础</a> <a href="/tags/ResNet/" style="font-size: 10px;">ResNet</a> <a href="/tags/TLD/" style="font-size: 10px;">TLD</a> <a href="/tags/VS2010/" style="font-size: 10px;">VS2010</a> <a href="/tags/c/" style="font-size: 20px;">c++</a> <a href="/tags/leetcode/" style="font-size: 17.14px;">leetcode</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/图像处理/" style="font-size: 14.29px;">图像处理</a> <a href="/tags/数据结构与算法/" style="font-size: 18.57px;">数据结构与算法</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/目标跟踪/" style="font-size: 12.86px;">目标跟踪</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+      <a href="/tags/Caffe/" style="font-size: 10px;">Caffe</a> <a href="/tags/Linux/" style="font-size: 11.43px;">Linux</a> <a href="/tags/Markdown/" style="font-size: 10px;">Markdown</a> <a href="/tags/OpenCV/" style="font-size: 12.86px;">OpenCV</a> <a href="/tags/OpenCV基础/" style="font-size: 15.71px;">OpenCV基础</a> <a href="/tags/ResNet/" style="font-size: 10px;">ResNet</a> <a href="/tags/TLD/" style="font-size: 10px;">TLD</a> <a href="/tags/VS2010/" style="font-size: 10px;">VS2010</a> <a href="/tags/c/" style="font-size: 20px;">c++</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/leetcode/" style="font-size: 17.14px;">leetcode</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/图像处理/" style="font-size: 14.29px;">图像处理</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/数据结构与算法/" style="font-size: 18.57px;">数据结构与算法</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/目标跟踪/" style="font-size: 12.86px;">目标跟踪</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
     </div>
   </div>
 
@@ -439,7 +150,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -452,6 +163,14 @@
       <ul>
         
           <li>
+            <a href="/2020/11/11/CPP/C++并发编程学习总结1/">C++多线程编程指南</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/11/Summary/hexo+github博客使用指南/">hexo使用指南</a>
+          </li>
+        
+          <li>
             <a href="/2020/09/30/Linux_shell/正则表达式/">正则表达式</a>
           </li>
         
@@ -461,14 +180,6 @@
         
           <li>
             <a href="/2017/08/24/CPP/数据结构之常见图论算法/">数据结构之常见图论算法</a>
-          </li>
-        
-          <li>
-            <a href="/2017/08/24/CPP/数据结构之图论基础/">数据结构之图论基础</a>
-          </li>
-        
-          <li>
-            <a href="/2017/08/19/DeepLearning/caffe-finetuning/">Caffe ResNet50微调</a>
           </li>
         
       </ul>
