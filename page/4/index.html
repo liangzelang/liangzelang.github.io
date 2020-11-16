@@ -71,6 +71,109 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-CPP/模板的具体化和实例化" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/12/CPP/模板的具体化和实例化/" class="article-date">
+  <time datetime="2017-03-11T23:08:12.000Z" itemprop="datePublished">2017-03-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/12/CPP/模板的具体化和实例化/">模板的具体化和实例化</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>什么是模板的具体化和实例化呢？有以下模板<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">void Swap(T &amp;a, T &amp;b);</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt; void Swap(T &amp;a, T  &amp;b)</span><br><span class="line">&#123;</span><br><span class="line">	T temp;</span><br><span class="line">	temp = a;</span><br><span class="line">	a = b;</span><br><span class="line">	b = temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	using namespace std;</span><br><span class="line">	int i = 10;</span><br><span class="line">	int j = 20;</span><br><span class="line">	Swap(i, j);   // 标志1</span><br><span class="line">	...</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在上面的模板函数声明中，声明一个交换类型为T的两个元素。代码包含函数模板并不会生产函数定义，它只是一个用于生产函数定义的方案。当编译器使用模板为特定类型生产函数定义时（程序标志1处），得到的是<b>模板实例化</b>，值得注意的是这里实例化的方式为隐式实例化，因为编译器发现你用的int类型参数，所以就隐式实例化。<br>在C++中，还有一种实例化方式：<b>显式实例化</b>，语法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">template void Swap&lt;int&gt;(int, int);  //显式实例化</span><br></pre></td></tr></table></figure></p>
+<p>与实例化不太一样的是<b>显式具体化</b>,具体的声明语法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">template &lt;&gt; void Swap(int &amp;, int &amp;);</span><br><span class="line">template &lt;&gt; void Swap&lt;int&gt;(int &amp;, int &amp;);</span><br></pre></td></tr></table></figure></p>
+<p>显示具体化不同的是：需要专门为int类型显式地定义函数定义，显式具体化声明在关键字template后包含&lt;&gt;,而显式实例化没有。</p>
+<p>此时，我们会发现有很多不同的函数定义，那么我们使用某个函数的时候，编译器到底使用的哪个函数原型呢？ 编译器选择原型的时候，非模板函数版本 &gt; 显式具体化 &gt; 通用模板版本。</p>
+<p>另外一点，同一个类型的显示实例化和显式具体化不能同时使用，会出错。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/03/12/CPP/模板的具体化和实例化/" data-id="ckhkqe0se0008iepliwpkzcdp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-CPP/CPP中如何输出char型指针地址" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/12/CPP/CPP中如何输出char型指针地址/" class="article-date">
+  <time datetime="2017-03-11T23:07:40.000Z" itemprop="datePublished">2017-03-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/12/CPP/CPP中如何输出char型指针地址/">C++中如何输出char型指针地址</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>C++ 中std::cout对于char类型的指针，将默认输出这个类型指向的字符串，也就是：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">char * temp = &quot;Hello, CPP.\n&quot;;</span><br><span class="line">std::cout &lt;&lt; temp &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">OUTPUT:  Hello, CPP</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>那么我们要想输出这个字符串的地址怎么办？？？</p>
+<ul>
+<li>首先，我们要清楚为什么会这样呢，因为如果是int类型的指针就不会呀。这是因为C++标准库中IO类对’&lt;&lt;’运算符进行了重载，因此呢， 在遇到 char * 类型数据的时候，就自动使用相应的重载函数，把那个char型指针指向的字符串输出了。</li>
+<li><p>那么，How 2 solve this problem? 类型转换呀，你把它转换为int型指针？ 这是可以的， 但是这时下策。使用’static_cast<const void *>‘,把char型指针转换为无类型指针。如下：</const></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">char * temp = &quot;Hello, CPP.\n&quot;;</span><br><span class="line">std::cout &lt;&lt; temp &lt;&lt; endl;</span><br><span class="line">std::cout &lt;&lt; static_cast&lt;const void *&gt;(temp) &lt;&lt; endl;</span><br><span class="line">OUTPUT:  </span><br><span class="line">Hello, CPP</span><br><span class="line">某个地址</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>一些学渣还会有疑问，static_cast&lt;&gt;()这是什么鬼？那么拾起那么《C++ primer》，你会发现C++还是很有趣的。</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2017/03/12/CPP/CPP中如何输出char型指针地址/" data-id="ckhkqe0s70001ieplgcixejcn" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-CPP/派生类与基类之间的特殊关系" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/03/12/CPP/派生类与基类之间的特殊关系/" class="article-date">
@@ -107,7 +210,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://newbird.cn/2017/03/12/CPP/派生类与基类之间的特殊关系/" data-id="ckhkn409100090hplevcsoc2l" class="article-share-link">Share</a>
+      <a data-url="http://newbird.cn/2017/03/12/CPP/派生类与基类之间的特殊关系/" data-id="ckhkqe0sg0009ieplmhdx8gm7" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li></ul>
@@ -158,7 +261,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://newbird.cn/2017/03/01/OpenCV/HigtGUI的初识/" data-id="ckhkn4099000p0hpl5qlah0zs" class="article-share-link">Share</a>
+      <a data-url="http://newbird.cn/2017/03/01/OpenCV/HigtGUI的初识/" data-id="ckhkqe0so000rieplndjds46x" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenCV基础/">OpenCV基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li></ul>
@@ -213,7 +316,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://newbird.cn/2016/12/29/CPP/c-成员运算符/" data-id="ckhkn408x00030hpl6d6imy7q" class="article-share-link">Share</a>
+      <a data-url="http://newbird.cn/2016/12/29/CPP/c-成员运算符/" data-id="ckhkqe0sc0005iepla6dcr0ht" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li></ul>
@@ -270,7 +373,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://newbird.cn/2016/12/29/CPP/sizeof-和-strlen的区别/" data-id="ckhkn408x00040hplth4do7fl" class="article-share-link">Share</a>
+      <a data-url="http://newbird.cn/2016/12/29/CPP/sizeof-和-strlen的区别/" data-id="ckhkqe0sc0004iepltxqhkvzj" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li></ul>
@@ -330,7 +433,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://newbird.cn/2016/12/29/CPP/C-指针注意事项/" data-id="ckhkn408w00020hplu6nhti9y" class="article-share-link">Share</a>
+      <a data-url="http://newbird.cn/2016/12/29/CPP/C-指针注意事项/" data-id="ckhkqe0sa0002ieplg66cycog" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li></ul>
@@ -384,7 +487,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://newbird.cn/2016/12/28/Leetcode/414-the-third-maxium-number/" data-id="ckhkn4096000i0hpllp944rs4" class="article-share-link">Share</a>
+      <a data-url="http://newbird.cn/2016/12/28/Leetcode/414-the-third-maxium-number/" data-id="ckhkqe0sl000kiepld9uvdsj6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
@@ -438,7 +541,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://newbird.cn/2016/12/26/Leetcode/1-two-sum/" data-id="ckhkn4093000c0hplni8qhct0" class="article-share-link">Share</a>
+      <a data-url="http://newbird.cn/2016/12/26/Leetcode/1-two-sum/" data-id="ckhkqe0sj000eieplqxek2eej" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
@@ -450,9 +553,9 @@
 
 
   
-    <article id="post-Leetcode/461-hamming-distance-md" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Leetcode/461.hamming-distance-md" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/12/23/Leetcode/461-hamming-distance-md/" class="article-date">
+    <a href="/2016/12/23/Leetcode/461.hamming-distance-md/" class="article-date">
   <time datetime="2016-12-23T02:11:23.000Z" itemprop="datePublished">2016-12-23</time>
 </a>
     
@@ -468,7 +571,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/23/Leetcode/461-hamming-distance-md/">461.hamming distance</a>
+      <a class="article-title" href="/2016/12/23/Leetcode/461.hamming-distance-md/">461.hamming distance</a>
     </h1>
   
 
@@ -488,125 +591,13 @@
 <li><b>翻译</b>：Hanmming Distance 就是两个整数[0 2^31]二进制表示对应位上不同位数的个数。给定X,Y求取两者的hamming distance
         
           <p class="article-more-link">
-            <a href="/2016/12/23/Leetcode/461-hamming-distance-md/#more">Read More</a>
+            <a href="/2016/12/23/Leetcode/461.hamming-distance-md/#more">Read More</a>
           </p>
         
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://newbird.cn/2016/12/23/Leetcode/461-hamming-distance-md/" data-id="ckhkn4097000k0hplx6ux3231" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Leetcode/442-find-all-duplicates-in-an-array-md" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/12/23/Leetcode/442-find-all-duplicates-in-an-array-md/" class="article-date">
-  <time datetime="2016-12-23T02:09:57.000Z" itemprop="datePublished">2016-12-23</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/23/Leetcode/442-find-all-duplicates-in-an-array-md/">442.find all duplicates in an array</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><p>Given an array of integers, 1 ≤ a[i] ≤ n (n = size of array), some elements appear twice and others appear once.</p>
-</li>
-<li><p>Find all the elements that appear twice in this array.</p>
-</li>
-<li><p>Could you do it without extra space and in O(n) runtime?</p>
-</li>
-</ul>
-<p><b>Example:</b><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Input:</span><br><span class="line">[4,3,2,7,8,2,3,1]</span><br><span class="line"></span><br><span class="line">Output:</span><br><span class="line">[2,3]</span><br></pre></td></tr></table></figure></p>
-<h1 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h1><ul>
-<li>翻译：一个整型数组，[1,n]其中n为数组大小，其中有些元素出现2次，有些出现1次，求出现2次的元素，0(n)复杂度
-        
-          <p class="article-more-link">
-            <a href="/2016/12/23/Leetcode/442-find-all-duplicates-in-an-array-md/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://newbird.cn/2016/12/23/Leetcode/442-find-all-duplicates-in-an-array-md/" data-id="ckhkn4096000j0hplswjjelzl" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Leetcode/412-fizz-buzz-md" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/12/23/Leetcode/412-fizz-buzz-md/" class="article-date">
-  <time datetime="2016-12-23T02:09:06.000Z" itemprop="datePublished">2016-12-23</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/23/Leetcode/412-fizz-buzz-md/">412. fizz buzz</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><p>Write a program that outputs the string representation of numbers from 1 to n.</p>
-</li>
-<li><p>But for multiples of three it should output “Fizz” instead of the number and for the multiples of five output “Buzz”. For numbers which are multiples of both three and five output “FizzBuzz”.</p>
-</li>
-</ul>
-<p><b>Example:</b><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">n = <span class="number">15</span>,</span><br><span class="line"></span><br><span class="line">Return:</span><br><span class="line">[</span><br><span class="line">    <span class="string">"1"</span>,</span><br><span class="line">    <span class="string">"2"</span>,</span><br><span class="line">    <span class="string">"Fizz"</span>,</span><br><span class="line">    <span class="string">"4"</span>,</span><br><span class="line">    <span class="string">"Buzz"</span>,</span><br><span class="line">    <span class="string">"Fizz"</span>,</span><br><span class="line">    <span class="string">"7"</span>,</span><br><span class="line">    <span class="string">"8"</span>,</span><br><span class="line">    <span class="string">"Fizz"</span>,</span><br><span class="line">    <span class="string">"Buzz"</span>,</span><br><span class="line">    <span class="string">"11"</span>,</span><br><span class="line">    <span class="string">"Fizz"</span>,</span><br><span class="line">    <span class="string">"13"</span>,</span><br><span class="line">    <span class="string">"14"</span>,</span><br><span class="line">    <span class="string">"FizzBuzz"</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
-<h1 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h1><ul>
-<li>翻译：写一个程序输出1到n的字符串表达，但是 如果是3的倍数，不输出对应数字的字符串，而是输出“Fizz” ，如果是5的倍数，不输出对应数字的字符串，而是输出“Buzz”， 若同时是3和5的倍数，则输出 “FizzBuzz”。
-        
-          <p class="article-more-link">
-            <a href="/2016/12/23/Leetcode/412-fizz-buzz-md/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://newbird.cn/2016/12/23/Leetcode/412-fizz-buzz-md/" data-id="ckhkn4096000h0hplqsaxgp8w" class="article-share-link">Share</a>
+      <a data-url="http://newbird.cn/2016/12/23/Leetcode/461.hamming-distance-md/" data-id="ckhkqe0sn000niepl0zdeyqno" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
@@ -643,7 +634,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">41</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">42</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -653,7 +644,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Caffe/">Caffe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/">Markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV基础/">OpenCV基础</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ResNet/">ResNet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TLD/">TLD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VS2010/">VS2010</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c++</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gdb/">gdb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/">ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图像处理/">图像处理</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/目标跟踪/">目标跟踪</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/调试与定位/">调试与定位</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Caffe/">Caffe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/">Markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV基础/">OpenCV基础</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ResNet/">ResNet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TLD/">TLD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VS2010/">VS2010</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c++</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gdb/">gdb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/">ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图像处理/">图像处理</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/目标跟踪/">目标跟踪</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/调试与定位/">调试与定位</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -672,7 +663,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -685,11 +676,7 @@
       <ul>
         
           <li>
-            <a href="/2020/11/16/Leetcode/750.角矩阵的数量/">leetcode 750.角矩阵的数量</a>
-          </li>
-        
-          <li>
-            <a href="/2020/11/16/CPP/gdb终极指南/">gdb调试指南</a>
+            <a href="/2020/11/16/Leetcode/452.用最少的箭引爆气球/">leetcode 452.用最少的箭引爆气球</a>
           </li>
         
           <li>
@@ -697,11 +684,15 @@
           </li>
         
           <li>
+            <a href="/2020/11/16/Leetcode/750.角矩阵的数量/">leetcode 750.角矩阵的数量</a>
+          </li>
+        
+          <li>
             <a href="/2020/11/16/Leetcode/1055. 形成字符串的最短路径/">leetcode 1055.形成字符串的最短路经</a>
           </li>
         
           <li>
-            <a href="/2020/11/16/Summary/202011_plan/">(no title)</a>
+            <a href="/2020/11/16/CPP/gdb终极指南/">gdb调试指南</a>
           </li>
         
       </ul>

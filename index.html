@@ -71,6 +71,113 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Leetcode/452.用最少的箭引爆气球" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/11/16/Leetcode/452.用最少的箭引爆气球/" class="article-date">
+  <time datetime="2020-11-16T15:35:23.000Z" itemprop="datePublished">2020-11-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/16/Leetcode/452.用最少的箭引爆气球/">leetcode 452.用最少的箭引爆气球</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/home/lzlang/.config/Typora/typora-user-images/image-20201116234520178.png" alt="image-20201116234520178"></p>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><ol>
+<li>贪心算法的核心就是先排序再遍历处理；</li>
+<li>排序使用<code>qsort</code>函数</li>
+<li>对于排序后的数组，一个简单的规则就是以第0个气球为<code>[start,end]</code>范围，</li>
+<li>如果后面气球的起始小于end,则可以一枪解决；并更新start</li>
+<li>如果后面气球的起始大于end，那肯定要再开一枪，并更新新的<code>[start, end]</code>;</li>
+</ol>
+<h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><ul>
+<li>时间复杂度 O（nlogn）</li>
+<li>空间复杂度 O（1）<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX(x, y) ((x &gt;= y) ? x : y)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LEN 1000</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">cmpFunc</span><span class="params">(<span class="keyword">const</span> <span class="keyword">void</span> *a, <span class="keyword">const</span> <span class="keyword">void</span> *b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (((<span class="keyword">int</span>**)a)[<span class="number">0</span>][<span class="number">1</span>] &gt; ((<span class="keyword">int</span> **)b)[<span class="number">0</span>][<span class="number">1</span>]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">findMinArrowShots</span><span class="params">(<span class="keyword">int</span>** points, <span class="keyword">int</span> pointsSize, <span class="keyword">int</span>* pointsColSize)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (points == <span class="literal">NULL</span> || pointsSize == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    qsort(points, pointsSize, <span class="keyword">sizeof</span>(points[<span class="number">0</span>]), cmpFunc);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> start = points[<span class="number">0</span>][<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">int</span> end = points[<span class="number">0</span>][<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">int</span> cnt = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; pointsSize; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (end &gt;= points[i][<span class="number">0</span>]) &#123;</span><br><span class="line">            start = MAX(start, points[i][<span class="number">0</span>]);</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            cnt++;</span><br><span class="line">            start = points[i][<span class="number">0</span>];</span><br><span class="line">            end = points[i][<span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> cnt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2020/11/16/Leetcode/452.用最少的箭引爆气球/" data-id="ckhkqe0sm000mieplkzxu73ou" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Leetcode/1230.抛掷硬币" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/11/16/Leetcode/1230.抛掷硬币/" class="article-date">
+  <time datetime="2020-11-16T15:35:23.000Z" itemprop="datePublished">2020-11-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/16/Leetcode/1230.抛掷硬币/">leetcode 1230.抛掷硬币</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="https://pic.leetcode-cn.com/1604404008-ilwMYw-image.png" alt="image.png"></p>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><ol>
+<li>这种类型的题目显然可以优化成最小结构，使用动态规划</li>
+<li>最小结构： <code>dp[i][j]</code>:  抛掷i次硬币，j次正面的概率</li>
+<li>状态转移方程： <code>dp[i][j] = dp[i-1][j]*(1-(prob[i-1])) + dp[i-1][j-1]*prob[i-1]</code>  （注意这里第i次的概率对应数组index要-1）</li>
+<li>边界条件分析，<code>dp[0][0]=1</code></li>
+</ol>
+<h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><ul>
+<li>时间复杂度：<code>O(n^2)</code></li>
+<li>空间复杂度：<code>O(n^2)</code> 认为row和col都为n</li>
+</ul>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">probabilityOfHeads</span><span class="params">(<span class="keyword">double</span>* prob, <span class="keyword">int</span> probSize, <span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">float</span>** dp = (<span class="keyword">float</span>**)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">float</span>*)*(probSize+<span class="number">1</span>));</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= probSize; i++) &#123;</span><br><span class="line">        dp[i] = (<span class="keyword">float</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">float</span>)*(target+<span class="number">1</span>));</span><br><span class="line">        (<span class="keyword">void</span>)<span class="built_in">memset</span>(dp[i], <span class="number">0</span>, <span class="keyword">sizeof</span>(<span class="keyword">float</span>)*(target+<span class="number">1</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= probSize; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= target; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (j &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                dp[i][j] = dp[i<span class="number">-1</span>][j]*(<span class="number">1</span>-prob[i<span class="number">-1</span>]) + dp[i<span class="number">-1</span>][j<span class="number">-1</span>]*prob[i<span class="number">-1</span>];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                dp[i][<span class="number">0</span>] = dp[i<span class="number">-1</span>][<span class="number">0</span>]*(<span class="number">1</span>-prob[i<span class="number">-1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;        </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[probSize][target];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2020/11/16/Leetcode/1230.抛掷硬币/" data-id="ckhkqe0sk000hieplfvm7l9mu" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Leetcode/750.角矩阵的数量" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/11/16/Leetcode/750.角矩阵的数量/" class="article-date">
@@ -111,7 +218,58 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://newbird.cn/2020/11/16/Leetcode/750.角矩阵的数量/" data-id="ckhkn4098000n0hpl9g9d4x1w" class="article-share-link">Share</a>
+      <a data-url="http://newbird.cn/2020/11/16/Leetcode/750.角矩阵的数量/" data-id="ckhkqe0sn000piepldio13138" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Leetcode/1055. 形成字符串的最短路径" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/11/16/Leetcode/1055. 形成字符串的最短路径/" class="article-date">
+  <time datetime="2020-11-16T15:35:23.000Z" itemprop="datePublished">2020-11-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/16/Leetcode/1055. 形成字符串的最短路径/">leetcode 1055.形成字符串的最短路经</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="https://pic.leetcode-cn.com/1604921591-QkayHN-image.png" alt="image.png"></p>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><ol>
+<li>以target字符串为基准，从index=0开始与souce[i]比较，如果相同，source和target的index向后；如果不相同，source的下一个字符直至source结束；</li>
+<li>上一步完成后，可能source和target一个字符都没有匹配上，或者至少匹配上一个；判断一下如果一个都没有匹配上，肯定就直接返回-1了；如果至少匹配上一个，那就继续比较。</li>
+</ol>
+<h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><ul>
+<li>时间复杂度： O(n^2)</li>
+<li>空间复杂度： O(1)</li>
+</ul>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">shortestWay</span><span class="params">(<span class="keyword">char</span> * source, <span class="keyword">char</span> * target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> cnt = <span class="number">0</span>;  </span><br><span class="line">    <span class="keyword">int</span> t_index = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (t_index &lt; <span class="built_in">strlen</span>(target)) &#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = t_index;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">strlen</span>(source); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (source[i] == target[t_index]) &#123;</span><br><span class="line">                t_index++;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (tmp != t_index) &#123;</span><br><span class="line">            cnt++;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> cnt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://newbird.cn/2020/11/16/Leetcode/1055. 形成字符串的最短路径/" data-id="ckhkqe0sk000giepl23r57vh2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
@@ -187,7 +345,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://newbird.cn/2020/11/16/CPP/gdb终极指南/" data-id="ckhkn408y00050hpljs3936mf" class="article-share-link">Share</a>
+      <a data-url="http://newbird.cn/2020/11/16/CPP/gdb终极指南/" data-id="ckhkqe0sb0003ieplyen9efm1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gdb/">gdb</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/调试与定位/">调试与定位</a></li></ul>
@@ -199,103 +357,26 @@
 
 
   
-    <article id="post-Leetcode/1230.抛掷硬币" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Leetcode/C语言刷题必备技能点" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/11/16/Leetcode/1230.抛掷硬币/" class="article-date">
-  <time datetime="2020-11-16T15:35:23.000Z" itemprop="datePublished">2020-11-16</time>
+    <a href="/2020/11/16/Leetcode/C语言刷题必备技能点/" class="article-date">
+  <time datetime="2020-11-16T14:52:27.788Z" itemprop="datePublished">2020-11-16</time>
 </a>
     
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
   </div>
   <div class="article-inner">
     
     
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/16/Leetcode/1230.抛掷硬币/">leetcode 1230.抛掷硬币</a>
-    </h1>
-  
-
-      </header>
-    
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="https://pic.leetcode-cn.com/1604404008-ilwMYw-image.png" alt="image.png"></p>
-<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><ol>
-<li>这种类型的题目显然可以优化成最小结构，使用动态规划</li>
-<li>最小结构： <code>dp[i][j]</code>:  抛掷i次硬币，j次正面的概率</li>
-<li>状态转移方程： <code>dp[i][j] = dp[i-1][j]*(1-(prob[i-1])) + dp[i-1][j-1]*prob[i-1]</code>  （注意这里第i次的概率对应数组index要-1）</li>
-<li>边界条件分析，<code>dp[0][0]=1</code></li>
-</ol>
-<h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><ul>
-<li>时间复杂度：<code>O(n^2)</code></li>
-<li>空间复杂度：<code>O(n^2)</code> 认为row和col都为n</li>
-</ul>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">probabilityOfHeads</span><span class="params">(<span class="keyword">double</span>* prob, <span class="keyword">int</span> probSize, <span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">float</span>** dp = (<span class="keyword">float</span>**)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">float</span>*)*(probSize+<span class="number">1</span>));</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= probSize; i++) &#123;</span><br><span class="line">        dp[i] = (<span class="keyword">float</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">float</span>)*(target+<span class="number">1</span>));</span><br><span class="line">        (<span class="keyword">void</span>)<span class="built_in">memset</span>(dp[i], <span class="number">0</span>, <span class="keyword">sizeof</span>(<span class="keyword">float</span>)*(target+<span class="number">1</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= probSize; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= target; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (j &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                dp[i][j] = dp[i<span class="number">-1</span>][j]*(<span class="number">1</span>-prob[i<span class="number">-1</span>]) + dp[i<span class="number">-1</span>][j<span class="number">-1</span>]*prob[i<span class="number">-1</span>];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                dp[i][<span class="number">0</span>] = dp[i<span class="number">-1</span>][<span class="number">0</span>]*(<span class="number">1</span>-prob[i<span class="number">-1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;        </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[probSize][target];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>由于C语言不想python\</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://newbird.cn/2020/11/16/Leetcode/1230.抛掷硬币/" data-id="ckhkn4095000f0hpl7rrcmqyd" class="article-share-link">Share</a>
+      <a data-url="http://newbird.cn/2020/11/16/Leetcode/C语言刷题必备技能点/" data-id="ckhkqe0so000qieplug78m19j" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Leetcode/1055. 形成字符串的最短路径" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/11/16/Leetcode/1055. 形成字符串的最短路径/" class="article-date">
-  <time datetime="2020-11-16T15:35:23.000Z" itemprop="datePublished">2020-11-16</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/16/Leetcode/1055. 形成字符串的最短路径/">leetcode 1055.形成字符串的最短路经</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="https://pic.leetcode-cn.com/1604921591-QkayHN-image.png" alt="image.png"></p>
-<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><ol>
-<li>以target字符串为基准，从index=0开始与souce[i]比较，如果相同，source和target的index向后；如果不相同，source的下一个字符直至source结束；</li>
-<li>上一步完成后，可能source和target一个字符都没有匹配上，或者至少匹配上一个；判断一下如果一个都没有匹配上，肯定就直接返回-1了；如果至少匹配上一个，那就继续比较。</li>
-</ol>
-<h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><ul>
-<li>时间复杂度： O(n^2)</li>
-<li>空间复杂度： O(1)</li>
-</ul>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">shortestWay</span><span class="params">(<span class="keyword">char</span> * source, <span class="keyword">char</span> * target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> cnt = <span class="number">0</span>;  </span><br><span class="line">    <span class="keyword">int</span> t_index = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (t_index &lt; <span class="built_in">strlen</span>(target)) &#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = t_index;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">strlen</span>(source); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (source[i] == target[t_index]) &#123;</span><br><span class="line">                t_index++;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (tmp != t_index) &#123;</span><br><span class="line">            cnt++;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> cnt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://newbird.cn/2020/11/16/Leetcode/1055. 形成字符串的最短路径/" data-id="ckhkn4094000e0hpl4m9nxhn1" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
-
     </footer>
   </div>
   
@@ -343,7 +424,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://newbird.cn/2020/11/16/Summary/202011_plan/" data-id="ckhkn409f000x0hpldebw7npw" class="article-share-link">Share</a>
+      <a data-url="http://newbird.cn/2020/11/16/Summary/202011_plan/" data-id="ckhkqe0ss000zieplgalkfaw3" class="article-share-link">Share</a>
       
       
     </footer>
@@ -394,7 +475,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://newbird.cn/2020/11/16/Summary/学习方法论总结/" data-id="ckhkn409h00110hplig3xhy49" class="article-share-link">Share</a>
+      <a data-url="http://newbird.cn/2020/11/16/Summary/学习方法论总结/" data-id="ckhkqe0st0013iepl6oqd7l6b" class="article-share-link">Share</a>
       
       
     </footer>
@@ -512,7 +593,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://newbird.cn/2020/11/11/CPP/C++并发编程学习总结1/" data-id="ckhkn409p00130hpli0bpglfi" class="article-share-link">Share</a>
+      <a data-url="http://newbird.cn/2020/11/11/CPP/C++并发编程学习总结1/" data-id="ckhkqe0t40015iepluevlk8hq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li></ul>
@@ -564,150 +645,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://newbird.cn/2020/11/11/Summary/hexo+github博客使用指南/" data-id="ckhkn409g00100hplsw30b9od" class="article-share-link">Share</a>
+      <a data-url="http://newbird.cn/2020/11/11/Summary/hexo+github博客使用指南/" data-id="ckhkqe0st0012iepl7eytzfly" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Linux_shell/正则表达式" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/09/30/Linux_shell/正则表达式/" class="article-date">
-  <time datetime="2020-09-30T00:00:17.000Z" itemprop="datePublished">2020-09-30</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/30/Linux_shell/正则表达式/">正则表达式</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Python中的正则表达式"><a href="#Python中的正则表达式" class="headerlink" title="Python中的正则表达式"></a>Python中的正则表达式</h1><p>实际编程开发中，会遇到很多字符串处理相关的工作，因此专为处理匹配字符串的正则表达式一定需要花时间学习的。</p>
-<h2 id="基础表达"><a href="#基础表达" class="headerlink" title="基础表达"></a>基础表达</h2><p>我们以匹配一个简单的邮箱<a href="mailto:*liangzelang@gmail.com" target="_blank" rel="noopener">*liangzelang@gmail.com</a>*为例介绍正则表达式的入门方法。</p>
-<h3 id="基本元素表达"><a href="#基本元素表达" class="headerlink" title="基本元素表达"></a>基本元素表达</h3><ul>
-<li><code>\w</code>表示匹配一个字母或数字</li>
-<li><code>\d</code>表示匹配一个数字</li>
-<li><code>\s</code>表示匹配一个空格</li>
-<li><code>.</code>表示匹配任意字符</li>
-</ul>
-<h3 id="基本数量表达"><a href="#基本数量表达" class="headerlink" title="基本数量表达"></a>基本数量表达</h3><p>有了上述的基本表达，那么我们可以看一下如果匹配不同数量的字符</p>
-<ul>
-<li><code>+</code>表示一个或以上的字符，如<code>\d+</code>表示匹配一个或以上的数字字符串，可以匹配<code>1</code>和<code>123456</code></li>
-<li><code>*</code>表示任意个字符，可以是0个，如<code>\w*</code>表示匹配任何个字母或数字</li>
-<li><code>?</code>表示0个或1个字符，如<code>&lt;?liangzelang&gt;?</code>表示匹配<code>liangzelang</code> 或 <code>&lt;liangzelang&gt;</code></li>
-<li><code>{n}</code>表示n个字符，同时可以限定数量范围<code>{m,n}</code>,表示m–n个字符</li>
-</ul>
-<h3 id="特殊字符表达"><a href="#特殊字符表达" class="headerlink" title="特殊字符表达"></a>特殊字符表达</h3><ul>
-<li><code>\</code>转义符，实际工作中会用到很多特殊字符<code>* . ? + $ ^ [ ] ( ) { } | \ /</code>等，这个时候需要加上<code>\</code>转义符</li>
-</ul>
-<p>了解了上面的基本表达可以顺利写出邮箱的正则表达式：<br><code>\w+@\w+\.\w+</code> ,为了更直观python的用例如下：</p>
-<h2 id="进阶表达"><a href="#进阶表达" class="headerlink" title="进阶表达"></a>进阶表达</h2><p>匹配<code>192.168.1.1</code>这个IP地址，可以容易得到<code>\d+\.\d+\.\d+\.\d+</code>,但是这样有个问题就是如果是<code>999.999.999.999</code>也匹配上了,因此我们需要匹配的更加准确</p>
-<h3 id="精确范围表达"><a href="#精确范围表达" class="headerlink" title="精确范围表达"></a>精确范围表达</h3><ul>
-<li><code>[]</code>表示匹配的字符串范围，如<code>[0-9A-Za-z]</code>表示一个数字或者字母</li>
-<li><code>^</code>表示匹配字符串起始</li>
-<li><code>$</code>表示匹配字符串结尾</li>
-<li><code>[A|B]</code>表示匹配A或者B<br>那么正则表达式<code>&#39;^[2[0-5][0-5]|1[0-9][0-9]|[0-9]?[0-9][\.]?]{4}$&#39;</code> 可以匹配<code>192.168.1.1</code></li>
-</ul>
-<h2 id="python-re库"><a href="#python-re库" class="headerlink" title="python re库"></a>python re库</h2><p>以上就是在python中使用正则表达式的基础知识，python中有专门的正则表达式库<code>re</code>,该库主要包含一些处理正则表达式的函数接口：<br><img src="./re.png" alt="re模块相关API接口"></p>
-<h3 id="匹配正则表达式-re-match"><a href="#匹配正则表达式-re-match" class="headerlink" title="匹配正则表达式 re.match"></a>匹配正则表达式 re.match</h3><p>以上文讲到的匹配email地址：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> re.match(<span class="string">r'\w+@\w+\.\w+'</span>, <span class="string">'liangzelang@gmail.com'</span>):</span><br><span class="line">    print(<span class="string">"OK"</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">"not match"</span>)</span><br></pre></td></tr></table></figure></p>
-<p>匹配IP地址：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> re.match(<span class="string">r'^[2[0-5][0-5]|1[0-9][0-9]|[0-9]?[0-9][\.]?]&#123;4&#125;$'</span>, <span class="string">'192.168.1.1'</span>):</span><br><span class="line">    print(<span class="string">"IP ok"</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">"IP not match"</span>)</span><br></pre></td></tr></table></figure></p>
-<h3 id="切分字符-re-split"><a href="#切分字符-re-split" class="headerlink" title="切分字符 re.split"></a>切分字符 re.split</h3><p>如果使用正常的字符串切分函数是无法去除多余的字符或者空格的：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'a b  c'</span>.split(<span class="string">' '</span>)</span><br><span class="line">[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">''</span>, <span class="string">'c'</span>]</span><br></pre></td></tr></table></figure></p>
-<p>使用re.split函数：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> re</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>re.split(<span class="string">r'\s+'</span>, <span class="string">'a b  c'</span>)</span><br><span class="line">[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>]</span><br></pre></td></tr></table></figure></p>
-<h3 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h3><p>上文中我们匹配了邮箱和IP，那如果我们要找到邮箱中对应的用户名、邮箱服务商或者IP地址的网段，那么就需要把匹配到的字符串分组；</p>
-<ul>
-<li><code>()</code>表示需要提取的分组</li>
-</ul>
-<p>re.match函数返回的Match对象正好有group方法可以提供匹配到每个分组字符串。<br><img src="./re.match_api.png" alt="match对象的方法"><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> re</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>m = re.match(<span class="string">r'^(\w+)@(\w+)\.(\w+)$'</span>, <span class="string">'liangzelang@gmail.com'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>m</span><br><span class="line">&lt;re.Match object; span=(<span class="number">0</span>, <span class="number">21</span>), match=<span class="string">'liangzelang@gmail.com'</span>&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>m.group(<span class="number">0</span>)</span><br><span class="line"><span class="string">'liangzelang@gmail.com'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>m.group(<span class="number">1</span>)</span><br><span class="line"><span class="string">'liangzelang'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>m.group(<span class="number">2</span>)</span><br><span class="line"><span class="string">'gmail'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>m.group(<span class="number">3</span>)</span><br><span class="line"><span class="string">'com'</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="编译-re-compile"><a href="#编译-re-compile" class="headerlink" title="编译 re.compile"></a>编译 re.compile</h3><p>实际使用中一般先编译正则表达式，可以确保正则表达式本身没有语法错误，然后再使用编译后的正则表达式直接匹配使用。如果反复使用效率会有较大提升。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>re.compile(<span class="string">r'^(\w+)@(\w+)\.(\w+)$'</span>)</span><br><span class="line">re.compile(<span class="string">'^(\\w+)@(\\w+)\\.(\\w+)$'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>email = re.compile(<span class="string">r'^(\w+)@(\w+)\.(\w+)$'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>email.match(<span class="string">'liangzelang@gmail.com'</span>).groups()</span><br><span class="line">(<span class="string">'liangzelang'</span>, <span class="string">'gmail'</span>, <span class="string">'com'</span>)</span><br></pre></td></tr></table></figure></p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017639890281664" target="_blank" rel="noopener">正则表达式</a></li>
-<li><a href="https://www.jianshu.com/p/0053af01554e" target="_blank" rel="noopener">re库的用法介绍
-</a></li>
-</ul>
-<h1 id="Linux正则表达式"><a href="#Linux正则表达式" class="headerlink" title="Linux正则表达式"></a>Linux正则表达式</h1><ul>
-<li>未完待续</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://newbird.cn/2020/09/30/Linux_shell/正则表达式/" data-id="ckhkn4099000o0hplgxly05hc" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Leetcode/5-最长回文子串-C-中心扩展-暴力-md" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/08/02/Leetcode/5-最长回文子串-C-中心扩展-暴力-md/" class="article-date">
-  <time datetime="2020-08-02T13:48:21.000Z" itemprop="datePublished">2020-08-02</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/08/02/Leetcode/5-最长回文子串-C-中心扩展-暴力-md/">[5. 最长回文子串] C + 中心扩展 + 暴力</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Leetcode-No-5"><a href="#Leetcode-No-5" class="headerlink" title="Leetcode No.5"></a>Leetcode No.5</h2><ul>
-<li><b>给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为 1000。</b></li>
-</ul>
-<p><b>示例:</b><br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">示例 <span class="number">1</span>：</span><br><span class="line">输入: <span class="string">"babad"</span></span><br><span class="line">输出: <span class="string">"bab"</span></span><br><span class="line">注意: <span class="string">"aba"</span> 也是一个有效答案。</span><br><span class="line"></span><br><span class="line">示例 <span class="number">2</span>：</span><br><span class="line">输入: <span class="string">"cbbd"</span></span><br><span class="line">输出: <span class="string">"bb"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> [<span class="number">0</span>, <span class="number">1</span>].</span><br></pre></td></tr></table></figure></p>
-<p><img src="https://pic.leetcode-cn.com/15a55cf50b8c3e9ad272f581e5b7174c94fcbbdbadb990a7a11b0c22b4cb361f-image.png" alt="result" height="175" width="475"></p>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><ol>
-<li>没有思路，只有暴力解，以每个点为中心向两边扩散；</li>
-<li>但是条件1中又需要考虑奇数偶数的情况，原本想的是每次传个left和right，但是题解搞了一种骚操作，就是通过中心点i和长度len，直接求出left和right</li>
-</ol>
-<h2 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h2><p>时间复杂度： O(n^2)<br>空间复杂度： O(n)</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//start: 19:35</span></span><br><span class="line"><span class="comment">// 解前思路：没啥思路，弱点就在字符串这块，难，先暴力一下：以每个点作为中心点来判断</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX(x, y) (x &gt; y) ? x : y</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">loopPalindrome</span><span class="params">(<span class="keyword">char</span>* s, <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (r &gt;= <span class="built_in">strlen</span>(s)) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> len = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (l &gt;= <span class="number">0</span> &amp;&amp; r &lt;= <span class="built_in">strlen</span>(s) &amp;&amp; s[l] == s[r]) &#123;</span><br><span class="line">        l--;</span><br><span class="line">        r++;</span><br><span class="line">        len = r - l - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> len;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">char</span> * <span class="title">longestPalindrome</span><span class="params">(<span class="keyword">char</span> * s)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (s == <span class="literal">NULL</span>) <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">int</span> r = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> l = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> len = <span class="built_in">strlen</span>(s);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> len1 = loopPalindrome(s, i, i);</span><br><span class="line">        <span class="keyword">int</span> len = loopPalindrome(s, i, i + <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">int</span> maxLen = MAX(len1, len);</span><br><span class="line">        <span class="keyword">if</span> (maxLen &gt; (r - l + <span class="number">1</span>)) &#123;</span><br><span class="line">            l = i - (maxLen - <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">            r = i + maxLen / <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">char</span>* res = (<span class="keyword">char</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">char</span>) * (r - l + <span class="number">2</span>));</span><br><span class="line">    <span class="built_in">memcpy</span>(res, &amp;s[l], (r - l + <span class="number">1</span>));</span><br><span class="line">    res[r - l + <span class="number">1</span>] = <span class="string">'\0'</span>;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">作者：liangzelang</span><br><span class="line">链接：https:<span class="comment">//leetcode-cn.com/problems/longest-palindromic-substring/solution/5-zui-chang-hui-wen-zi-chuan-c-zhong-xin-kuo-zhan-/</span></span><br><span class="line">来源：力扣（LeetCode）</span><br><span class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://newbird.cn/2020/08/02/Leetcode/5-最长回文子串-C-中心扩展-暴力-md/" data-id="ckhkn4097000l0hpl0pgfh48m" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
 
     </footer>
   </div>
@@ -741,7 +682,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">41</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">42</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -751,7 +692,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Caffe/">Caffe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/">Markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV基础/">OpenCV基础</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ResNet/">ResNet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TLD/">TLD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VS2010/">VS2010</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c++</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gdb/">gdb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/">ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图像处理/">图像处理</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/目标跟踪/">目标跟踪</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/调试与定位/">调试与定位</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Caffe/">Caffe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/">Markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV/">OpenCV</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCV基础/">OpenCV基础</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ResNet/">ResNet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TLD/">TLD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VS2010/">VS2010</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c++</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gdb/">gdb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/">ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图像处理/">图像处理</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/目标跟踪/">目标跟踪</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/调试与定位/">调试与定位</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -770,7 +711,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -783,11 +724,7 @@
       <ul>
         
           <li>
-            <a href="/2020/11/16/Leetcode/750.角矩阵的数量/">leetcode 750.角矩阵的数量</a>
-          </li>
-        
-          <li>
-            <a href="/2020/11/16/CPP/gdb终极指南/">gdb调试指南</a>
+            <a href="/2020/11/16/Leetcode/452.用最少的箭引爆气球/">leetcode 452.用最少的箭引爆气球</a>
           </li>
         
           <li>
@@ -795,11 +732,15 @@
           </li>
         
           <li>
+            <a href="/2020/11/16/Leetcode/750.角矩阵的数量/">leetcode 750.角矩阵的数量</a>
+          </li>
+        
+          <li>
             <a href="/2020/11/16/Leetcode/1055. 形成字符串的最短路径/">leetcode 1055.形成字符串的最短路经</a>
           </li>
         
           <li>
-            <a href="/2020/11/16/Summary/202011_plan/">(no title)</a>
+            <a href="/2020/11/16/CPP/gdb终极指南/">gdb调试指南</a>
           </li>
         
       </ul>
